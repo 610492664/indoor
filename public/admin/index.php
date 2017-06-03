@@ -15,12 +15,8 @@ define('APP_PATH', __DIR__ . '/../../application/');
 /*if(file_exists(APP_PATH .'extra' . DIRECTORY_SEPARATOR . 'install.lock') === false){
     define('BIND_MODULE','install');
 }else{*/
-//    define('BIND_MODULE','admin');
+    define('BIND_MODULE','admin');
 //}
 // 加载框架引导文件
-require __DIR__ . '/../../thinkphp/start.php';
 
-// 读取自动生成定义文件
-$build = include __DIR__.'/../../build.php';
-// 运行自动生成
-\think\Build::run($build);
+require __DIR__ . '/../../thinkphp/start.php';

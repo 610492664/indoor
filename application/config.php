@@ -14,12 +14,19 @@ return [
     // | 应用设置
     // +----------------------------------------------------------------------
 
+    // 网站信息
+    'PRODUCT_VERSION' => 'V1.2.0', //项目版本
+    'PRODUCT_NAME'   => '室内定位web管理', //产品名称
+    'WEBSITE_DOMAIN' => 'http://indoor.tomee.cn', //官方网址
+    'COMPANY_NAME'   => 'indoor开发维护团队', //公司名称
+    'SQL_PRIMARY_KEY' => 'id',
+
     // 应用命名空间
     'app_namespace'          => 'app',
     // 应用调试模式
     'app_debug'              => true,
     // 应用Trace
-    'app_trace'              => false,
+    'app_trace'              => true,
     // 应用模式状态
     'app_status'             => '',
     // 是否支持多模块
@@ -139,7 +146,13 @@ return [
     ],
 
     // 视图输出字符串内容替换
-    'view_replace_str'       => [],
+    'view_replace_str'  => [
+        '__STATIC__'=>'/indoor/public/admin/static',
+        '__CSS__'=>'/indoor/public/admin/static/css',
+        '__JS__'=>'/indoor/public/admin/static/js',
+        '__IMG__'=>'/indoor/public/admin/static/img',
+        '__PLUGIN__'=>'/indoor/public/admin/static/plugin',
+    ],
     // 默认跳转页面对应的模板文件
     'dispatch_success_tmpl'  => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
     'dispatch_error_tmpl'    => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
