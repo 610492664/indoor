@@ -172,7 +172,7 @@
     <!-- BootBox -->
     <script src="__PLUGIN__/bootBox/bootbox.min.js"></script>
     <!-- AdminLTE App -->
-    <script src="__JS__/app.min.js"></script>
+    <script src="__JS__/app.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="__JS__/demo.js"></script>
     <script>
@@ -183,25 +183,35 @@
         var PLUGIN_PATH = '__PLUGIN__';
         var COMPANY_NAME = '{:config("COMPANY_NAME")}';
 
-        function changeFrameHeight(){
-            var height = $(window).height()
-                - $("header.main-header").height()
-                - $("section.content-header").height()
-                - $("footer.main-footer").height();
-            console.log($(window).height());
-            console.log($("header.main-header").height());
-            console.log($("section.content-header").height());
-            console.log($("footer.main-footer").height());
+        /*function changeFrameHeight(){
+            var height = 0;
+            var wrapperheight = $("div.content-wrapper").height();
+            var wrapperminheight = $("div.content-wrapper").css("min-height");
+            wrapperminheight = parseFloat(wrapperminheight);
+            var wrapperinnerheight = $("div.content-wrapper").innerHeight();;
+            if( wrapperheight < wrapperminheight){
+                height = wrapperminheight - (wrapperheight - wrapperinnerheight);
+            }else{
+                height = wrapperinnerheight;
+            }
+              height = height - $("section.content-header").outerHeight();
+           /!* var height = $(window).height()
+                - $("header.main-header").outerHeight()
+                - $("section.content-header").outerHeight()
+                - $("footer.main-footer").outerHeight();*!/
+           console.log(wrapperminheight);
+            console.log($("div.content-wrapper").height());
+            console.log($("div.content-wrapper").innerHeight());
+           /!* console.log($(window).height());
+            console.log($("header.main-header").outerHeight());
+            console.log($("section.content-header").outerHeight());
+            console.log($("footer.main-footer").outerHeight());*!/
             $("iframe").height(height);
-        }
-        $(function(){
-            changeFrameHeight();
-        });
-
+        }*/
         /**
          * iframe自适应
          */
-        $(window).resize(changeFrameHeight);
+//        $(window).resize(changeFrameHeight);
 
         /**
          * 自动适配面包屑导航
@@ -220,5 +230,6 @@
     </script>
     <script src="__JS__/template.js"></script>
     {block name="myScript"}{/block}
+    <!--<script>changeFrameHeight();</script>-->
 </body>
 </html>
