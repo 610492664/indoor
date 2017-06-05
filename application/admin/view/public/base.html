@@ -106,32 +106,50 @@
                 </form>
                 <ul class="sidebar-menu">
                     <li class="header">主菜单</li>
+                    <li class="active">
+                        <a href="###" target="content">
+                            <i class="fa fa-circle-o"></i> <span>首页</span>
+                        </a>
+                    </li>
                     <li class="treeview">
                         <a href="javascript:void(0);">
-                            <i class="fa fa-files-o"></i> <span class="menuFather">设备管理</span>
+                            <i class="fa fa-files-o"></i> <span>设备管理</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li class="menuChild"><a url="###" class="refresh"><i class="fa fa-circle-o"></i> 定位套件</a></li>
-                            <li class="menuChild"><a url="###" class="refresh"><i class="fa fa-circle-o"></i> 信标</a></li>
-                            <li class="menuChild"><a url="###" class="refresh"><i class="fa fa-circle-o"></i> 终端管理</a></li>
+                            <li><a href="###"><i class="fa fa-circle-o"></i> 定位套件</a></li>
+                            <li><a href="###"><i class="fa fa-circle-o"></i> 信标</a></li>
+                            <li><a href="###"><i class="fa fa-circle-o"></i> 终端管理</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="javascript:void(0);">
+                            <i class="fa fa-files-o"></i> <span>设备管理</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="###"><i class="fa fa-circle-o"></i> 定位套件</a></li>
+                            <li><a href="###"><i class="fa fa-circle-o"></i> 信标</a></li>
+                            <li><a href="###"><i class="fa fa-circle-o"></i> 终端管理</a></li>
                         </ul>
                     </li>
                     <li>
                         <a href="{:url('person/index')}" target="content">
-                            <i class="fa fa-circle-o"></i> <span class="menuFather">人员管理</span>
+                            <i class="fa fa-circle-o"></i> <span>人员管理</span>
                         </a>
                     </li>
                     <li>
-                        <a url="###" class="refresh">
-                            <i class="fa fa-circle-o"></i> <span class="menuFather">建筑物</span>
+                        <a href="###"  target="content">
+                            <i class="fa fa-circle-o"></i> <span>建筑物</span>
                         </a>
                     </li>
                     <li>
-                        <a url="###" class="refresh">
-                            <i class="fa fa-circle-o"></i> <span class="menuFather">事件</span>
+                        <a href="###"  target="content">
+                            <i class="fa fa-circle-o"></i> <span>事件</span>
                         </a>
                     </li>
                 </ul>
@@ -182,54 +200,8 @@
         var IMG_PATH = '__IMG__';
         var PLUGIN_PATH = '__PLUGIN__';
         var COMPANY_NAME = '{:config("COMPANY_NAME")}';
-
-        /*function changeFrameHeight(){
-            var height = 0;
-            var wrapperheight = $("div.content-wrapper").height();
-            var wrapperminheight = $("div.content-wrapper").css("min-height");
-            wrapperminheight = parseFloat(wrapperminheight);
-            var wrapperinnerheight = $("div.content-wrapper").innerHeight();;
-            if( wrapperheight < wrapperminheight){
-                height = wrapperminheight - (wrapperheight - wrapperinnerheight);
-            }else{
-                height = wrapperinnerheight;
-            }
-              height = height - $("section.content-header").outerHeight();
-           /!* var height = $(window).height()
-                - $("header.main-header").outerHeight()
-                - $("section.content-header").outerHeight()
-                - $("footer.main-footer").outerHeight();*!/
-           console.log(wrapperminheight);
-            console.log($("div.content-wrapper").height());
-            console.log($("div.content-wrapper").innerHeight());
-           /!* console.log($(window).height());
-            console.log($("header.main-header").outerHeight());
-            console.log($("section.content-header").outerHeight());
-            console.log($("footer.main-footer").outerHeight());*!/
-            $("iframe").height(height);
-        }*/
-        /**
-         * iframe自适应
-         */
-//        $(window).resize(changeFrameHeight);
-
-        /**
-         * 自动适配面包屑导航
-         */
-        $('body').on('click', '.menuChild', function() {
-            $('.menuChild').removeClass('active');
-            $(this).addClass('active');
-            var parentName = $.trim($(this).parent().prev().text());
-            var ownName = $(this).children('a').text();
-            var breadcrumb = $('#breadcrumb');
-            breadcrumb.html('<li><i class="fa fa-dashboard"></i>　首页</li>');
-            breadcrumb.append('<li>'+ parentName +'</li><li>'+ ownName +'</li>');
-            breadcrumb.prev().text(ownName);
-        });
-
     </script>
     <script src="__JS__/template.js"></script>
     {block name="myScript"}{/block}
-    <!--<script>changeFrameHeight();</script>-->
 </body>
 </html>
