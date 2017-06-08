@@ -267,14 +267,9 @@ function _init() {
             var window_height = $(window).height();
             var sidebar_height = $(".sidebar").height() || 0;
 
-            //用来设置iframe高度
-            var iframe_height;
-            var content_wrapper_minheight;
-            var content_header_height = $("section.content-header").outerHeight();
-            var iframe_content_height = $(window.frames[0].document).outerHeight();
-            var content_wrapper_pheight = $(".content-wrapper").outerHeight() - $(".content-wrapper").height();//计算padding高度
             //Set the min-height of the content and sidebar based on the
             //the height of the document.
+            var content_wrapper_minheight;
             if ($("body").hasClass("fixed")) {
                 $(".content-wrapper, .right-side").css('min-height', window_height - footer_height);//min-height包含padding
                 content_wrapper_minheight = window_height - footer_height;
@@ -294,14 +289,21 @@ function _init() {
                         $(".content-wrapper, .right-side").css('min-height', controlSidebar.height());
                         content_wrapper_minheight = controlSidebar.height();
                     }
-
                 }
 
             }
-            //减掉 content-wrapper的padding、content-header的高度、content的padding（30px）
-            iframe_height = content_wrapper_minheight- content_wrapper_pheight - content_header_height -30;
-            iframe_height = iframe_height > iframe_content_height ? iframe_height : iframe_content_height;
-            $('iframe').css('min-height', iframe_height);
+            //如果存在iframe，则设置iframe高度
+            if (typeof window.frames[0] != "undefined") {
+                var iframe_height;
+                var content_header_height = $("section.content-header").outerHeight();
+                var iframe_content_height = $(window.frames[0].document).outerHeight();
+                var content_wrapper_pheight = $(".content-wrapper").outerHeight() - $(".content-wrapper").height();//计算padding高度
+                //减掉 content-wrapper的padding、content-header的高度、content的padding（30px）
+                iframe_height = content_wrapper_minheight- content_wrapper_pheight - content_header_height -30;
+                iframe_height = iframe_height > iframe_content_height ? iframe_height : iframe_content_height;
+                $('iframe').css('min-height', iframe_height);
+            }
+
         },
         fixSidebar: function () {
             //Make sure the body tag has the .fixed class
@@ -478,7 +480,18 @@ function _init() {
                         $li = $li.parents('li:first');
                     }
                     breadcrumb.prepend('<li><i class="fa fa-dashboard"></i>　首页</li>');
-
+                    var href = $this.attr('href');
+                    $("section.content").load(href);
+                    //ajax获取 content 页面
+                   /* $.ajax({
+                        url: href,
+                        type: "get",
+                        dataType:"html",
+                        success: function(data){
+                            $("section.content").html(data);
+                        }
+                    });*/
+                    e.preventDefault();
                     //Fix the layout in case the sidebar stretches over the height of the window
                     _this.layout.fix();
                 }

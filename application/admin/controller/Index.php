@@ -12,4 +12,8 @@ class Index extends Base
         $this->assign('title', '首页');
         return $this->fetch();
    }
+    public function dashBoard()
+    {
+        return $this->fetch();
+    }
 }

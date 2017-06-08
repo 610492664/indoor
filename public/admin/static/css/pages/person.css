@@ -1,0 +1,8 @@
+.dataTables_length, .dataTables_filter, .dataTables_paginate {
+    float: right;
+    height: 35px;
+}
+dataTables_info {
+    float:left;
+    height: 35px;
+}
