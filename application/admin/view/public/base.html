@@ -119,7 +119,7 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="###"><i class="fa fa-circle-o"></i> 定位套件</a></li>
+                            <li><a href="{:url('locator/index')}"><i class="fa fa-circle-o"></i> 定位套件</a></li>
                             <li><a href="###"><i class="fa fa-circle-o"></i> 信标</a></li>
                             <li><a href="###"><i class="fa fa-circle-o"></i> 终端管理</a></li>
                         </ul>
@@ -178,6 +178,14 @@
         <!-- 主题适配相关(完成适配) -->
         <div class="control-sidebar-bg"></div>
     </div>
+    <script>
+        var JS_PATH = '__JS__';
+        var CSS_PATH = '__CSS__';
+        var STATIC_PATH = '__STATIC__';
+        var IMG_PATH = '__IMG__';
+        var PLUGIN_PATH = '__PLUGIN__';
+        var COMPANY_NAME = '{:config("COMPANY_NAME")}';
+    </script>
     <!-- jQuery 2.2.3 -->
     <script src="__PLUGIN__/jQuery/2.2.4/jquery.min.js"></script>
     <!-- Bootstrap 3.3.6 -->
@@ -192,14 +200,8 @@
     <script src="__JS__/app.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="__JS__/demo.js"></script>
-    <script>
-        var JS_PATH = '__JS__';
-        var CSS_PATH = '__CSS__';
-        var STATIC_PATH = '__STATIC__';
-        var IMG_PATH = '__IMG__';
-        var PLUGIN_PATH = '__PLUGIN__';
-        var COMPANY_NAME = '{:config("COMPANY_NAME")}';
-    </script>
+    <script src="__JS__/cachedScript.js"></script>
+
     <script src="__JS__/template.js"></script>
     {block name="myScript"}{/block}
 </body>
