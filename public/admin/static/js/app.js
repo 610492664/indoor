@@ -480,17 +480,17 @@ function _init() {
                         $li = $li.parents('li:first');
                     }
                     breadcrumb.prepend('<li><i class="fa fa-dashboard"></i>　首页</li>');
+                    //加载content页面
                     var href = $this.attr('href');
-                    $("section.content").load(href);
+                    // $("section.content").load(href); 会出现/r/n，不知道為什麼？
                     //ajax获取 content 页面
-                   /* $.ajax({
+                    $.ajax({
                         url: href,
                         type: "get",
-                        dataType:"html",
                         success: function(data){
                             $("section.content").html(data);
                         }
-                    });*/
+                    });
                     e.preventDefault();
                     //Fix the layout in case the sidebar stretches over the height of the window
                     _this.layout.fix();
