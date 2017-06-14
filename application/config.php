@@ -147,9 +147,6 @@ return [
 
     // 视图输出字符串内容替换
     'view_replace_str'  => [
-        '__STATIC__'=>'/indoor/public/admin/static',
-        '__CSS__'=>'/indoor/public/admin/static/css',
-        '__JS__'=>'/indoor/public/admin/static/js',
         '__IMG__'=>'/indoor/public/admin/static/img',
         '__PLUGIN__'=>'/indoor/public/admin/static/plugin',
     ],

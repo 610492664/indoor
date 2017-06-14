@@ -482,6 +482,7 @@ function _init() {
                     breadcrumb.prepend('<li><i class="fa fa-dashboard"></i>　首页</li>');
                     //加载content页面
                     var href = $this.attr('href');
+                    PHP_DATA.url = href;
                     // $("section.content").load(href); 会出现/r/n，不知道為什麼？
                     //ajax获取 content 页面
                     $.ajax({
