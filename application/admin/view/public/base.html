@@ -189,23 +189,24 @@
         var PLUGIN_PATH = '__PLUGIN__';
         var COMPANY_NAME = '{:config("COMPANY_NAME")}';
     </script>
-    <!-- jQuery 2.2.3 -->
+    <script src="__PLUGIN__/require/require.js?ver={:date('ymd')}" data-main="__JS__/main"></script>
+  <!--  &lt;!&ndash; jQuery 2.2.3 &ndash;&gt;
     <script src="__PLUGIN__/jQuery/2.2.4/jquery.min.js"></script>
-    <!-- Bootstrap 3.3.6 -->
+    &lt;!&ndash; Bootstrap 3.3.6 &ndash;&gt;
     <script src="__PLUGIN__/bootstrap/js/bootstrap.min.js"></script>
-    <!-- FastClick -->
+    &lt;!&ndash; FastClick &ndash;&gt;
     <script src="__PLUGIN__/fastClick/fastclick.js"></script>
-    <!-- slimScroll -->
+    &lt;!&ndash; slimScroll &ndash;&gt;
     <script src="__PLUGIN__/slimScroll/jquery.slimscroll.min.js"></script>
-    <!-- BootBox -->
+    &lt;!&ndash; BootBox &ndash;&gt;
     <script src="__PLUGIN__/bootBox/bootbox.min.js"></script>
-    <!-- AdminLTE App -->
+    &lt;!&ndash; AdminLTE App &ndash;&gt;
     <script src="__JS__/app.js"></script>
-    <!-- AdminLTE for demo purposes -->
+    &lt;!&ndash; AdminLTE for demo purposes &ndash;&gt;
     <script src="__JS__/demo.js"></script>
     <script src="__JS__/common.js"></script>
 
-    <script src="__JS__/template.js"></script>
+    <script src="__JS__/template.js"></script>-->
     {block name="myScript"}{/block}
 </body>
 </html>

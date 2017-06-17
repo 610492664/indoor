@@ -1,6 +1,3 @@
-<!-- DataTables -->
-<link rel="stylesheet" href="__PLUGIN__/datatables/dataTables.bootstrap.css">
-<link rel="stylesheet" href="__CSS__/pages/person.css">
 <div class="person-index">
     <div class="row">
         <div class="col-xs-12">
@@ -42,13 +39,9 @@
     </div>
 </div>
 <script>
-    $.multi_required_once([
-        "__PLUGIN__/datatables/jquery.dataTables.min.js",
-        "__PLUGIN__/datatables/dataTables.bootstrap.min.js",
-        "__PLUGIN__/input-mask/jquery.inputmask.js",
-        "__PLUGIN__/input-mask/jquery.inputmask.date.extensions.js",
-        "__PLUGIN__/input-mask/jquery.inputmask.extensions.js",
-        "__PLUGIN__/jquery-form/jquery.form.js",
-    ],{"cache":false,"async":false});
+    require(['dataTables.bootstrap','inputmask.date','jquery.form'],function () {
+        require(['domready!','js/pages/locator'],function () {
+            locator();
+        });
+    });
 </script>
-<script src="__JS__/pages/locator.js"></script>
