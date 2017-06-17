@@ -1,0 +1,38 @@
+.diy-text-center{
+    text-align: center;
+}
+.diy-input-group{
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+}
+.diy-input-group > input {
+    opacity: 0;
+    z-index: 9;
+}
+.diy-input-group > img{
+    position: absolute;
+    top:0;
+    left:0;
+    border: 1px solid #000000;
+}
+.diy-input-group > img,.diy-input-group input {
+    width: 100px;
+    height: 140px;
+}
+.diy-input-group > span{
+    position: absolute;
+    top:0;
+    left:0;
+    height: 10px;
+    width:10px;
+    padding:5px;
+    z-index: 10;
+    display: none;
+}
+@media (min-width: 768px) {
+    .diy-label-pad{
+        padding: 7px 0px;
+    }
+}
+

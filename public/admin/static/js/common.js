@@ -8,7 +8,7 @@
 //定义一个全局script的标记数组，用来标记是否某个script已经下载到本地
 var scriptsArray = new Array();
 (function ($) {
-    $.getUnloadedScript = function (url, options, callback) {
+    $.required_once = function (url, options, callback) {
         // Shift arguments if options argument was omitted
         if ( $.isFunction( options ) ) {
             callback = options;
@@ -42,14 +42,42 @@ var scriptsArray = new Array();
         }
         return $.ajax(options);
     };
-    $.getUnloadedScripts = function (urls, options) {
+    $.multi_required_once = function (urls, options) {
         if ($.isArray(urls)) {
             for (var i=0;i<urls.length;i++){
-                $.getUnloadedScript(urls[i], options);
+                $.required_once(urls[i], options);
             }
         }
     };
 })(jQuery);
+
+(function ($) {
+    $('section.content').on('click','[diy-action]', function () {
+        var action = $(this).attr('diy-action'), data = {};
+        data.id = $(this).attr('diy-id');
+        $.ajax({
+            url: MODULE+'/'+action,
+            type: "get",
+            data: data,
+            success: function(data){
+                $('#myModal div.modal-content').html(data);
+                $("[data-mask]").inputmask();
+                //表单上传
+                $("#form").ajaxForm({
+                    type: 'post',
+                    success: function(data) {
+                        alert(data.msg);
+                        if (data.code = 1) {
+
+                        }
+                    }
+                });
+            }
+        });
+    } );
+})(jQuery);
+
+
 
 function person() {
     var table = $('#table').DataTable({
@@ -67,7 +95,7 @@ function person() {
         "columns": [
             { "data": "per_id", "searchable": false,"orderable": false, "width": "3px" },
             { "data": null, "searchable": false,"orderable": false, "width": "3px"},
-            { "data": "per_name" },
+            { "data": "name" },
             { "data": "pid" },
             { "data": "birthday" },
             { "data": "position" },
@@ -118,7 +146,7 @@ function person() {
         }
     });
 
-    $('section.content').on('click','[diy-action]', function () {
+    $('section.content').off('click','[diy-action]').on('click','[diy-action]', function () {
         var action = $(this).attr('diy-action'), data = {};
         data.id = $(this).attr('diy-id');
         $.ajax({
@@ -140,19 +168,24 @@ function person() {
         });
         $('#pic').change(function () {
             var file = this;
-            $("div.picbox").next().empty();
+            $('.alert').alert('close');
             var ireg = /image\/.*/i;
+            var hmsg = '<div class="alert alert-warning"><a href="#" class="close" data-dismiss="alert">&times;</a>'
+                ,msg;
             if (file.files && file.files[0]) {
                 var f = file.files[0];
                 if (!f.type.match(ireg)) {
                     //设置错误信息
-                    $("div.picbox").next().append('<li>' + f.name + '图片类型不对.</li>');
+                    msg = hmsg+'<strong>警告！</strong>' + f.name + '图片类型不对。</div>';
+                    $(".modal-body").prepend(msg);
                     return false;
                 } else if (f.size >= 512000) {
-                    $("div.picbox").next().append('<li>图片大小过大，应小于500k</li>');
+                    msg = hmsg+'<strong>警告！</strong>' + f.name + '图片大小过大，应小于500k。</div>';
+                    $(".modal-body").prepend(msg);
                     return false;
                 } else if (!(window.File && window.FileList && window.FileReader && window.Blob)) {
-                    $("div.picbox").next().html('<li>您的浏览器不支持图片预览</li>');
+                    msg = hmsg+'<strong>警告！</strong>' + f.name + '您的浏览器不支持图片预览。</div>';
+                    $(".modal-body").prepend(msg);
                     $('#thumb').attr('alt', file.name);
                     return true;
                 }
@@ -195,4 +228,70 @@ function person() {
         });
     }
 
+}
+
+
+function locator() {
+    var table = $('#table').DataTable({
+        "language":  {"url": "http://cdn.datatables.net/plug-ins/e9421181788/i18n/Chinese.json"},
+        "lengthMenu": [[10, 25, 50, 100, -1], ["10", "25", "50", "100", "全部"]],
+        "autoWidth": false,
+        "ajax": {
+            "url": MODULE+"/locator/getList",
+            "type":'get',
+            "data": {
+                "org_id": "123"
+            },
+            "dataSrc": ""
+        },
+        "columns": [
+            { "data": "loc_id", "searchable": false,"orderable": false, "width": "3px" },
+            { "data": null, "searchable": false,"orderable": false, "width": "2em"},
+            { "data": "name" },
+            { "data": "buytime" },
+            { "data": "status" },
+            { "data": "per_name" },
+            { "data": "loc_id", "width": "25%"}
+        ],
+        "columnDefs": [ {
+            "targets": 0,
+            "render": function ( data, type, full, meta ) {
+                if (type === 'display') {
+                    return '<input type="checkbox" name="checkList" value="' + data + '">';
+                }
+                return data;
+            }
+        },
+            {
+                "targets": 6,
+                "render": function ( data, type, full, meta ) {
+                    if (type === 'display') {
+                        return '<div class="btn-group">'+
+                            '<button class="btn btn-default" data-toggle="modal" data-target="#myModal" diy-action="locator/mod" diy-id="'+data+'" ><i class="fa fa-pencil-square-o"></i></button>'+
+                            '<button class="btn btn-default" diy-id="'+data+'" ><i class="fa fa-trash-o"></i></button>'+
+                            '</div>';
+                    }
+                    return data;
+                }
+            }
+        ]
+    });
+    //添加索引列
+    table.on('order.dt search.dt',
+        function () {
+            table.column(1, {
+                search: 'applied',
+                order: 'applied'
+            }).nodes().each(function (cell, i) {
+                cell.innerHTML = i + 1;
+            });
+        }).draw();
+    //checkbox全选
+    $("#checkAll").on("click", function () {
+        if ($(this).prop("checked") === true) {
+            $("input[name='checkList']").prop("checked", $(this).prop("checked"));
+        } else {
+            $("input[name='checkList']").prop("checked", false);
+        }
+    });
 }
