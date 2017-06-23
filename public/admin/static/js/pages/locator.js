@@ -3,9 +3,9 @@
  */
 
 function locator() {
-    var table = $('#table').DataTable({
+    $.table = $('#table').DataTable({
         "language":  {"url": "http://cdn.datatables.net/plug-ins/e9421181788/i18n/Chinese.json"},
-        "lengthMenu": [[10, 25, 50, 100, -1], ["10", "25", "50", "100", "全部"]],
+        "lengthMenu": [[1, 25, 50, 100, -1], ["10", "25", "50", "100", "全部"]],
         "autoWidth": false,
         "ajax": {
             "url": MODULE+"/locator/getList",
@@ -16,13 +16,13 @@ function locator() {
             "dataSrc": ""
         },
         "columns": [
-            { "data": "loc_id", "searchable": false,"orderable": false, "width": "3px" },
-            { "data": null, "searchable": false,"orderable": false, "width": "2em"},
-            { "data": "name" },
-            { "data": "buytime" },
-            { "data": "status" },
-            { "data": "per_name" },
-            { "data": "loc_id", "width": "25%"}
+            { "data": "loc_id","title":"<input type='checkbox' e-check-name = 'checkList'>", "searchable": false,"orderable": false, "width": "3px" },
+            { "data": null, "title":"序号", "searchable": false,"orderable": false, "width": "2em"},
+            { "data": "name","title":"名称"},
+            { "data": "buy_time","title":"购入日期" },
+            { "data": "status" ,"title":"状态"},
+            { "data": "per_name","title":"当前使用人" },
+            { "data": "loc_id","title":"操作", "width": "25%"}
         ],
         "columnDefs": [ {
             "targets": 0,
@@ -38,8 +38,8 @@ function locator() {
                 "render": function ( data, type, full, meta ) {
                     if (type === 'display') {
                         return '<div class="btn-group">'+
-                            '<button class="btn btn-default" data-toggle="modal" data-target="#myModal" diy-action="locator/mod" diy-id="'+data+'" ><i class="fa fa-pencil-square-o"></i></button>'+
-                            '<button class="btn btn-default" diy-id="'+data+'" ><i class="fa fa-trash-o"></i></button>'+
+                            '<button class="btn btn-default" data-toggle="modal" data-target="#myModal" e-action-modal="'+php_url.locator_mod+'" e-data="'+data+'" ><i class="fa fa-pencil-square-o"></i></button>'+
+                            '<button class="btn btn-default" e-action-del="'+php_url.locator_del+'" e-data="'+data+'" ><i class="fa fa-trash-o"></i></button>'+
                             '</div>';
                     }
                     return data;
@@ -48,21 +48,5 @@ function locator() {
         ]
     });
     //添加索引列
-    table.on('order.dt search.dt',
-        function () {
-            table.column(1, {
-                search: 'applied',
-                order: 'applied'
-            }).nodes().each(function (cell, i) {
-                cell.innerHTML = i + 1;
-            });
-        }).draw();
-    //checkbox全选
-    $("#checkAll").on("click", function () {
-        if ($(this).prop("checked") === true) {
-            $("input[name='checkList']").prop("checked", $(this).prop("checked"));
-        } else {
-            $("input[name='checkList']").prop("checked", false);
-        }
-    });
+    $.table_index($.table);
 }

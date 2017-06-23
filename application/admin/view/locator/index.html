@@ -1,44 +1,35 @@
-<div class="person-index">
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="box">
-                <div class="box-header with-border">
-                    <h3 class="box-title">定位模块列表</h3>
-                    <button type="button" class="btn btn-primary pull-right"  data-toggle="modal" data-target="#myModal" diy-action="locator/add"><span><i class="fa fa-plus"></i>添加</span></button>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body">
-                    <table id="table" class="table table-bordered table-striped">
-                        <thead>
-                        <tr>
-                            <th><input type="checkbox" id='checkAll'></th>
-                            <th>序号</th>
-                            <th>设备名称</th>
-                            <th>购入日期</th>
-                            <th>使用状态</th>
-                            <th>当前使用人</th>
-                            <th>操作</th>
-                        </tr>
-                        </thead>
-                    </table>
-                </div>
-                <!-- /.box-body -->
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">定位模块列表</h3>
+                <button e-action-del="{:url('locator/del')}">删除</button>
+                <button type="button" class="btn btn-primary pull-right" e-action-modal="{:url('locator/add')}"><span><i class="fa fa-plus"></i>添加</span></button>
             </div>
-            <!-- /.box -->
-        </div>
-        <!-- /.col -->
-    </div>
-    <!-- /.row -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
+            <!-- /.box-header -->
+            <div class="box-body">
+                <table id="table" class="table table-bordered table-striped"></table>
             </div>
-            <!-- /.modal-content -->
+            <!-- /.box-body -->
         </div>
-        <!-- /.modal-dialog -->
+        <!-- /.box -->
     </div>
+    <!-- /.col -->
+</div>
+<!-- /.row -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
 </div>
 <script>
+    var php_url = {
+        locator_mod : '{:url("locator/mod")}',
+        locator_del : '{:url("locator/del")}',
+    };
     require(['dataTables.bootstrap','inputmask.date','jquery.form'],function () {
         require(['domready!','js/pages/locator'],function () {
             locator();

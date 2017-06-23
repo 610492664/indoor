@@ -2,28 +2,27 @@
 namespace app\admin\controller;
 
 use \Think\Loader;
-use \app\admin\model\Person as MPerson;
+use \app\admin\model\Person as PersonModel;
 
 class Person extends Base
 {
     public function index()
     {
-        $persons = MPerson::all(['org_id'=>'{3033D1DB-3C92-6624-DCDE-0435498BB60D}']);
-        $this->assign('data',json_encode($persons));
         return $this->fetch();
     }
     //获取列表
     public function getList()
     {
 //        $org_id = input('session.org_id');
-        $persons = MPerson::all(['org_id'=>'{3033D1DB-3C92-6624-DCDE-0435498BB60D}']);
+        $model = new PersonModel();
+        $persons = $model->where(['org_id'=>'{3033D1DB-3C92-6624-DCDE-0435498BB60D}'])->select();
         return $persons;
     }
     //查看详情
     public function detail()
     {
         $id = input('get.id');
-        $person = MPerson::get($id);
+        $person = PersonModel::get($id);
         $this->assign('person',$person);
         return $this->fetch();
     }
@@ -36,11 +35,10 @@ class Person extends Base
     {
         // 获取表单上传文件 例如上传了001.jpg
         $file = $this->request->file('pic');
-        $picname = '';
         if(!empty($file)){
             $info = $file->validate(['size'=>512000,'ext'=>'jpg,png,gif'])->move(ROOT_PATH . 'public' . DS . 'admin' . DS .'static'. DS .'upload');
             if($info){
-                $picname =  $info->getSaveName();
+                $this->request->post(['pic'=>$info->getSaveName()]);
             }else{
                 $return['code'] = 0;
                 $return['msg'] = $file->getError();
@@ -48,46 +46,59 @@ class Person extends Base
             }
         }
         $person = Loader::model('Person');
-        $data['per_id'] = create_guid();
-        $data['name'] = input('post.name');
-        $data['sex'] = input('post.sex');
-        $data['org_id'] = create_guid();
-        $data['birthday'] = strtotime(input('post.birthday/s'));
-        $data['pid'] = input('post.pid');
-        $data['pidtype'] = input('post.pidtype');
-        $data['pic'] = $picname;
-        $data['position'] = input('post.position');
-        $data['rank'] = input('post.rank');
-        $data['status'] = 0;
-        $data['loc_id'] = input('post.loc_id');
-        $data['jointime'] = strtotime(input('post.jointime/s'));
-        $result = $person->data($data)->save();
-        if(!empty($result)){
-            $return['code'] = 1;
-            $return['msg'] = '添加人员成功！';
-        }else{
-            $return['code'] = 0;
-            $return['msg'] = '添加人员失败！';
-        }
-        return $return;
+        $result = $person->data(input('post.'))->save();
+        return result($result,'添加人员成功！', '添加人员失败！');
     }
     //获取修改表单
     public function mod()
     {
         $id = input('get.id');
-        $person = MPerson::get($id);
+        $person = PersonModel::get($id);
         $this->assign('person',$person);
         return $this->fetch();
     }
     //修改更新
     public function update()
     {
-
+        $file = $this->request->file('pic');
+        $data = input('post.');
+        if(!empty($file)){
+            $info = $file->validate(['size'=>512000,'ext'=>'jpg,png,gif'])->move(ROOT_PATH . 'public' . DS . 'admin' . DS .'static'. DS .'upload');
+            if($info){
+                $data['pic'] = $info->getSaveName();
+            }else{
+                $return['code'] = 0;
+                $return['msg'] = $file->getError();
+                return $return;
+            }
+        }else{
+            unset($data['pic']);
+        }
+        $model = new PersonModel;
+        $result = $model->save($data,['per_id' => $data['per_id']]);
+        if(!empty($result)){
+            $return['code'] = 1;
+            $return['msg'] = '修改成功！';
+        }else{
+            $return['code'] = 0;
+            $return['msg'] = '修改失败！';
+        }
+        return $return;
     }
     //删除
     public function del()
     {
-
+        $ids = input('get.id/a');
+//        $result = PersonModel::destroy($ids);
+        $result = true;
+        if(!empty($result)){
+            $return['code'] = 1;
+            $return['msg'] = '删除人员成功！';
+        }else{
+            $return['code'] = 0;
+            $return['msg'] = '删除人员失败！';
+        }
+        return $return;
     }
 
 }

@@ -4,14 +4,15 @@
             <div class="box">
                 <div class="box-header with-border">
                     <h3 class="box-title">人员列表</h3>
-                    <button type="button" class="btn btn-primary pull-right"  data-toggle="modal" data-target="#myModal" diy-action="person/add"><span><i class="fa fa-plus"></i>添加人员</span></button>
+                    <button e-action-del="{:url('person/del')}">删除</button>
+                    <button type="button" class="btn btn-primary pull-right" e-action-modal="{:url('person/add')}"><span><i class="fa fa-plus"></i>添加人员</span></button>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
                     <table id="table" class="table table-bordered table-striped">
                         <thead>
                         <tr>
-                            <th><input type="checkbox" id='checkAll'></th>
+                            <th><input type="checkbox" e-check-name = 'checkList'></th>
                             <th>序号</th>
                             <th>姓名</th>
                             <th>证件</th>
@@ -40,6 +41,13 @@
         <!-- /.modal-dialog -->
     </div>
 </div>
+<script>
+    var php_url = {
+        person_detail : '{:url("person/detail")}',
+        person_mod : '{:url("person/mod")}',
+        person_del : '{:url("person/del")}',
+    };
+</script>
 <script>
     require(['dataTables.bootstrap','inputmask.date','jquery.form','css!__CSS__/pages/person.css','js/pages/person'],function () {
         $(person);

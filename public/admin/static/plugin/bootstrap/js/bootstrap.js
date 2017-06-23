@@ -1008,6 +1008,12 @@ if (typeof jQuery === 'undefined') {
 
       that.$element.addClass('in')
 
+      //使模态框垂直居中显示
+      var $dialog=that.$element.find("div.modal-dialog"),
+          top=($(window).height()-$dialog.height())/2-150;
+      top = top>0 ? top : 0 ;
+      $dialog.css({"margin":+top+"px auto"});
+
       that.enforceFocus()
 
       var e = $.Event('shown.bs.modal', { relatedTarget: _relatedTarget })

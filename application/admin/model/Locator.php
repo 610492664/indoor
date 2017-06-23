@@ -4,7 +4,7 @@ namespace app\admin\model;
 class Locator extends Base
 {
     protected $type = [
-        'buytime' => 'timestamp:Y-m-d'
+        'buy_time' => 'timestamp:Y-m-d'
     ];
 
     public function getStatusAttr($value)

@@ -26,3 +26,14 @@ function create_guid(){
         .chr(125);// "}"
     return $uuid;
 }
+
+function result($result, $success_msg, $error_msg) {
+    if(!empty($result)){
+        $return['code'] = 1;
+        $return['msg'] = $success_msg;
+    }else{
+        $return['code'] = 0;
+        $return['msg'] = $error_msg;
+    }
+    return $return;
+}

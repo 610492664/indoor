@@ -1,5 +1,6 @@
 /**
  * Created by Administrator on 2017/6/17.
+ * require.js 主入口文件
  */
 // 当前资源URL目录
 var baseUrl = STATIC_PATH +'/';
@@ -17,11 +18,15 @@ require.config({
         // 开源插件（未修改源码）
         'domready': ['plugin/require/domReady'],
         'bootbox': ['plugin/bootBox/bootbox.min'],
-        'bootstrap': ['plugin/bootstrap/js/bootstrap.min'],
+        'bootstrap': ['plugin/bootstrap/js/bootstrap'],
+        'bootstrap-validator':['plugin/bootstrap-validator-1000hz/validator'],
         'html5shiv': ['plugin/compatible/html5shiv'],
         'respond': ['plugin/compatible/respond.min'],
         'dataTables.bootstrap': ['plugin/datatables/dataTables.bootstrap'],
         'jquery.dataTables': ['plugin/datatables/jquery.dataTables'],
+        'dataTables.input' : ['plugin/datatables/plug-ins/ellipses'],
+        'dataTables.buttons.bootstrap': ['plugin/datatables/extensions/Buttons/js/buttons.bootstrap'],
+        'dataTables.buttons': ['plugin/datatables/extensions/Buttons/js/dataTables.buttons'],
         'fastclick': ['plugin/fastClick/fastclick'],
         'inputmask': ['plugin/input-mask/jquery.inputmask'],
         'inputmask.date': ['plugin/input-mask/jquery.inputmask.date.extensions'],
@@ -36,11 +41,15 @@ require.config({
         'bootbox': {deps: ['jquery','bootstrap']},
         'bootstrap': {deps: ['jquery']},
         'dataTables.bootstrap': {deps: ['jquery','bootstrap','jquery.dataTables','css!' + baseUrl + 'plugin/datatables/dataTables.bootstrap.css']},
+        'dataTables.input':  {deps: ['dataTables.bootstrap']},
         'inputmask': {deps: ['jquery']},
         'inputmask.extensions': {deps: ['jquery','inputmask']},
         'inputmask.date': {deps: ['jquery','inputmask','inputmask.extensions']},
         'jquery.slimscroll': {deps: ['jquery']},
-        'jquery.form': {deps: ['jquery']}
+        'jquery.form': {deps: ['jquery']},
+        'bootstrap-validator': {deps: ['bootstrap']},
+        'dataTables.buttons': {deps: ['dataTables.bootstrap']},
+        'dataTables.buttons.bootstrap': {deps: ['dataTables.buttons','css!' + baseUrl + 'plugin/datatables/extensions/Buttons/css/buttons.bootstrap.css']}
     },
     deps: ['css!//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css'],
     // 开启debug模式，不缓存资源
@@ -49,4 +58,7 @@ require.config({
 
 
 // UI框架初始化
-require(['bootbox','fastclick', 'jquery.slimscroll','app','common']);
+require(['bootbox','fastclick', 'jquery.slimscroll','app','common'],
+function (bootbox) {
+   window.bootbox = bootbox;
+});

@@ -18,7 +18,7 @@ class Locator extends Base
 //       $records = MLocator::all(['org_id'=>'{3033D1DB-3C92-6624-DCDE-0435498BB60D}'], 'person');
 //       dump($records);exit;
         $locator = model('locator');
-        $records = $locator->alias('loc')->field('loc.loc_id, loc.name, per.name per_name,buytime,loc.status')->join('__PERSON__ per', 'per.loc_id = loc.loc_id','LEFT')->select();
+        $records = $locator->alias('loc')->field('loc.loc_id, loc.name, per.name per_name,buy_time,loc.status')->join('__PERSON__ per', 'per.loc_id = loc.loc_id','LEFT')->select();
         return $records;
     }
     //查看详情
@@ -40,7 +40,7 @@ class Locator extends Base
         $data['loc_id'] = create_guid();
         $data['name'] = input('post.name');
         $data['org_id'] = '{3033D1DB-3C92-6624-DCDE-0435498BB60D}';
-        $data['buytime'] = input('post.buytime/s');
+        $data['buy_time'] = input('post.buy_time/s');
         $data['status'] = input('post.status');
         $result = $model->data($data)->save();
         if(!empty($result)){
@@ -67,7 +67,7 @@ class Locator extends Base
         $loc_id = input('post.loc_id');
         $data['name'] = input('post.name');
         $data['org_id'] = '{3033D1DB-3C92-6624-DCDE-0435498BB60D}';
-        $data['buytime'] = input('post.buytime/s');
+        $data['buy_time'] = input('post.buy_time/s');
         $data['status'] = input('post.status');
         $result = $model->save($data,['loc_id' => $loc_id]);
         if(!empty($result)){

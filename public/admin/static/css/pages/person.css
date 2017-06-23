@@ -1,3 +1,4 @@
+/****头像照片上传表单样式****/
 .diy-text-center{
     text-align: center;
 }
@@ -16,7 +17,7 @@
     left:0;
     border: 1px solid #000000;
 }
-.diy-input-group > img,.diy-input-group input {
+.diy-input-group > img,.diy-input-group > input {
     width: 100px;
     height: 140px;
 }
@@ -30,9 +31,16 @@
     z-index: 10;
     display: none;
 }
+/**********/
+
 @media (min-width: 768px) {
     .diy-label-pad{
         padding: 7px 0px;
     }
+}
+.diy-select-addon{
+    border: none;
+    height: 20px;
+    margin: 0px -12px;
 }
 
