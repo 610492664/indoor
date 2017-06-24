@@ -7,7 +7,7 @@ function person() {
         "lengthMenu": [[10, 25, 50, 100, -1], ["10", "25", "50", "100", "全部"]],
         "autoWidth": false,
         "ajax": {
-            "url": MODULE+"/person/getList",
+            "url": php_url.getList,
             "type":'get',
             "data": {
                 "org_id": "123"
@@ -15,15 +15,15 @@ function person() {
             "dataSrc": ""
         },
         "columns": [
-            { "data": "per_id", "searchable": false,"orderable": false, "width": "3px" },
-            { "data": null, "searchable": false,"orderable": false, "width": "3px"},
-            { "data": "name" },
-            { "data": "pid" },
-            { "data": "birthday" },
-            { "data": "position" },
-            { "data": "loc_id" },
-            { "data": "rank" },
-            { "data": "per_id", "width": "25%"}
+            { "data": "per_id", "title": '<input type="checkbox" e-check-name="checkList">',"searchable": false,"orderable": false, "width": "3px" },
+            { "data": null, "title": "姓名", "searchable": false,"orderable": false, "width": "3px"},
+            { "data": "name" , "title": "姓名"},
+            { "data": "pid" , "title": "证件"},
+            { "data": "birthday" , "title": "出生日期"},
+            { "data": "position" , "title": "职务"},
+            { "data": "loc_id" , "title": "定位模块"},
+            { "data": "rank" , "title": "是否在岗"},
+            { "data": "per_id", "title": "操作", "width": "25%"}
         ],
         "columnDefs": [ {
             "targets": 0,
@@ -39,9 +39,9 @@ function person() {
                 "render": function ( data, type, full, meta ) {
                     if (type === 'display') {
                         return '<div class="btn-group">'+
-                            '<button class="btn btn-default " e-action-modal="'+php_url.person_detail+'" e-data="'+data+'" ><i class="fa fa-search"></i></button>'+
-                            '<button class="btn btn-default" e-action-modal="'+php_url.person_mod+'" e-data="'+data+'" ><i class="fa fa-pencil-square-o"></i></button>'+
-                            '<button class="btn btn-default" e-action-del="'+php_url.person_del+'" e-data="'+data+'" ><i class="fa fa-trash-o"></i></button>'+
+                            '<button class="btn btn-default " e-action-modal="'+php_url.detail+'" e-data="'+data+'" ><i class="fa fa-search"></i></button>'+
+                            '<button class="btn btn-default" e-action-modal="'+php_url.mod+'" e-data="'+data+'" ><i class="fa fa-pencil-square-o"></i></button>'+
+                            '<button class="btn btn-default" e-action-del="'+php_url.del+'" e-data="'+data+'" ><i class="fa fa-trash-o"></i></button>'+
                             '</div>';
                     }
                     return data;

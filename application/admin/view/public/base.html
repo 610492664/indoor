@@ -114,6 +114,18 @@
                     </li>
                     <li class="treeview">
                         <a href="javascript:void(0);">
+                            <i class="fa fa-files-o"></i> <span>人员管理</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="{:url('group/index')}"><i class="fa fa-circle-o"></i>分组管理</a></li>
+                            <li><a href="{:url('person/index')}"><i class="fa fa-circle-o"></i>人员列表</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="javascript:void(0);">
                             <i class="fa fa-files-o"></i> <span>设备管理</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>
@@ -125,6 +137,16 @@
                             <li><a href="{:url('localEquipment/index')}"><i class="fa fa-circle-o"></i> 终端管理</a></li>
                         </ul>
                     </li>
+                    <li>
+                        <a href="{:url('building/index')}">
+                            <i class="fa fa-circle-o"></i> <span>建筑物</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('incident/index')}">
+                            <i class="fa fa-circle-o"></i> <span>事件</span>
+                        </a>
+                    </li>
                     <li class="treeview">
                         <a href="javascript:void(0);">
                             <i class="fa fa-files-o"></i> <span>日志</span>
@@ -133,31 +155,9 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="###"><i class="fa fa-circle-o"></i> 用户操作</a></li>
-                            <li><a href="###"><i class="fa fa-circle-o"></i> 系统日志</a></li>
+                            <li><a href="{:url('action/index')}"><i class="fa fa-circle-o"></i> 用户操作</a></li>
+                            <li><a href="{:url('log/index')}"><i class="fa fa-circle-o"></i> 系统日志</a></li>
                         </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="javascript:void(0);">
-                            <i class="fa fa-files-o"></i> <span>人员管理</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="{:url('group/index')}"><i class="fa fa-circle-o"></i>分组管理</a></li>
-                            <li><a href="{:url('person/index')}"><i class="fa fa-circle-o"></i>人员列表</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="###">
-                            <i class="fa fa-circle-o"></i> <span>建筑物</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="###">
-                            <i class="fa fa-circle-o"></i> <span>事件</span>
-                        </a>
                     </li>
                 </ul>
             </section>

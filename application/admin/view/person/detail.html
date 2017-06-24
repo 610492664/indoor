@@ -2,7 +2,7 @@
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">×</span></button>
-    <h4 class="modal-title">添加人员</h4>
+    <h4 class="modal-title">人员信息</h4>
 </div>
 <div class="modal-body">
     <div class="row">
@@ -12,35 +12,35 @@
             </a>
         </div>
         <div class="col-sm-9">
-            <ul class="row list-group list-group-unbordered">
+            <ul class="list-group list-group-unbordered">
                 <li class="col-sm-6 list-group-item">
-                    姓名
+                    姓名： {$person.name}
                 </li>
                 <li class="col-sm-6 list-group-item">
-                    性别
+                    性别： {$person.sex}
                 </li>
                 <li class="col-sm-6 list-group-item">
-                    出生日期
+                    出生日期： {$person.birthday}
                 </li>
                 <li class="col-sm-6 list-group-item">
-                    入伍日期
+                    入伍日期： {$person.join_time}
                 </li>
                 <li class="col-sm-6 list-group-item">
-                    证件
+                    证件： {$person.pidtype}（证件号：{$person.pid}）
                 </li>
                 <li class="col-sm-6 list-group-item">
-                    职务
+                    职务： {$person.position}
                 </li>
                 <li class="col-sm-6 list-group-item">
-                    警衔
+                    警衔： {$person.rank}
                 </li>
                 <li class="col-sm-6 list-group-item">
-                    定位器
+                    定位器： {$person.loc_id}
                 </li>
             </ul>
         </div>
     </div>
 </div>
 <div class="modal-footer">
-    <button type="botton" class="btn btn-default">关闭</button>
+    <button type="botton" class="btn btn-default" data-dismiss="modal">关闭</button>
 </div>

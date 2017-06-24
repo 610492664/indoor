@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">信标列表</h3>
+                <button e-action-del="{:url('LocationMark/del')}">删除</button>
+                <button type="button" class="btn btn-primary pull-right" e-action-modal="{:url('LocationMark/add')}"><span><i class="fa fa-plus"></i>添加</span></button>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <table id="table" class="table table-bordered table-striped"></table>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+    <!-- /.col -->
+</div>
+<!-- /.row -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<script>
+    var php_url = {
+        getList: '{:url("LocationMark/getList")}',
+        detail: '{:url("LocationMark/detail")}',
+        mod : '{:url("LocationMark/mod")}',
+        del : '{:url("LocationMark/del")}',
+    };
+    require(['dataTables.bootstrap','inputmask.date','jquery.form','js/pages/location_mark'],function () {
+        location_mark();
+    });
+</script>

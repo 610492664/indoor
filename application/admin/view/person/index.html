@@ -10,19 +10,6 @@
                 <!-- /.box-header -->
                 <div class="box-body">
                     <table id="table" class="table table-bordered table-striped">
-                        <thead>
-                        <tr>
-                            <th><input type="checkbox" e-check-name = 'checkList'></th>
-                            <th>序号</th>
-                            <th>姓名</th>
-                            <th>证件</th>
-                            <th>年龄</th>
-                            <th>职务</th>
-                            <th>定位模块</th>
-                            <th>是否在岗</th>
-                            <th>操作</th>
-                        </tr>
-                        </thead>
                     </table>
                 </div>
                 <!-- /.box-body -->
@@ -43,9 +30,10 @@
 </div>
 <script>
     var php_url = {
-        person_detail : '{:url("person/detail")}',
-        person_mod : '{:url("person/mod")}',
-        person_del : '{:url("person/del")}',
+        getList : '{:url("person/getList")}',
+        detail : '{:url("person/detail")}',
+        mod : '{:url("person/mod")}',
+        del : '{:url("person/del")}',
     };
 </script>
 <script>

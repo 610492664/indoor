@@ -4,7 +4,7 @@
 
 function group() {
     $.table = $('#table').DataTable({
-        "language":  {"url": "http://cdn.datatables.net/plug-ins/e9421181788/i18n/Chinese.json"},
+        "language":  {"url": PLUGIN_PATH+"/datatables/Chinese.json"},
         "lengthMenu": [[2, 25, 50, 100, -1], ["10", "25", "50", "100", "全部"]],
         "autoWidth": false,
         "ajax": {
