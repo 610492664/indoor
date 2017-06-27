@@ -20,6 +20,7 @@ require.config({
         'bootbox': ['plugin/bootBox/bootbox.min'],
         'bootstrap': ['plugin/bootstrap/js/bootstrap'],
         'bootstrap-validator':['plugin/bootstrap-validator-1000hz/validator'],
+        'bootstrap-dialog': ['plugin/bootstrap-dialog/js/bootstrap-dialog'],
         'html5shiv': ['plugin/compatible/html5shiv'],
         'respond': ['plugin/compatible/respond.min'],
         'dataTables.bootstrap': ['plugin/datatables/dataTables.bootstrap'],
@@ -40,6 +41,8 @@ require.config({
         'common': {deps: ['jquery','bootbox']},
         'bootbox': {deps: ['jquery','bootstrap']},
         'bootstrap': {deps: ['jquery']},
+        'bootstrap-validator': {deps: ['bootstrap']},
+        'bootstrap-dialog': {deps: ['bootstrap','css!' + baseUrl + 'plugin/bootstrap-dialog/css/bootstrap-dialog.css']},
         'dataTables.bootstrap': {deps: ['jquery','bootstrap','jquery.dataTables','css!' + baseUrl + 'plugin/datatables/dataTables.bootstrap.css']},
         'dataTables.input':  {deps: ['dataTables.bootstrap']},
         'inputmask': {deps: ['jquery']},
@@ -47,7 +50,6 @@ require.config({
         'inputmask.date': {deps: ['jquery','inputmask','inputmask.extensions']},
         'jquery.slimscroll': {deps: ['jquery']},
         'jquery.form': {deps: ['jquery']},
-        'bootstrap-validator': {deps: ['bootstrap']},
         'dataTables.buttons': {deps: ['dataTables.bootstrap']},
         'dataTables.buttons.bootstrap': {deps: ['dataTables.buttons','css!' + baseUrl + 'plugin/datatables/extensions/Buttons/css/buttons.bootstrap.css']}
     },
@@ -58,7 +60,8 @@ require.config({
 
 
 // UI框架初始化
-require(['bootbox','fastclick', 'jquery.slimscroll','app','common'],
-function (bootbox) {
+require(['bootbox','bootstrap-dialog', 'fastclick', 'jquery.slimscroll','app','common'],
+function (bootbox,BootstrapDialog) {
    window.bootbox = bootbox;
+   window.BootstrapDialog = BootstrapDialog;
 });

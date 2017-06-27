@@ -45,12 +45,36 @@
             })
         }
         if(id.length < 1) {
+           /* BootstrapDialog.alert('I want banana!');
+            BootstrapDialog.alert('I want banana!');
+            BootstrapDialog.alert('I want banana!');BootstrapDialog.alert('I want banana!');*/
+
             var warn = bootbox.alert({
                 size: "small",
                 title: "提示：",
                 message: '请选择需要操作的数据！'
             });
-            setTimeout(function(){warn.modal("hide")},1000);
+            var warn = bootbox.alert({
+                size: "small",
+                title: "提示：",
+                message: '请选择需要操作的数据！'
+            });
+            var warn = bootbox.alert({
+                size: "small",
+                title: "提示：",
+                message: '请选择需要操作的数据！'
+            });
+            var warn = bootbox.alert({
+                size: "small",
+                title: "提示：",
+                message: '请选择需要操作的数据！'
+            });
+            var warn = bootbox.alert({
+                size: "small",
+                title: "提示：",
+                message: '请选择需要操作的数据！'
+            });
+            // setTimeout(function(){warn.modal("hide")},1000);s
             return false;
 
         }
@@ -103,8 +127,14 @@
                 $('#myModal div.modal-content').html(data);
             },
             complete: function () {
-                $modal.modal({"backdrop":"static"});
+                $modal.modal();
                 if ($("#form").length > 0) {
+                    $modal.one('hide.bs.modal',function (e) {
+                        var select = confirm('确定取消？');
+                        if (select == false) {
+                            e.preventDefault();
+                        }
+                    });
                     //激活公共表单验证
                     require(['bootstrap-validator'],function () {
                         $('#form').validator();
@@ -119,6 +149,7 @@
                         },
                         success: function(data) {
                             if (data.code = 1) {
+                                $modal.off('hide.bs.modal');
                                 $modal.modal('hide');
                                 $.table.ajax.reload();
                                 bootbox.alert(data.msg);

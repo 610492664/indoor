@@ -33,6 +33,7 @@ class LocalEquipment extends Base
     //添加到数据库
     public function insert()
     {
+        /** @var $model Model */
         $model = Loader::model('LocalEquipment');
         $result = $model->data(input('post.'))->save();
         return result($result,'添加终端设备成功！', '添加终端设备失败！');

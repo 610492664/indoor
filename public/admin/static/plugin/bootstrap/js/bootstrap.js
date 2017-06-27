@@ -953,6 +953,7 @@ if (typeof jQuery === 'undefined') {
 
   Modal.TRANSITION_DURATION = 300
   Modal.BACKDROP_TRANSITION_DURATION = 150
+    Modal.elements = [];
 
   Modal.DEFAULTS = {
     backdrop: true,
@@ -1100,8 +1101,16 @@ if (typeof jQuery === 'undefined') {
   }
 
   Modal.prototype.removeBackdrop = function () {
-    this.$backdrop && this.$backdrop.remove()
-    this.$backdrop = null
+    //只剩一个模态框时移除遮罩层，否则修改z-index
+    if(Modal.elements.length == 1){
+        this.$backdrop && this.$backdrop.remove()
+        this.$backdrop = null
+        Modal.elements.shift();
+    }else{
+        var perviouszIndex = parseInt($(".modal-backdrop").css("z-Index"));
+        this.$backdrop.attr("style","z-Index:"+(perviouszIndex-20));
+        Modal.elements.shift();
+    }
   }
 
   Modal.prototype.backdrop = function (callback) {
@@ -1111,9 +1120,17 @@ if (typeof jQuery === 'undefined') {
     if (this.isShown && this.options.backdrop) {
       var doAnimate = $.support.transition && animate
 
-      this.$backdrop = $(document.createElement('div'))
-        .addClass('modal-backdrop ' + animate)
-        .appendTo(this.$body)
+        //只加一次遮罩层
+        Modal.elements.push(this.$element);
+      if( Modal.elements.length == 1){
+          this.$backdrop = $(document.createElement('div'))
+              .addClass('modal-backdrop ' + animate)
+              .appendTo(this.$body)
+      } else {
+          var perviouszIndex = parseInt($(".modal-backdrop").css("z-Index"));
+          this.$backdrop = $(".modal-backdrop").attr("style","z-Index:"+(perviouszIndex+20));
+          this.$element.attr("style","z-Index:"+(perviouszIndex+30));
+      }
 
       this.$element.on('click.dismiss.bs.modal', $.proxy(function (e) {
         if (this.ignoreBackdropClick) {
@@ -1139,7 +1156,10 @@ if (typeof jQuery === 'undefined') {
         callback()
 
     } else if (!this.isShown && this.$backdrop) {
-      this.$backdrop.removeClass('in')
+      //当只剩一个模态框时
+        if( Modal.elements.length == 1){
+            this.$backdrop.removeClass('in')
+        }
 
       var callbackRemove = function () {
         that.removeBackdrop()

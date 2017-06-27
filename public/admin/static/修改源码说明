@@ -1,0 +1,8 @@
+一、JS
+1、bootstrap.js 文件 修改
+   1012行，模态框垂直居中
+   1116行 backdrop函数部分 多模态框只加一个遮罩层，当只剩一个模态框时移除遮罩层，并移除.in类属性
+二、CSS
+1、AdminLTE.css 文件
+    2985行 去掉.modal类的背景
+    2992行 modal-content 修改border，还原至bootstrap
