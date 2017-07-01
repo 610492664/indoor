@@ -1,6 +1,7 @@
 /**
  *
  * 公共函数文件
+ * 定义全局方法
  *
  * @author JAN
  */
@@ -19,145 +20,193 @@
             }).draw();
     };
 
-    var $body = $('body');
+    /**
+     * 定义消息处理构造方法
+     */
+    function msg() {
+        this.version = '2.0';
+        this.shade = [0.02, '#000'];
+        this.closeIndexs = {};
+    }
 
-    //监听全选事件（自定义属性 e-check-name)
-    $body.on('click', '[e-check-name]', function () {
-        var checked = !!this.checked;
-        var targetname = $(this).attr('e-check-name');
-        $("input[name='"+targetname+"']").map(function () {
-            this.checked = checked;
-        });
-    });
+    /**
+     * 关闭消息框
+     */
+    msg.prototype.close = function () {
+        return this.index.modal('hide');
+    };
 
-    //监听删除事件（定义属性e-atcion-del、单删e-data)
-    $body.on('click', '[e-action-del]', function () {
-        $this =$(this);
-        var id = [], row = [];
-        if(typeof ($this.attr('e-data')) !== 'undefined'){
-            id.push($this.attr('e-data'));
-            row.push($this.parents('tr'));
-        } else {
-            var targetname = $("[e-check-name]").attr('e-check-name');
-            $("input[name='"+targetname+"']:checked").map(function () {
-                id.push(this.value);
-                row.push($(this).parents('tr'));
-            })
-        }
-        if(id.length < 1) {
-           /* BootstrapDialog.alert('I want banana!');
-            BootstrapDialog.alert('I want banana!');
-            BootstrapDialog.alert('I want banana!');BootstrapDialog.alert('I want banana!');*/
+    /**
+     * 弹出警告消息框
+     * @param msg 消息内容
+     * @param callback 回调函数
+     * @return {*|undefined}
+     */
+    msg.prototype.alert = function (msg, callback) {
+        // this.close();
+        return this.index;
+    };
 
-            var warn = bootbox.alert({
-                size: "small",
-                title: "提示：",
-                message: '请选择需要操作的数据！'
-            });
-            var warn = bootbox.alert({
-                size: "small",
-                title: "提示：",
-                message: '请选择需要操作的数据！'
-            });
-            var warn = bootbox.alert({
-                size: "small",
-                title: "提示：",
-                message: '请选择需要操作的数据！'
-            });
-            var warn = bootbox.alert({
-                size: "small",
-                title: "提示：",
-                message: '请选择需要操作的数据！'
-            });
-            var warn = bootbox.alert({
-                size: "small",
-                title: "提示：",
-                message: '请选择需要操作的数据！'
-            });
-            // setTimeout(function(){warn.modal("hide")},1000);s
-            return false;
-
-        }
-        var flag = bootbox.confirm({
+    /**
+     * 确认对话框
+     * @param msg 提示消息内容
+     * @param srcdata 回调函数操作的源数据
+     * @param ok 确认的回调函数
+     * @param no 取消的回调函数
+     * @return {undefined|*}
+     */
+    msg.prototype.confirm = function (msg, ok, no) {
+        return this.index = bootbox.confirm({
+            title: "消息",
+            message: msg,
             size: "small",
-            title: "提示：",
-            message: "确认删除？",
-            callback: function (result) {
-                if (result){
-                    var url = $this.attr('e-action-del');
-                    $.ajax({
-                        url: url,
-                        type: "get",
-                        data: {"id": id},
-                        success: function(data){
-                            if (data.code == 1) {
-                                bootbox.alert({
-                                    size: "small",
-                                    title: "提示：",
-                                    message: data.msg,
-                                    callback: function(){
-                                        $.table.rows(row).remove().draw( false );
-                                    }
-                                });
-                            }else{
-                                bootbox.alert({
-                                    size: "small",
-                                    title: "提示：",
-                                    message: data.msg
-                                });
-                            }
-                        }
-                    });
+            buttons: {
+                cancel: {
+                    label: '<i class="fa fa-times"></i> 取消'
+                },
+                confirm: {
+                    label: '<i class="fa fa-check"></i> 确定'
                 }
-            }
-        } );
-    });
-
-    //监听模态框add,mod,detail事件
-    $body.on('click','[e-action-modal]', function () {
-        var url = $(this).attr('e-action-modal'), data = {},callback;
-        data.id = $(this).attr('e-data');
-        callback = $(this).attr('e-callback');
-        var $modal =  $('#myModal');
-        $.ajax({
-            url: url,
-            type: "get",
-            data: data,
-            success: function(data){
-                $('#myModal div.modal-content').html(data);
             },
-            complete: function () {
-                $modal.modal();
-                if ($("#form").length > 0) {
-                    $modal.one('hide.bs.modal',function (e) {
-                        var select = confirm('确定取消？');
-                        if (select == false) {
-                            e.preventDefault();
-                        }
-                    });
-                    //激活公共表单验证
-                    require(['bootstrap-validator'],function () {
-                        $('#form').validator();
-                    });
-                    //激活表单上传事件
-                    $("#form").ajaxForm({
-                        type: 'post',
-                        error: function () {
-                            var msg = $('<div class="alert alert-warning"><a href="#" class="close" data-dismiss="alert">&times;</a></div>')
-                                .append('服务器错误！请稍后再试！');
-                            $(".modal-body").prepend(msg);
-                        },
-                        success: function(data) {
-                            if (data.code = 1) {
-                                $modal.off('hide.bs.modal');
-                                $modal.modal('hide');
-                                $.table.ajax.reload();
-                                bootbox.alert(data.msg);
-                            }
-                        }
-                    });
+            backdrop: true,
+            callback: function (result) {
+                if (result == true){
+                    typeof ok === 'function' && ok();
+                }else if(result == false){
+                   typeof no === 'function' && no();
                 }
             }
         });
-    });
+    };
+
+    /**
+     * 显示成功类型的消息
+     * @param msg 消息内容
+     * @param time 延迟关闭时间
+     * @param callback 回调函数
+     * @return {common_L11._msg|*}
+     */
+    msg.prototype.success = function (msg, time, callback) {
+        // this.close();
+        var dialog = bootbox.dialog({
+            message: '<h4><i class="icon fa fa-check"></i> '+msg+'</h4>',
+            size: 'small',
+            backdrop: true,
+            onEscape: true,
+            closeButton: false
+        });
+        setTimeout(function () {
+            dialog.modal('hide');
+            typeof callback === 'function' && callback();
+        },time || 3000);
+        return this.index = dialog;
+    };
+
+    /**
+     * 显示失败类型的消息
+     * @param msg 消息内容
+     * @param time 延迟关闭时间
+     * @param callback 回调函数
+     * @return {common_L11._msg|*}
+     */
+    msg.prototype.error = function (msg, time, callback) {
+        // this.close();
+        var dialog = bootbox.dialog({
+            message:  '<h4><i class="icon fa fa-warning"></i> '+msg+'</h4>',
+            size: 'small',
+            backdrop: true,
+            onEscape: true,
+            closeButton: false
+        });
+        setTimeout(function () {
+            dialog.modal('hide');
+            typeof callback === 'function' && callback();
+        },time || 3000 );
+        return this.index = dialog;
+    };
+
+    /**
+     * 状态消息提示
+     * @param msg 消息内容
+     * @param time 显示时间s
+     * @param callback 回调函数
+     * @return {common_L11._msg|*}
+     */
+    msg.prototype.tips = function (msg, time, callback) {
+        // this.close();
+        var dialog = bootbox.dialog({
+            message:  '<h4><i class="icon fa fa-info"></i> '+msg+'</h4>',
+            size: 'small',
+            backdrop: true,
+            onEscape: true,
+            closeButton: false
+        });
+        setTimeout(function () {
+            dialog.modal('hide');
+            typeof callback === 'function' && callback();
+        },time || 3000 );
+        return this.index = dialog;
+    };
+
+    /**
+     * 显示正在加载中的提示
+     * @param msg 提示内容
+     * @param callback 回调方法
+     * @return {common_L11._msg|*}
+     */
+    msg.prototype.loading = function (msg, callback) {
+        // this.close();
+        return this.index = bootbox.dialog({
+            className: "loading",
+            message: '<div class="text-center"><i class="fa fa-spin fa-spinner"></i> Loading...</div>' ,
+            closeButton: false,
+            animate: false
+        });
+       /* return this.index = msg
+            ? layer.msg(msg, {icon: 16, scrollbar: false, shade: this.shade, time: 0, end: callback})
+            : layer.load(2, {time: 0, scrollbar: false, shade: this.shade, end: callback});*/
+    };
+
+
+    /**
+     * 自动处理显示Think返回的Json数据
+     * @param data JSON数据对象
+     * @param time 延迟关闭时间
+     * @return {common_L11._msg|*}
+     */
+    msg.prototype.auto = function (data, time) {
+        var self = this;
+        if (parseInt(data.code) === 1) {
+            return self.success(data.msg, time, function () {
+                !!data.url ? (window.location.href = data.url) : $.form.reload();
+                if (self.autoSuccessCloseIndexs && self.autoSuccessCloseIndexs.length > 0) {
+                    for (var i in self.autoSuccessCloseIndexs) {
+                        layer.close(self.autoSuccessCloseIndexs[i]);
+                    }
+                    self.autoSuccessCloseIndexs = [];
+                }
+            });
+        }
+        self.error(data.msg, 3, function () {
+            !!data.url && (window.location.href = data.url);
+        });
+    };
+
+    /**
+     * auto处理成功的自动关闭
+     * @param index
+     */
+    msg.prototype.addAutoSuccessCloseIndex = function (index) {
+        this.autoSuccessCloseIndexs = this.autoSuccessCloseIndexs || [];
+        this.autoSuccessCloseIndexs.push(index);
+    };
+
+    /**
+     * 将消息对象挂载到Jq
+     */
+    $.msg = new msg();
+
+
+
+
 })(jQuery);

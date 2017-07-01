@@ -1,5 +1,5 @@
 {
-  "sProcessing":   "处理中...",
+  "sProcessing":   "<div class='text-center'><i class='fa fa-spin fa-spinner'></i> 加载中...</div>",
   "sLengthMenu":   "显示 _MENU_ 项结果",
   "sZeroRecords":  "没有匹配结果",
   "sInfo":         "第 _START_ - _END_ 项，共 _TOTAL_ 项",
@@ -9,7 +9,7 @@
   "sSearch":       "搜索:",
   "sUrl":          "",
   "sEmptyTable":     "表中数据为空",
-  "sLoadingRecords": "载入中...",
+  "sLoadingRecords": "<div class='text-center'><i class='fa fa-spin fa-spinner'></i> Loading...</div>",
   "sInfoThousands":  ",",
   "oPaginate": {
     "sFirst":    "首页",

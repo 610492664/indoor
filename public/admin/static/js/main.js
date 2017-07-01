@@ -15,6 +15,7 @@ require.config({
         'template': ['js/template'],
         'common': ['js/common'],
         'app': ['js/app'],
+        'listen': ['js/listen'],
         // 开源插件（未修改源码）
         'domready': ['plugin/require/domReady'],
         'bootbox': ['plugin/bootBox/bootbox.min'],
@@ -34,7 +35,8 @@ require.config({
         'inputmask.extensions': ['plugin/input-mask/jquery.inputmask.extensions'],
         'jquery.slimscroll': ['plugin/slimScroll/jquery.slimscroll'],
         'jquery': ['plugin/jQuery/2.2.4/jquery'],
-        'jquery.form': ['plugin/jquery-form/jquery.form']
+        'jquery.form': ['plugin/jquery-form/jquery.form'],
+        'select2': ['plugin/select2/js/select2.full'],
     },
     shim: {
         'app': {deps: ['jquery','bootstrap']},
@@ -51,16 +53,17 @@ require.config({
         'jquery.slimscroll': {deps: ['jquery']},
         'jquery.form': {deps: ['jquery']},
         'dataTables.buttons': {deps: ['dataTables.bootstrap']},
-        'dataTables.buttons.bootstrap': {deps: ['dataTables.buttons','css!' + baseUrl + 'plugin/datatables/extensions/Buttons/css/buttons.bootstrap.css']}
+        'dataTables.buttons.bootstrap': {deps: ['dataTables.buttons','css!' + baseUrl + 'plugin/datatables/extensions/Buttons/css/buttons.bootstrap.css']},
+        'select2':{deps: ['css!' + baseUrl + 'plugin/select2/css/select2.css']}
     },
     deps: ['css!//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css'],
     // 开启debug模式，不缓存资源
-    urlArgs: "ver=" + (new Date()).getTime()
+    // urlArgs: "ver=" + (new Date()).getTime()
 });
 
 
 // UI框架初始化
-require(['bootbox','bootstrap-dialog', 'fastclick', 'jquery.slimscroll','app','common'],
+require(['bootbox','bootstrap-dialog', 'fastclick', 'jquery.slimscroll','app','listen'],
 function (bootbox,BootstrapDialog) {
    window.bootbox = bootbox;
    window.BootstrapDialog = BootstrapDialog;

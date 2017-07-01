@@ -488,9 +488,13 @@ function _init() {
                     $.ajax({
                         url: href,
                         type: "get",
+                        beforeSend: function () {
+                            $.msg.loading();
+                        },
                         success: function(data){
+                            $.msg.close();
                             $("section.content").html(data);
-                        }
+                        },
                     });
                     e.preventDefault();
                     //Fix the layout in case the sidebar stretches over the height of the window

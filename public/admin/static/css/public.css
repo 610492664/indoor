@@ -6,3 +6,26 @@
 .table > tfoot > tr > td {
     vertical-align: middle;
 }
+
+/*modal*/
+/*loading style*/
+.loading .modal-content {
+    border-radius: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    background-color: transparent;
+    border: none;
+    font-size:40px;
+    color: #ffffff;
+    /*border: 0;*/
+}
+@media (min-width: 768px) {
+    .loading .modal-content {
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        background-color: transparent;
+        border: none;
+        font-size:40px;
+        color: #ffffff;
+    }
+}

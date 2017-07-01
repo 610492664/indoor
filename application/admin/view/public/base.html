@@ -137,10 +137,18 @@
                             <li><a href="{:url('localEquipment/index')}"><i class="fa fa-circle-o"></i> 终端管理</a></li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="{:url('building/index')}">
-                            <i class="fa fa-circle-o"></i> <span>建筑物</span>
+                    <li class="treeview">
+                        <a href="javascript:void(0);">
+                            <i class="fa fa-files-o"></i> <span>辖区管理</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
                         </a>
+                        <ul class="treeview-menu">
+                            <li><a href="{:url('building/index')}"><i class="fa fa-fw fa-building-o"></i> 建筑物</a></li>
+                            <li><a href="{:url('floor/index')}"><i class="fa fa-fw fa-navicon"></i> 楼层管理</a></li>
+                            <li><a href="{:url('tag/index')}"><i class="fa fa-fw fa-circle-o"></i> 标记物</a></li>
+                        </ul>
                     </li>
                     <li>
                         <a href="{:url('incident/index')}">
@@ -155,8 +163,8 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{:url('action/index')}"><i class="fa fa-circle-o"></i> 用户操作</a></li>
-                            <li><a href="{:url('log/index')}"><i class="fa fa-circle-o"></i> 系统日志</a></li>
+                            <li><a href="{:url('action/index')}"><i class="fa fa-fw fa-circle-o"></i> 用户操作</a></li>
+                            <li><a href="{:url('log/index')}"><i class="fa fa-fw fa-circle-o"></i> 系统日志</a></li>
                         </ul>
                     </li>
                 </ul>

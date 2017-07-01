@@ -42,7 +42,7 @@ class Group extends Base
         $data['org_id'] = '{3033D1DB-3C92-6624-DCDE-0435498BB60D}';
         $data['status'] = input('post.status');
         $result = $model->data($data)->save();
-        return result($result,'添加成功！', '添加失败！');;
+        return result($result,'添加成功！', '添加失败！');
     }
     //获取修改表单
     public function mod()
@@ -67,8 +67,8 @@ class Group extends Base
     public function del()
     {
         $ids = input('get.id/a');
-//        $result = Model::destroy($ids);
-        $result = true;
+        $result = Model::destroy($ids);
+//        $result = true;
         return result($result,'删除成功！', '删除失败！');
     }
 

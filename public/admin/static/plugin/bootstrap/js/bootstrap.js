@@ -1008,13 +1008,6 @@ if (typeof jQuery === 'undefined') {
       }
 
       that.$element.addClass('in')
-
-      //使模态框垂直居中显示
-      var $dialog=that.$element.find("div.modal-dialog"),
-          top=($(window).height()-$dialog.height())/2-150;
-      top = top>0 ? top : 0 ;
-      $dialog.css({"margin":+top+"px auto"});
-
       that.enforceFocus()
 
       var e = $.Event('shown.bs.modal', { relatedTarget: _relatedTarget })
@@ -1026,7 +1019,14 @@ if (typeof jQuery === 'undefined') {
           })
           .emulateTransitionEnd(Modal.TRANSITION_DURATION) :
         that.$element.trigger('focus').trigger(e)
+
+      //使模态框垂直居中显示
+      var $dialog=that.$element.find("div.modal-content"),
+          top=($(window).height()-$dialog.height())/2-100;
+      top = top>0 ? top : 0 ;
+      $dialog.css({"margin":+top+"px auto"});
     })
+
   }
 
   Modal.prototype.hide = function (e) {
@@ -1051,6 +1051,9 @@ if (typeof jQuery === 'undefined') {
       .off('mouseup.dismiss.bs.modal')
 
     this.$dialog.off('mousedown.dismiss.bs.modal')
+
+    //将模态框从数组中移除
+    Modal.elements.pop();
 
     $.support.transition && this.$element.hasClass('fade') ?
       this.$element
@@ -1101,15 +1104,13 @@ if (typeof jQuery === 'undefined') {
   }
 
   Modal.prototype.removeBackdrop = function () {
-    //只剩一个模态框时移除遮罩层，否则修改z-index
-    if(Modal.elements.length == 1){
+    //模态框时全部关闭时，移除遮罩层，否则修改z-index，（瞬时关闭再打开带有fade属性的模态框，会同时存在两个遮罩窗）
+    if(Modal.elements.length == 0 || $(".modal-backdrop").length > 1){
         this.$backdrop && this.$backdrop.remove()
         this.$backdrop = null
-        Modal.elements.shift();
     }else{
         var perviouszIndex = parseInt($(".modal-backdrop").css("z-Index"));
         this.$backdrop.attr("style","z-Index:"+(perviouszIndex-20));
-        Modal.elements.shift();
     }
   }
 
@@ -1120,8 +1121,8 @@ if (typeof jQuery === 'undefined') {
     if (this.isShown && this.options.backdrop) {
       var doAnimate = $.support.transition && animate
 
-        //只加一次遮罩层
-        Modal.elements.push(this.$element);
+      //模态框为1时添加遮罩
+      Modal.elements.push(this.$element);
       if( Modal.elements.length == 1){
           this.$backdrop = $(document.createElement('div'))
               .addClass('modal-backdrop ' + animate)
@@ -1156,8 +1157,8 @@ if (typeof jQuery === 'undefined') {
         callback()
 
     } else if (!this.isShown && this.$backdrop) {
-      //当只剩一个模态框时
-        if( Modal.elements.length == 1){
+      //当模态框全部关闭时
+        if( Modal.elements.length == 0){
             this.$backdrop.removeClass('in')
         }
 

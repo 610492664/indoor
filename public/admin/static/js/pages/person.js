@@ -6,6 +6,7 @@ function person() {
         "language":  {"url": PLUGIN_PATH+"/datatables/Chinese.json"},
         "lengthMenu": [[10, 25, 50, 100, -1], ["10", "25", "50", "100", "全部"]],
         "autoWidth": false,
+        "processing": true,
         "ajax": {
             "url": php_url.getList,
             "type":'get',

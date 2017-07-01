@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50714
 File Encoding         : 65001
 
-Date: 2017-06-24 17:48:41
+Date: 2017-07-01 19:05:24
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -24,7 +24,7 @@ CREATE TABLE `il_building` (
   `name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '建筑名称',
   `totalfloor` smallint(2) unsigned NOT NULL COMMENT '建筑总层数',
   `height` smallint(6) NOT NULL COMMENT '建筑高度',
-  `fvlist` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `coordinate` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `address` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '建筑地址',
   `comment` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '备注',
   `org_id` char(38) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '主管单位',
@@ -34,6 +34,8 @@ CREATE TABLE `il_building` (
 -- ----------------------------
 -- Records of il_building
 -- ----------------------------
+INSERT INTO `il_building` VALUES ('{BFF5481F-A3DF-F185-927A-83FF572351DB}', '建筑以', '60', '300', 'fasdf', '福华三路100号', '福田中队负责', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}');
+INSERT INTO `il_building` VALUES ('{6642EB69-0EC0-25FF-29A7-C2842E5AB4A7}', '建筑二', '100', '32767', 'fdsafd', '北四道1号', '', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}');
 
 -- ----------------------------
 -- Table structure for il_floor
@@ -41,17 +43,20 @@ CREATE TABLE `il_building` (
 DROP TABLE IF EXISTS `il_floor`;
 CREATE TABLE `il_floor` (
   `flo_id` char(38) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `bid_id` char(38) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '所属建筑',
+  `bui_id` char(38) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '所属建筑',
   `number` tinyint(2) unsigned NOT NULL COMMENT '楼层号',
   `height` smallint(3) unsigned NOT NULL COMMENT '层高',
   `layout` char(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '楼层布局',
-  `fvlist` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '底面坐标',
+  `coordinate` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '底面坐标',
+  `comment` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`flo_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of il_floor
 -- ----------------------------
+INSERT INTO `il_floor` VALUES ('{4DCEC62F-F315-2360-E3FC-21A711B28948}', '{BFF5481F-A3DF-F185-927A-83FF572351DB}', '3', '211', 'dsaf', 'fdsaf', '没有备注');
+INSERT INTO `il_floor` VALUES ('{FF45E1EB-0721-7D71-9608-BC212359908D}', '{BFF5481F-A3DF-F185-927A-83FF572351DB}', '2', '4554', 'dsfad', 'dasfd', '备注2层');
 
 -- ----------------------------
 -- Table structure for il_group
@@ -69,10 +74,8 @@ CREATE TABLE `il_group` (
 -- ----------------------------
 -- Records of il_group
 -- ----------------------------
-INSERT INTO `il_group` VALUES ('{84E1E74A-0536-3F10-11C3-D9C45E56F25C}', '第四组', '', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0');
-INSERT INTO `il_group` VALUES ('{8DE57108-FD35-EA74-C71C-5F5083A7F711}', '第二组', '', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '1');
-INSERT INTO `il_group` VALUES ('{87D7713B-A0E0-71CC-8161-5F9EA919A501}', '第三组', '', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0');
-INSERT INTO `il_group` VALUES ('{51151C08-144E-532F-AD6B-9593174ED1CC}', '第五组', '', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0');
+INSERT INTO `il_group` VALUES ('{0AFDC3FA-F61E-C09E-B120-57F755E77408}', '第二组', '', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0');
+INSERT INTO `il_group` VALUES ('{7F24EB5F-8BF5-0B50-3B14-17654B7593AD}', '第一组', '', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0');
 
 -- ----------------------------
 -- Table structure for il_incident
@@ -264,6 +267,10 @@ INSERT INTO `il_person` VALUES ('{B2C35EE6-4EE5-7D57-A5F4-8B8ACC081164}', '', '0
 INSERT INTO `il_person` VALUES ('{A77175CD-9C4B-76CB-7CBE-CF1C96632F61}', '', '0', '0', '', '0', '', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '', '', '', '0', '', '0');
 INSERT INTO `il_person` VALUES ('{CF4A8E26-72E6-D9D4-8FB1-15A9230CF631}', '', '0', '0', '', '0', '', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '', '', '', '0', '', '0');
 INSERT INTO `il_person` VALUES ('{3E078409-5723-9415-56F4-6044B0AE8688}', '', '0', '0', '', '0', '', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '', '', '', '0', '', '0');
+INSERT INTO `il_person` VALUES ('{E72D8891-8B90-CA1E-A324-D022D2CB6102}', '王宇', '0', '2065', '', '0', '965454544', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '', '1', '1', '2056', '1', '0');
+INSERT INTO `il_person` VALUES ('{0A9ECA32-F234-A673-4837-B2388C12C317}', '王柳', '0', '-28800', '', '0', '54546565', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '', '1', '1', '-28800', '1', '0');
+INSERT INTO `il_person` VALUES ('{162FABDF-EA15-240F-551F-D066D1601701}', '', '0', '0', '', '0', '', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '', '1', '1', '0', '1', '0');
+INSERT INTO `il_person` VALUES ('{58E2B509-502D-E77D-3902-A3A6F11ED240}', '王文', '0', '2065', '', '0', '546+65+65', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '', '1', '1', '2044', '1', '0');
 
 -- ----------------------------
 -- Table structure for il_tag
