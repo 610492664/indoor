@@ -36,6 +36,7 @@ class Group extends Base
     //添加到数据库
     public function insert()
     {
+        /* @var $model Model*/
         $model = Loader::model('group');
         $data['gro_id'] = create_guid();
         $data['name'] = input('post.name');

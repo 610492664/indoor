@@ -17,4 +17,9 @@ class Building extends Base
     {
         return '{3033D1DB-3C92-6624-DCDE-0435498BB60D}';
     }
+
+    public function outfireFacilitys()
+    {
+        return $this->hasMany('OutfireFacility', 'bui_id');
+    }
 }

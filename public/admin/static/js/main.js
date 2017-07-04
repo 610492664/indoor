@@ -54,7 +54,7 @@ require.config({
         'jquery.form': {deps: ['jquery']},
         'dataTables.buttons': {deps: ['dataTables.bootstrap']},
         'dataTables.buttons.bootstrap': {deps: ['dataTables.buttons','css!' + baseUrl + 'plugin/datatables/extensions/Buttons/css/buttons.bootstrap.css']},
-        'select2':{deps: ['css!' + baseUrl + 'plugin/select2/css/select2.css']}
+        'select2':{deps: ['css!' + baseUrl + 'plugin/select2/css/select2.css', 'css!' + baseUrl + 'plugin/select2/css/AdminLTE.css']}
     },
     deps: ['css!//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css'],
     // 开启debug模式，不缓存资源
