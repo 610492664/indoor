@@ -5,7 +5,7 @@
 function local_equipment() {
     $.table = $('#table').DataTable({
         "language":  {"url": PLUGIN_PATH+"/datatables/Chinese.json"},
-        "lengthMenu": [[1, 25, 50, 100, -1], ["10", "25", "50", "100", "全部"]],
+        "lengthMenu": [[10, 25, 50, 100, -1], ["10", "25", "50", "100", "全部"]],
         "autoWidth": false,
         "ajax": {
             "url": php_url.getList,

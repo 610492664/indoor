@@ -6,9 +6,9 @@ class LocalEquipment extends Base
     protected $type = [
         'buy_time'=>'timestamp:Y-m-d'
     ];
-    protected $auto = [];
+//    protected $auto = [];
     protected $insert = ['lequ_id','org_id'];
-    protected $update = [];
+//    protected $update = [];
 
     protected function setLequIdAttr()
     {

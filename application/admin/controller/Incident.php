@@ -2,9 +2,9 @@
 namespace app\admin\controller;
 
 use \Think\Loader;
-use \app\admin\model\LocalEquipment as Model;
+use \app\admin\model\Incident as Model;
 
-class LocalEquipment extends Base
+class Incident extends Base
 {
     public function index()
     {
@@ -15,7 +15,9 @@ class LocalEquipment extends Base
     {
 //        $org_id = input('session.org_id');
         $model = new Model();
-        $list = $model->where(['org_id'=>'{3033D1DB-3C92-6624-DCDE-0435498BB60D}'])->select();
+        $org_id = '{3033D1DB-3C92-6624-DCDE-0435498BB60D}';
+        $list = $model->where(['org_id'=> $org_id])->select();
+        Model::all();
         return $list;
     }
     //查看详情
@@ -33,16 +35,18 @@ class LocalEquipment extends Base
     //添加到数据库
     public function insert()
     {
-        /** @var $model Model */
-        $model = Loader::model('LocalEquipment');
-        $result = $model->data()->save(input('post.'));
-        return result($result,'添加终端设备成功！', '添加终端设备失败！');
+        /* @var $model Model*/
+        $model = Loader::model('incident');
+        $buiding = \app\admin\model\Building::get('{BFF5481F-A3DF-F185-927A-83FF572351DB}');
+        $result = $model->data(input('post.'))->save();
+        $model->buildings()->save($buiding);
+        return result($result,'添加事件成功！', '添加事件失败！');
     }
     //获取修改表单
     public function mod()
     {
         $id = input('get.id');
-        $detail = Model::get($id)->getData();
+        $detail = Model::get($id);
         $this->assign('detail',$detail);
         return $this->fetch();
     }
@@ -50,15 +54,15 @@ class LocalEquipment extends Base
     public function update()
     {
         $model = new Model;
-        $result = $model->save(input("post."),['lmar_id' => input('post.lmar_id')]);
-        return result($result,'修改终端设备成功！', '修改终端设备成功！');
+        $result = $model->save(input("post."),['inc_id' => input('post.inc_id')]);
+        return result($result,'修改事件成功！', '修改事件失败！');
     }
     //删除
     public function del()
     {
         $ids = input('get.id/a');
         $result = Model::destroy($ids);
-        return result($result,'删除终端设备成功！', '删除终端设备失败！');
+        return result($result,'删除事件成功！', '删除事件失败！');
     }
 
 }

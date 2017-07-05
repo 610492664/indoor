@@ -62,7 +62,7 @@ function outfire_facility() {
                     var $building = $("select[name='bui_id']");
                     $building.select2({
                         placeholder: "选择建筑",
-                        // language: "zh-CN",
+                        language: "zh-CN",
                         allowClear: true
                     });
                     $building.on("change", function (e) {

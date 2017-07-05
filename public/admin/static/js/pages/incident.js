@@ -2,13 +2,13 @@
  * Created by Administrator on 2017/6/8.
  */
 
-function locator() {
+function incident() {
     $.table = $('#table').DataTable({
         "language":  {"url": PLUGIN_PATH+"/datatables/Chinese.json"},
-        "lengthMenu": [[10, 25, 50, 100, -1], ["10", "25", "50", "100", "全部"]],
+        "lengthMenu": [[1, 25, 50, 100, -1], ["10", "25", "50", "100", "全部"]],
         "autoWidth": false,
         "ajax": {
-            "url": MODULE+"/locator/getList",
+            "url": php_url.getList,
             "type":'get',
             "data": {
                 "org_id": "123"
@@ -16,13 +16,15 @@ function locator() {
             "dataSrc": ""
         },
         "columns": [
-            { "data": "loc_id","title":"<input type='checkbox' e-check-name = 'checkList'>", "searchable": false,"orderable": false, "width": "3px" },
+            { "data": "inc_id","title":"<input type='checkbox' e-check-name = 'checkList'>", "searchable": false,"orderable": false, "width": "3px" },
             { "data": null, "title":"序号", "searchable": false,"orderable": false, "width": "2em"},
             { "data": "name","title":"名称"},
-            { "data": "buy_time","title":"购入日期" },
-            { "data": "status" ,"title":"状态"},
-            { "data": "per_name","title":"当前使用人" },
-            { "data": "loc_id","title":"操作", "width": "25%"}
+            { "data": "type","title":"类型" },
+            { "data": "description","title":"描述" },
+            { "data": "buidings","title":"地点" },
+            { "data": "start_time" ,"title":"开始时间"},
+            { "data": "end_time" ,"title":"结束时间"},
+            { "data": "inc_id","title":"操作", "width": "25%"}
         ],
         "columnDefs": [ {
             "targets": 0,
@@ -38,8 +40,8 @@ function locator() {
                 "render": function ( data, type, full, meta ) {
                     if (type === 'display') {
                         return '<div class="btn-group">'+
-                            '<button class="btn btn-default" e-action-modal="'+php_url.locator_mod+'" e-data="'+data+'" ><i class="fa fa-pencil-square-o"></i></button>'+
-                            '<button class="btn btn-default" e-action-del="'+php_url.locator_del+'" e-data="'+data+'" ><i class="fa fa-trash-o"></i></button>'+
+                            '<button class="btn btn-default" e-action-modal="'+php_url.mod+'" e-data="'+data+'" ><i class="fa fa-pencil-square-o"></i></button>'+
+                            '<button class="btn btn-default" e-action-del="'+php_url.del+'" e-data="'+data+'" ><i class="fa fa-trash-o"></i></button>'+
                             '</div>';
                     }
                     return data;
@@ -49,9 +51,4 @@ function locator() {
     });
     //添加索引列
     $.table_index($.table);
-
-    //add、mod模态框初始化
-    $('#myModal').on('show.bs.modal', function () {
-        $("[data-mask]").inputmask();
-    });
 }
