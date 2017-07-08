@@ -8,6 +8,7 @@ class LocationMark extends Base
     protected $insert = ['lmar_id','org_id'];
     protected $update = [];
 
+
     protected function setLmarIdAttr()
     {
         return create_guid();

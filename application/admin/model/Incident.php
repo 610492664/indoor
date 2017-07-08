@@ -23,6 +23,6 @@ class Incident extends Base
 
     public function buildings()
     {
-        return $this->belongsToMany('Building','inc_bui', 'inc_id');
+        return $this->belongsToMany('Building','inc_bui', 'bui_id', 'inc_id');
     }
 }

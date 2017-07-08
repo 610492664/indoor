@@ -2,7 +2,7 @@
  * Created by Administrator on 2017/6/8.
  */
 
-function incident() {
+function user() {
     $.table = $('#table').DataTable({
         "language":  {"url": PLUGIN_PATH+"/datatables/Chinese.json"},
         "lengthMenu": [[10, 25, 50, 100, -1], ["10", "25", "50", "100", "全部"]],
@@ -16,15 +16,16 @@ function incident() {
             "dataSrc": ""
         },
         "columns": [
-            { "data": "inc_id","title":"<input type='checkbox' e-check-name = 'checkList'>", "searchable": false,"orderable": false, "width": "3px" },
+            { "data": "id","title":"<input type='checkbox' e-check-name = 'checkList'>", "searchable": false,"orderable": false, "width": "3px" },
             { "data": null, "title":"序号", "searchable": false,"orderable": false, "width": "2em"},
-            { "data": "name","title":"名称"},
-            { "data": "type","title":"类型" },
-            { "data": "description","title":"描述" },
-            { "data": "buildings[, ].name","title":"地点" },
-            { "data": "start_time" ,"title":"开始时间"},
-            { "data": "end_time" ,"title":"结束时间"},
-            { "data": "inc_id","title":"操作", "width": "25%"}
+            { "data": "name","title":"用户账号"},
+            { "data": "phone","title":"手机号" },
+            { "data": "email","title":"email" },
+            { "data": "login_num","title":"登录次数" },
+            { "data": "login_time","title":"最后登录日期" },
+            { "data": "login_ip","title":"最后登录ip" },
+            { "data": "status" ,"title":"状态"},
+            { "data": "id","title":"操作", "width": "25%"}
         ],
         "columnDefs": [ {
             "targets": 0,
@@ -36,7 +37,7 @@ function incident() {
             }
         },
             {
-                "targets": 8,
+                "targets": 9,
                 "render": function ( data, type, full, meta ) {
                     if (type === 'display') {
                         return '<div class="btn-group">'+

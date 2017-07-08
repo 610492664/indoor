@@ -45,8 +45,9 @@ class Person extends Base
                 return $return;
             }
         }
+        /* @var $person PersonModel*/
         $person = Loader::model('Person');
-        $result = $person->data(input('post.'))->save();
+        $result = $person->data(input('post.'),true)->save();
         return result($result,'添加人员成功！', '添加人员失败！');
     }
     //获取修改表单

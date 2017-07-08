@@ -2,10 +2,11 @@
 namespace app\admin\controller;
 
 use \Think\Loader;
-use \app\admin\model\Incident as Model;
+use \app\admin\model\User as Model;
 
-class Incident extends Base
+class User extends Base
 {
+
     public function index()
     {
         return $this->fetch();
@@ -14,13 +15,10 @@ class Incident extends Base
     public function getList()
     {
 //        $org_id = input('session.org_id');
-        $model = new Model();
         $org_id = '{3033D1DB-3C92-6624-DCDE-0435498BB60D}';
-//        $list = $model->where(['org_id'=> $org_id])->select();
-        $list = Model::all(function ($query) use($org_id) {
-            $query->where('org_id',$org_id)->order('start_time');
-        },'buildings');
-        return $list;
+        $records = Model::all(['org_id'=> $org_id]);
+//       dump($records);exit;
+        return $records;
     }
     //查看详情
     public function detail()
@@ -38,33 +36,32 @@ class Incident extends Base
     public function insert()
     {
         /* @var $model Model*/
-        $model = Loader::model('incident');
-        $buiding = \app\admin\model\Building::get('{BFF5481F-A3DF-F185-927A-83FF572351DB}');
-        $result = $model->data(input('post.'),true)->save();
-        $model->buildings()->save($buiding,['ibui_id'=>create_guid()] );
-        return result($result,'添加事件成功！', '添加事件失败！');
+        $model = Loader::model('user');
+        $result = $model->data(input('post.'), true)->save();
+        return result($result,'添加用户成功！', '添加用户失败！');
     }
     //获取修改表单
     public function mod()
     {
         $id = input('get.id');
-        $detail = Model::get($id);
+        $model = Model::get($id);
+        $detail = $model->getData();
         $this->assign('detail',$detail);
         return $this->fetch();
     }
-    //修改更新
     public function update()
     {
         $model = new Model;
-        $result = $model->save(input("post."),['inc_id' => input('post.inc_id')]);
-        return result($result,'修改事件成功！', '修改事件失败！');
+        $result = $model->save(input("post."),['id' => input('post.id')]);
+        return result($result,'修改用户信息成功！', '修改用户信息失败！');
     }
+
     //删除
     public function del()
     {
         $ids = input('get.id/a');
         $result = Model::destroy($ids);
-        return result($result,'删除事件成功！', '删除事件失败！');
+        return result($result,'删除用户成功！', '删除用户失败！');
     }
 
 }
