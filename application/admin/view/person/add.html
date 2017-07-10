@@ -112,9 +112,10 @@
                             <label class="col-sm-2 control-label diy-label-pad">定位器</label>
                             <div class="col-sm-10">
                                 <select class="form-control" name="loc_id">
-                                    <option value="1">定位器一</option>
-                                    <option value="2">定位器二</option>
-                                    <option value="3">定位器三</option>
+                                    <option value="">暂无</option>
+                                    {volist name="locators" id="locator"}
+                                    <option value="{$locator.loc_id}">{$locator.number}</option>
+                                    {/volist}
                                 </select>
                             </div>
                         </div>

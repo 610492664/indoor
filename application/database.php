@@ -13,13 +13,13 @@ return [
     // 数据库类型
     'type'            => 'mysql',
     // 服务器地址
-    'hostname'        => '123.207.252.99',
+    'hostname'        => 'localhost',
     // 数据库名
     'database'        => 'indoor',
     // 用户名
-    'username'        => 'il_web',
+    'username'        => 'ilweb',
     // 密码
-    'password'        => '123456',
+    'password'        => 'Tmuser1234',
     // 端口
     'hostport'        => '3306',
     // 连接dsn

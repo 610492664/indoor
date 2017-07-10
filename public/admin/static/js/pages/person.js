@@ -17,13 +17,13 @@ function person() {
         },
         "columns": [
             { "data": "per_id", "title": '<input type="checkbox" e-check-name="checkList">',"searchable": false,"orderable": false, "width": "3px" },
-            { "data": null, "title": "姓名", "searchable": false,"orderable": false, "width": "3px"},
+            { "data": null, "title": "序号", "searchable": false,"orderable": false, "width": "3px"},
             { "data": "name" , "title": "姓名"},
             { "data": "pid" , "title": "证件"},
             { "data": "birthday" , "title": "出生日期"},
             { "data": "position" , "title": "职务"},
+            { "data": "rank" , "title": "警衔"},
             { "data": "loc_id" , "title": "定位模块"},
-            { "data": "rank" , "title": "是否在岗"},
             { "data": "per_id", "title": "操作", "width": "25%"}
         ],
         "columnDefs": [ {
@@ -31,6 +31,14 @@ function person() {
             "render": function ( data, type, full, meta ) {
                 if (type === 'display') {
                     return '<input type="checkbox" name="checkList" value="' + data + '">';
+                }
+                return data;
+            }
+        },{
+            "targets": 7,
+            "render": function ( data, type, full, meta ) {
+                if (type === 'display') {
+                    return (data != '') ? full.loc_number :'无';
                 }
                 return data;
             }

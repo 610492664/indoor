@@ -17,8 +17,8 @@ function locator() {
         },
         "columns": [
             { "data": "loc_id","title":"<input type='checkbox' e-check-name = 'checkList'>", "searchable": false,"orderable": false, "width": "3px" },
-            { "data": null, "title":"序号", "searchable": false,"orderable": false, "width": "2em"},
-            { "data": "name","title":"名称"},
+            { "data": "number","title":"编号"},
+            { "data": "mac","title":"物理标识码"},
             { "data": "buy_time","title":"购入日期" },
             { "data": "status" ,"title":"状态"},
             { "data": "per_name","title":"当前使用人" },
@@ -47,8 +47,6 @@ function locator() {
             }
         ]
     });
-    //添加索引列
-    $.table_index($.table);
 
     //add、mod模态框初始化
     $('#myModal').on('show.bs.modal', function () {

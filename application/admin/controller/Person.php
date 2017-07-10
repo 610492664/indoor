@@ -1,8 +1,9 @@
 <?php
 namespace app\admin\controller;
 
+use think\Db;
 use \Think\Loader;
-use \app\admin\model\Person as PersonModel;
+use \app\admin\model\Person as Model;
 
 class Person extends Base
 {
@@ -14,20 +15,31 @@ class Person extends Base
     public function getList()
     {
 //        $org_id = input('session.org_id');
-        $model = new PersonModel();
-        $persons = $model->where(['org_id'=>'{3033D1DB-3C92-6624-DCDE-0435498BB60D}'])->select();
+//        $model = new Model();
+//        $persons = $model->where(['org_id'=>'{3033D1DB-3C92-6624-DCDE-0435498BB60D}'])->select();
+        $persons = Model::all(function($query){
+            $query->where(['org_id'=>'{3033D1DB-3C92-6624-DCDE-0435498BB60D}']);
+        },'locator');
+
         return $persons;
     }
     //查看详情
     public function detail()
     {
         $id = input('get.id');
-        $person = PersonModel::get($id);
+        $person = Model::get($id , 'locator');
         $this->assign('person',$person);
         return $this->fetch();
     }
     //获取添加表单
-    public function add(){
+    public function add()
+    {
+        $org_id = '{3033D1DB-3C92-6624-DCDE-0435498BB60D}';
+        $locators = Db::name('locator')
+            ->where(['status'=>0])
+            ->field('loc_id,number')
+            ->select();
+        $this->assign('locators', $locators);
         return $this->fetch();
     }
     //添加到数据库
@@ -45,17 +57,24 @@ class Person extends Base
                 return $return;
             }
         }
-        /* @var $person PersonModel*/
+        /* @var $person Model*/
         $person = Loader::model('Person');
         $result = $person->data(input('post.'),true)->save();
+        !empty($result)&&$person->locator()->save(['status'=>1]);
         return result($result,'添加人员成功！', '添加人员失败！');
     }
     //获取修改表单
     public function mod()
     {
         $id = input('get.id');
-        $person = PersonModel::get($id);
-        $this->assign('person',$person);
+        $person = Model::get($id);
+        $this->assign('person',$person->getData());
+        $locators = Db::name('locator')
+            ->where(['status'=>0])
+            ->whereOr(['loc_id'=>$person->loc_id])
+            ->field('loc_id,number')
+            ->select();
+        $this->assign('locators', $locators);
         return $this->fetch();
     }
     //修改更新
@@ -75,9 +94,16 @@ class Person extends Base
         }else{
             unset($data['pic']);
         }
-        $model = new PersonModel;
-        $result = $model->save($data,['per_id' => $data['per_id']]);
+        $model  = Model::get($data['per_id']);
+        $old_loc_id = $model->loc_id;
+        $result = $model->save($data, ['per_id'=>$data['per_id']]);
         if(!empty($result)){
+            if(!empty($model->loc_id)){
+                Db::name('locator')->update(['status'=>1, 'loc_id'=>$model->loc_id]);
+            }
+            if(!empty($old_loc_id)){
+                Db::name('locator')->update(['status'=>0, 'loc_id'=>$old_loc_id]);
+            }
             $return['code'] = 1;
             $return['msg'] = '修改成功！';
         }else{
@@ -90,8 +116,8 @@ class Person extends Base
     public function del()
     {
         $ids = input('get.id/a');
-//        $result = PersonModel::destroy($ids);
-        $result = true;
+        $result = Model::destroy($ids);
+//        $result = true;
         if(!empty($result)){
             $return['code'] = 1;
             $return['msg'] = '删除人员成功！';

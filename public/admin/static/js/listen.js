@@ -91,7 +91,7 @@ define(['jquery','common'],function ($) {
                                 $.msg.success(data.msg,1000, function () {
                                     $modal.off('hide.bs.modal');
                                     $modal.modal('hide');
-                                    $.table.ajax.reload();
+                                    $.table.ajax.reload(null, false);
                                 });
                             }
                         }

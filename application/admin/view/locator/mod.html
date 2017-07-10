@@ -7,9 +7,15 @@
     </div>
     <div class="modal-body">
         <div class="form-group">
-            <label  class="col-sm-2 control-label">设备名称</label>
+            <label  class="col-sm-2 control-label">设备编号</label>
             <div class="col-sm-10">
-                <input class="form-control" name="name" placeholder="名称" type="text" value="{$record.name}">
+                <input class="form-control" name="number" placeholder="设备编号" type="text" value="{$record.number}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">标识码</label>
+            <div class="col-sm-10">
+                <input class="form-control" name="mac" placeholder="标识码" type="text" value="{$record.mac}">
             </div>
         </div>
         <div class="form-group">
@@ -24,14 +30,23 @@
             </div>
         </div>
         <div class="form-group">
-            <label  class="col-sm-2 control-label">是否启用</label>
+            <label  class="col-sm-2 control-label">状态</label>
             <div class="col-sm-10">
                 <div class="checkbox">
                     <label>
-                        <input type="radio" name="status" value="1" {eq name="record['status']" value="1"}checked{/eq} >是
+                        <input type="radio" name="status" value="0" {eq name="record['status']" value="0"}checked{/eq} >可用
                     </label>
                     <label>
-                        <input type="radio" name="status"  value="0" {eq name="record['status']" value="0"}checked{/eq}>否
+                        <input type="radio" name="status"  value="2" {eq name="record['status']" value="2"}checked{/eq}>正常停用
+                    </label>
+                    <label>
+                        <input type="radio" name="status"  value="3" {eq name="record['status']" value="3"}checked{/eq}>故障停用
+                    </label>
+                    <label>
+                        <input type="radio" name="status"  value="4" {eq name="record['status']" value="4"}checked{/eq}>遗失
+                    </label>
+                    <label>
+                        <input type="radio" name="status"  value="5" {eq name="record['status']" value="5"}checked{/eq}>报废
                     </label>
                 </div>
             </div>

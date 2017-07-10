@@ -113,9 +113,10 @@
                             <label class="col-sm-2 control-label diy-label-pad">定位器</label>
                             <div class="col-sm-10">
                                 <select class="form-control" name="loc_id">
-                                    <option value="1" {eq name="person['loc_id']" value="1"}selected{/eq}>定位器一</option>
-                                    <option value="2" {eq name="person['loc_id']" value="2"}selected{/eq}>定位器二</option>
-                                    <option value="3" {eq name="person['loc_id']" value="3"}selected{/eq}>定位器三</option>
+                                    <option value="">暂无</option>
+                                    {volist name="locators" id="locator"}
+                                    <option value="{$locator.loc_id}" {eq name="person['loc_id']" value="$locator['loc_id']"}selected{/eq}>{$locator.number}</option>
+                                    {/volist}
                                 </select>
                             </div>
                         </div>
