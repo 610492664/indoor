@@ -8,6 +8,7 @@
 
 namespace app\admin\controller;
 
+use \think\Db;
 
 class Login extends Base
 {
@@ -15,19 +16,36 @@ class Login extends Base
     {
         if ($this->request->isGet()) {
             $this->assign('title', '用户登录');
+            $this->assign('data', []);
             return $this->fetch();
         } else {
-            $username = $this->request->post('username', '', 'trim');
+            $msg = '<div class="alert alert-warning alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4><i class="icon fa fa-warning"></i>警告！</h4>';
+            $code = $this->request->post('code', '', 'trim');
+            $name = $this->request->post('name', '', 'trim');
             $password = $this->request->post('password', '', 'trim');
-            (empty($username) || strlen($username) < 4) && $this->error('登录账号长度不能少于4位有效字符!');
-            (empty($password) || strlen($password) < 4) && $this->error('登录密码长度不能少于4位有效字符!');
-            $user = Db::name('SystemUser')->where('username', $username)->find();
-            empty($user) && $this->error('登录账号不存在，请重新输入!');
-            ($user['password'] !== md5($password)) && $this->error('登录密码与账号不匹配，请重新输入!');
-            Db::name('SystemUser')->where('id', $user['id'])->update(['login_at' => ['exp', 'now()'], 'login_num' => ['exp', 'login_num+1']]);
+            $data['name'] = $name;
+            $data['password'] = $password;
+            $this->assign('title', '用户登录');
+            if(!captcha_check($code)){
+                $data['msg'] = $msg.'验证码错误！'.'</div>';
+                $this->assign('data', $data);
+                return $this->fetch();
+            };
+            $user = Db::name('User')->where('name', $name)->find();
+            if (empty($user)) {
+                $data['msg'] = $msg.'登录账号不存在，请重新输入!'.'</div>';
+                $this->assign('data', $data);
+                return $this->fetch();
+            }
+            if ($user['password'] !== password_encrypt($password)) {
+                $data['msg'] = $msg.'登录密码与账号不匹配，请重新输入!'.'</div>';
+                $this->assign('data', $data);
+                return $this->fetch();
+            }
+            Db::name('User')->where('use_id', $user['use_id'])->update(['login_time' => time(), 'login_num' => ['exp', 'login_num+1']]);
             session('user', $user);
-//            !empty($user['authorize']) && NodeService::applyAuthNode();
-//            LogService::write('系统管理', '用户登录系统成功');
             $this->success('登录成功，正在进入系统...', '@admin');
         }
     }
@@ -36,6 +54,13 @@ class Login extends Base
     public function out()
     {
         session('user', null);
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000,
+                $params["path"], $params["domain"],
+                $params["secure"], $params["httponly"]
+            );
+        }
         session_destroy();
         $this->success('退出登录成功！', '@admin/login');
     }

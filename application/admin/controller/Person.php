@@ -60,7 +60,7 @@ class Person extends Base
         /* @var $person Model*/
         $person = Loader::model('Person');
         $result = $person->data(input('post.'),true)->save();
-        !empty($result)&&$person->locator()->save(['status'=>1]);
+        !empty($result)&&!empty($person->loc_id)&&Db::name('locator')->update(['status'=>1, 'loc_id'=>$person->loc_id]);
         return result($result,'添加人员成功！', '添加人员失败！');
     }
     //获取修改表单

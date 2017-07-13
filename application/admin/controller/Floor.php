@@ -18,7 +18,7 @@ class Floor extends Base
     //获取列表
     public function getList()
     {
-//        $org_id = input('session.org_id');
+//        $org_id = input('session.user.org_id');
         $model = new Model();
         $list = $model->where(['bui_id'=>input('get.bui_id')])->select();
         return $list;

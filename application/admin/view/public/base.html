@@ -56,7 +56,7 @@
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="__IMG__/logo.jpg" class="user-image" alt="User Image">
-                                <span class="hidden-xs">{$userInfo['username']}</span>
+                                <span class="hidden-xs">{$Think.session.user.name}</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
@@ -64,8 +64,8 @@
                                     <img src="__IMG__/logo.jpg" class="img-circle" alt="User Image">
 
                                     <p>
-                                        {$userInfo['username']} - {$userInfo['nickname']}
-                                        <small>注册时间：{$userInfo['regTime'] | date='Y-m-d',###}</small>
+                                        {$Think.session.user.name}
+                                        <small>注册时间：{$Think.session.user.create_time | date='Y-m-d',###}</small>
                                     </p>
                                 </li>
                                 <!-- Menu Footer-->
@@ -74,7 +74,7 @@
                                         <a url="{:url('User/edit')}" class="refresh btn btn-default btn-flat">修改信息</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="{:url('User/logout')}" class="btn btn-default btn-flat">退出登录</a>
+                                        <a href="{:url('Login/out')}" class="btn btn-default btn-flat">退出登录</a>
                                     </div>
                                 </li>
                             </ul>
@@ -92,7 +92,7 @@
                         <img src="__IMG__/logo.jpg" class="img-circle" alt="头像">
                     </div>
                     <div class="pull-left info">
-                        <p>{$userInfo['nickname']}</p>
+                        <p>{$Think.session.user.name}</p>
                         <a href="javascript:void(0);"><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
                 </div>

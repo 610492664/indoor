@@ -27,6 +27,11 @@ function create_guid(){
     return $uuid;
 }
 
+function password_encrypt($password)
+{
+    return md5($password);
+}
+
 function result($result, $success_msg, $error_msg) {
     if(!empty($result)){
         $return['code'] = 1;

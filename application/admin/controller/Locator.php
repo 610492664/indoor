@@ -40,6 +40,7 @@ class Locator extends Base
         $result = $model->data(input('post.'), true)->save();
         if(!empty($result)){
             $return['code'] = 1;
+            $return['msg'] = '添加成功！';
         }else{
             $return['code'] = 0;
             $return['msg'] = '添加失败！';

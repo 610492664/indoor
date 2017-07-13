@@ -13,9 +13,9 @@ class Building extends Base
     //获取列表
     public function getList()
     {
-//        $org_id = input('session.org_id');
+        $org_id = input('session.user.org_id');
         $model = new Model();
-        $list = $model->where(['org_id'=>'{3033D1DB-3C92-6624-DCDE-0435498BB60D}'])->select();
+        $list = $model->where(['org_id'=>$org_id])->select();
         return $list;
     }
     //查看详情
