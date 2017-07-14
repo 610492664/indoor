@@ -1,6 +1,7 @@
 <?php
 namespace app\admin\controller;
 
+use think\Db;
 use \Think\Loader;
 use \app\admin\model\Building as Model;
 
@@ -36,7 +37,11 @@ class Building extends Base
        /* @var $model Model*/
         $model = Loader::model('Building');
         $result = $model->data(input('post.'))->save();
-        return result($result,'添加建筑成功！', '添加建筑失败！');
+        if(!empty($result)){
+            $this->success('添加建筑成功！');
+        }else{
+            $this->error('添加建筑失败！');
+        }
     }
     //获取修改表单
     public function mod()
@@ -51,14 +56,22 @@ class Building extends Base
     {
         $model = new Model;
         $result = $model->save(input("post."),['bui_id' => input('post.bui_id')]);
-        return result($result,'修改建筑信息成功！', '修改建筑信息失败！');
+        if(!empty($result)){
+            $this->success('修改建筑信息成功！');
+        }else{
+            $this->error('修改建筑信息失败！');
+        }
     }
     //删除
     public function del()
     {
         $ids = input('get.id/a');
         $result = Model::destroy($ids);
-        return result($result,'删除建筑信息成功！', '删除建筑信息失败！');
+        if(!empty($result)){
+            $this->success('删除建筑信息成功！');
+        }else{
+            $this->error('删除建筑信息失败！');
+        }
     }
 
 }

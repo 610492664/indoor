@@ -20,6 +20,52 @@
             }).draw();
     };
 
+    //加载content内容
+    $.content_load = function (href, layout_fix) {
+        $.ajax({
+            url: href,
+            type: "get",
+            beforeSend: function () {
+                $.msg.loading();
+            },
+            error: function () {
+                $.msg.close();
+                $.msg.error('页面未找到！',1000, function () {
+                    history.back();
+                });
+            },
+            success: function(data){
+                $.msg.close();
+                $("section.content").html(data);
+                if ($("#form").length > 0) {
+                    //激活公共表单验证
+                    require(['bootstrap-validator'],function () {
+                        $('#form').validator();
+                    });
+                    //激活表单上传事件
+                    $("#form").ajaxForm({
+                        type: 'post',
+                        error: function () {
+                            var msg = $('<div class="alert alert-warning"><a href="#" class="close" data-dismiss="alert">&times;</a></div>')
+                                .append('服务器错误！请稍后再试！');
+                            $(".box-body").prepend(msg);
+                        },
+                        success: function(data) {
+                            if (data.code == 1) {
+                                $.msg.success(data.msg,1000, function () {
+                                    window.onhashchange();
+                                });
+                            }else {
+                                $.msg.error(data.msg,1000);
+                            }
+                        }
+                    });
+                }
+                layout_fix();
+            },
+        });
+    }
+
     /**
      * 定义消息处理构造方法
      */
@@ -205,8 +251,5 @@
      * 将消息对象挂载到Jq
      */
     $.msg = new msg();
-
-
-
 
 })(jQuery);

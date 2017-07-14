@@ -480,7 +480,7 @@ function _init() {
                         $li = $li.parents('li:first');
                     }
                     breadcrumb.prepend('<li><i class="fa fa-dashboard"></i>　首页</li>');
-                    //加载content页面
+                   /* //加载content页面
                     var href = $this.attr('href');
                     PHP_DATA.url = href;
                     // $("section.content").load(href); 会出现/r/n，不知道為什麼？
@@ -496,7 +496,7 @@ function _init() {
                             $("section.content").html(data);
                         },
                     });
-                    e.preventDefault();
+                    e.preventDefault();*/
                     //Fix the layout in case the sidebar stretches over the height of the window
                     _this.layout.fix();
                 }

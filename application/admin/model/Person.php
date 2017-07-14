@@ -27,6 +27,12 @@ class Person extends Base
         return $status[$value];
     }
 
+    public function getPidtypeAttr($value)
+    {
+        $status = [0=>'士官证',1=>'身份证'];
+        return $status[$value];
+    }
+
     public function getRankAttr($value)
     {
         $status = [1=>'警衔一',2=>'警衔二', 3=>'警衔三'];

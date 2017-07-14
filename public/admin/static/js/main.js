@@ -67,4 +67,5 @@ require(['bootbox','bootstrap-dialog', 'fastclick', 'jquery.slimscroll','app','l
 function (bootbox,BootstrapDialog) {
    window.bootbox = bootbox;
    window.BootstrapDialog = BootstrapDialog;
+   window.onhashchange();
 });

@@ -1,6 +1,7 @@
 <?php
 namespace app\admin\controller;
 
+use think\Db;
 use \Think\Loader;
 use \app\admin\model\Locator as Model;
 
@@ -57,17 +58,15 @@ class Locator extends Base
     }
     public function update()
     {
+        /* @var $model Model*/
         $model = Loader::model('Locator');
         $loc_id = input('post.loc_id');
         $result = $model->save(input('post.'),['loc_id' => $loc_id]);
         if(!empty($result)){
-            $return['code'] = 1;
-            $return['msg'] = '修改成功！';
+            $this->success('修改成功！');
         }else{
-            $return['code'] = 0;
-            $return['msg'] = '修改失败！';
+            $this->error('修改失败！');
         }
-        return $return;
     }
 
     //删除
@@ -75,7 +74,11 @@ class Locator extends Base
     {
         $ids = input('get.id/a');
         $result = Model::destroy($ids);
-        return result($result,'删除定位模块成功！', '删除删除定位模块失败！');
+        if(!empty($result)){
+            $this->success('删除定位模块成功！');
+        }else{
+            $this->error('删除删除定位模块失败！');
+        }
     }
 
 }

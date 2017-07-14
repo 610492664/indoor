@@ -2,13 +2,13 @@
  * Created by Administrator on 2017/6/8.
  */
 
-function location_mark() {
+function organization() {
     $.table = $('#table').DataTable({
         "language":  {"url": PLUGIN_PATH+"/datatables/Chinese.json"},
-        "lengthMenu": [[10, 25, 50, 100, -1], ["10", "25", "50", "100", "全部"]],
+        "lengthMenu": [[2, 25, 50, 100, -1], ["10", "25", "50", "100", "全部"]],
         "autoWidth": false,
         "ajax": {
-            "url": php_url.getList,
+            "url": php_url.list,
             "type":'get',
             "data": {
                 "org_id": "123"
@@ -16,13 +16,13 @@ function location_mark() {
             "dataSrc": ""
         },
         "columns": [
-            { "data": "lmar_id","title":"<input type='checkbox' e-check-name = 'checkList'>", "searchable": false,"orderable": false, "width": "3px" },
+            { "data": "org_id","title":"<input type='checkbox' e-check-name = 'checkList'>", "searchable": false,"orderable": false, "width": "3px" },
             { "data": null, "title":"序号", "searchable": false,"orderable": false, "width": "2em"},
-            { "data": "name","title":"名称"},
-            { "data": "type","title":"类型" },
-            { "data": "mac","title":"mac地址" },
+            { "data": "name","title":"单位名"},
+            { "data": "abbr","title":"单位简称" },
+            { "data": "address","title":"单位地址" },
             { "data": "status" ,"title":"状态"},
-            { "data": "lmar_id","title":"操作", "width": "25%"}
+            { "data": "org_id","title":"操作", "width": "25%"}
         ],
         "columnDefs": [ {
             "targets": 0,
@@ -47,6 +47,13 @@ function location_mark() {
             }
         ]
     });
+    $.table.buttons().container()
+        .appendTo( $('.col-sm-6:eq(0)', $.table.table().container() ) );
     //添加索引列
     $.table_index($.table);
+
+    //add、mod模态框初始化，添加页面个性化表单事件
+    $('#myModal').on('show.bs.modal', function () {
+
+    });
 }

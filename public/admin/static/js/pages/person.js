@@ -26,31 +26,42 @@ function person() {
             { "data": "loc_id" , "title": "定位模块"},
             { "data": "per_id", "title": "操作", "width": "25%"}
         ],
-        "columnDefs": [ {
-            "targets": 0,
-            "render": function ( data, type, full, meta ) {
-                if (type === 'display') {
-                    return '<input type="checkbox" name="checkList" value="' + data + '">';
+        "columnDefs": [
+            {
+                "targets": 0,
+                "render": function ( data, type, full, meta ) {
+                    if (type === 'display') {
+                        return '<input type="checkbox" name="checkList" value="' + data + '">';
+                    }
+                    return data;
                 }
-                return data;
-            }
-        },{
-            "targets": 7,
-            "render": function ( data, type, full, meta ) {
-                if (type === 'display') {
-                    return (data != '') ? full.loc_number :'无';
+            },
+            {
+                "targets": 3,
+                "render": function ( data, type, full, meta ) {
+                    if (type === 'display') {
+                        return full.pidtype+'：'+data;
+                    }
+                    return data;
                 }
-                return data;
-            }
-        },
+            },
+            {
+                "targets": 7,
+                "render": function ( data, type, full, meta ) {
+                    if (type === 'display') {
+                        return (data != '') ? full.loc_number :'无';
+                    }
+                    return data;
+                }
+            },
             {
                 "targets": 8,
                 "render": function ( data, type, full, meta ) {
                     if (type === 'display') {
                         return '<div class="btn-group">'+
-                            '<button class="btn btn-default " e-action-modal="'+php_url.detail+'" e-data="'+data+'" ><i class="fa fa-search"></i></button>'+
-                            '<button class="btn btn-default" e-action-modal="'+php_url.mod+'" e-data="'+data+'" ><i class="fa fa-pencil-square-o"></i></button>'+
-                            '<button class="btn btn-default" e-action-del="'+php_url.del+'" e-data="'+data+'" ><i class="fa fa-trash-o"></i></button>'+
+                            '<button class="btn btn-link " e-action-modal="'+php_url.detail+'" e-data="'+data+'" ><i class="fa fa-search"></i></button>'+
+                            '<button class="btn btn-link" e-action-modal="'+php_url.mod+'" e-data="'+data+'" ><i class="fa fa-pencil-square-o"></i></button>'+
+                            '<button class="btn btn-link" e-action-del="'+php_url.del+'" e-data="'+data+'" ><i class="fa fa-trash-o"></i></button>'+
                             '</div>';
                     }
                     return data;

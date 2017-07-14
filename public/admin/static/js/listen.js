@@ -87,12 +87,14 @@ define(['jquery','common'],function ($) {
                             $(".modal-body").prepend(msg);
                         },
                         success: function(data) {
-                            if (data.code = 1) {
+                            if (data.code == 1) {
                                 $.msg.success(data.msg,1000, function () {
                                     $modal.off('hide.bs.modal');
                                     $modal.modal('hide');
                                     $.table.ajax.reload(null, false);
                                 });
+                            }else {
+                                $.msg.error(data.msg,1000);
                             }
                         }
                     });
@@ -100,4 +102,11 @@ define(['jquery','common'],function ($) {
             }
         });
     });
+
+
+    //监听url hash处理
+    window.onhashchange = function () {
+        var hash = (window.location.hash).substring(1)||'/indoor/public/index.php/admin/index/dashboard.html';
+        $.content_load(hash, $.AdminLTE.layout.fix);
+    }
 });

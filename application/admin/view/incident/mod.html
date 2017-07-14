@@ -1,39 +1,48 @@
-<form class="form-horizontal" id="form" action = "{:url('LocationMark/update')}">
-    <input name="lmar_id" value="{$detail.lmar_id}" hidden/>
+<form class="form-horizontal" id="form" action = "{:url('Incident/update')}">
+    <input name="inc_id" value="{$detail.inc_id}" hidden>
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span></button>
-        <h4 class="modal-title">修改信标</h4>
+        <h4 class="modal-title">修改事件</h4>
     </div>
     <div class="modal-body">
         <div class="form-group">
-            <label  class="col-sm-2 control-label">信标名称</label>
+            <label  class="col-sm-2 control-label">事件名称</label>
             <div class="col-sm-10">
-                <input class="form-control" name="name" placeholder="名称" type="text" value="{$detail.name}">
+                <input class="form-control" name="name" placeholder="名称" type="text">
             </div>
         </div>
         <div class="form-group">
             <label  class="col-sm-2 control-label">类型</label>
             <div class="col-sm-10">
-                <input class="form-control" name="type" placeholder="类型" type="text"  value="{$detail.type}">
+                <input class="form-control" name="type" placeholder="类型" type="text">
             </div>
         </div>
         <div class="form-group">
-            <label  class="col-sm-2 control-label">mac地址</label>
+            <label  class="col-sm-2 control-label">描述</label>
             <div class="col-sm-10">
-                <input class="form-control" name="mac" placeholder="mac地址" type="text"  value="{$detail.mac}">
+                <input class="form-control" name="description" placeholder="描述" type="text">
             </div>
         </div>
         <div class="form-group">
-            <label  class="col-sm-2 control-label">是否启用</label>
+            <label class="col-sm-2 control-label diy-label-pad">开始时间</label>
             <div class="col-sm-10">
-                <div class="checkbox">
-                    <label>
-                        <input type="radio" name="status" value="0"  {eq name="detail['status']" value="0"}checked{/eq}>是
-                    </label>
-                    <label>
-                        <input type="radio" name="status"  value="1"  {eq name="detail['status']" value="1"}checked{/eq}>否
-                    </label>
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                    <input class="form-control" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask="" type="text" name="start_time">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label diy-label-pad">结束时间</label>
+            <div class="col-sm-10">
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                    <input class="form-control" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask="" type="text" name="end_time">
                 </div>
             </div>
         </div>
