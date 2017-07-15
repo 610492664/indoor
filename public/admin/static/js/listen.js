@@ -29,7 +29,7 @@ define(['jquery','common'],function ($) {
             return false;
         }
         $.msg.confirm("确认删除？",function () {
-            var url = $this.attr('e-action-del');
+            var url = MODULE + $this.attr('e-action-del');
             $.ajax({
                 url: url,
                 type: "get",
@@ -49,7 +49,7 @@ define(['jquery','common'],function ($) {
 
     //监听模态框add,mod,detail事件
     $body.on('click','[e-action-modal]', function () {
-        var url = $(this).attr('e-action-modal'), data = {},callback;
+        var url = MODULE + $(this).attr('e-action-modal'), data = {},callback;
         data.id = $(this).attr('e-data');
         callback = $(this).attr('e-callback');
         var $modal =  $('#myModal');
@@ -106,7 +106,8 @@ define(['jquery','common'],function ($) {
 
     //监听url hash处理
     window.onhashchange = function () {
-        var hash = (window.location.hash).substring(1)||'/indoor/public/index.php/admin/index/dashboard.html';
+        var hash = (window.location.hash).substring(1)||'/index/dashboard.html';
+        hash = MODULE + hash;
         $.content_load(hash, $.AdminLTE.layout.fix);
     }
 });

@@ -31,6 +31,7 @@ class Group extends Base
     }
     //获取添加表单
     public function add(){
+        url('group/insert');
         return $this->fetch();
     }
     //添加到数据库

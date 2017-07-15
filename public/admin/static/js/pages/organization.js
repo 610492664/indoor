@@ -8,7 +8,7 @@ function organization() {
         "lengthMenu": [[2, 25, 50, 100, -1], ["10", "25", "50", "100", "全部"]],
         "autoWidth": false,
         "ajax": {
-            "url": php_url.list,
+            "url": MODULE + php_url.list,
             "type":'get',
             "data": {
                 "org_id": "123"

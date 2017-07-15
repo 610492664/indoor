@@ -8,7 +8,7 @@ function user() {
         "lengthMenu": [[10, 25, 50, 100, -1], ["10", "25", "50", "100", "全部"]],
         "autoWidth": false,
         "ajax": {
-            "url": php_url.getList,
+            "url": MODULE + php_url.getList,
             "type":'get',
             "data": {
                 "org_id": "123"

@@ -8,7 +8,7 @@ function locator() {
         "lengthMenu": [[10, 25, 50, 100, -1], ["10", "25", "50", "100", "全部"]],
         "autoWidth": false,
         "ajax": {
-            "url": MODULE+"/locator/getList",
+            "url": MODULE +"/locator/getList",
             "type":'get',
             "data": {
                 "org_id": "123"

@@ -9,7 +9,7 @@ function floor() {
         "autoWidth": false,
         "processing": true,
         "ajax": {
-            "url": php_url.getList,
+            "url": MODULE + php_url.getList,
             "type":'get',
             "data": {
                 "bui_id": "123"

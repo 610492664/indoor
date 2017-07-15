@@ -26,6 +26,7 @@
             url: href,
             type: "get",
             beforeSend: function () {
+                $.msg.close();
                 $.msg.loading();
             },
             error: function () {
@@ -79,7 +80,7 @@
      * 关闭消息框
      */
     msg.prototype.close = function () {
-        return this.index.modal('hide');
+        return typeof this.index !== 'undefined' && this.index.modal('hide');
     };
 
     /**
