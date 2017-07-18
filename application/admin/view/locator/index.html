@@ -27,8 +27,9 @@
 </div>
 <script>
     var php_url = {
-        locator_mod : '{:url("locator/mod")}',
-        locator_del : '{:url("locator/del")}',
+        getList : '{:url("locator/getList")}',
+        mod : '{:url("locator/mod")}',
+        del : '{:url("locator/del")}',
     };
     require(['dataTables.bootstrap','inputmask.date','jquery.form'],function () {
         require(['domready!','js/pages/locator'],function () {

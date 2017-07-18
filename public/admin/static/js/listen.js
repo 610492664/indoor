@@ -29,7 +29,7 @@ define(['jquery','common'],function ($) {
             return false;
         }
         $.msg.confirm("确认删除？",function () {
-            var url = MODULE + $this.attr('e-action-del');
+            var url = $this.attr('e-action-del');
             $.ajax({
                 url: url,
                 type: "get",
@@ -49,7 +49,7 @@ define(['jquery','common'],function ($) {
 
     //监听模态框add,mod,detail事件
     $body.on('click','[e-action-modal]', function () {
-        var url = MODULE + $(this).attr('e-action-modal'), data = {},callback;
+        var url = $(this).attr('e-action-modal'), data = {},callback;
         data.id = $(this).attr('e-data');
         callback = $(this).attr('e-callback');
         var $modal =  $('#myModal');

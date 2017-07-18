@@ -8,7 +8,7 @@ function person() {
         "autoWidth": false,
         "processing": true,
         "ajax": {
-            "url": MODULE + php_url.getList,
+            "url": php_url.getList,
             "type":'get',
             "data": {
                 "org_id": "123"

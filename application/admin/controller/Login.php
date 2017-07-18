@@ -46,7 +46,8 @@ class Login extends Base
             }
             Db::name('User')->where('use_id', $user['use_id'])->update(['login_time' => time(), 'login_num' => ['exp', 'login_num+1']]);
             session('user', $user);
-            $this->success('登录成功，正在进入系统...', '@admin');
+            $url = url('/#/index/dashBoard.html','',false);
+            $this->redirect($url);
         }
     }
 

@@ -35,14 +35,18 @@ class LocalEquipment extends Base
     {
         /** @var $model Model */
         $model = Loader::model('LocalEquipment');
-        $result = $model->data()->save(input('post.'));
-        return result($result,'添加终端设备成功！', '添加终端设备失败！');
+        $result = $model->data(input('post.'),true)->save();
+        if(!empty($result)){
+            $this->success('添加终端设备成功！');
+        }else{
+            $this->error('添加终端设备失败！');
+        }
     }
     //获取修改表单
     public function mod()
     {
         $id = input('get.id');
-        $detail = Model::get($id)->getData();
+        $detail = Model::get($id);
         $this->assign('detail',$detail);
         return $this->fetch();
     }
@@ -50,15 +54,23 @@ class LocalEquipment extends Base
     public function update()
     {
         $model = new Model;
-        $result = $model->save(input("post."),['lmar_id' => input('post.lmar_id')]);
-        return result($result,'修改终端设备成功！', '修改终端设备成功！');
+        $result = $model->save(input("post."),['lequ_id' => input('post.lequ_id')]);
+        if(!empty($result)){
+            $this->success('修改终端设备成功！');
+        }else{
+            $this->error('修改终端设备成功！');
+        }
     }
     //删除
     public function del()
     {
         $ids = input('get.id/a');
         $result = Model::destroy($ids);
-        return result($result,'删除终端设备成功！', '删除终端设备失败！');
+        if(!empty($result)){
+            $this->success('删除终端设备成功！');
+        }else{
+            $this->error('删除终端设备失败！');
+        }
     }
 
 }
