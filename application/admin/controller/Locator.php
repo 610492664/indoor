@@ -63,7 +63,7 @@ class Locator extends Base
         $loc_id = input('post.loc_id');
         $result = $model->save(input('post.'),['loc_id' => $loc_id]);
         if(!empty($result)){
-            $this->success('修改成功！');
+            $this->success('修改成功！','');
         }else{
             $this->error('修改失败！');
         }

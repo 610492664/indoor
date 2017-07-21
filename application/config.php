@@ -147,8 +147,8 @@ return [
 
     // 视图输出字符串内容替换
     'view_replace_str'  => [
-        '__IMG__'=>'/indoor/public/admin/static/img',
-        '__PLUGIN__'=>'/indoor/public/admin/static/plugin',
+        '__IMG__'=>'/indoor/public/static/img',
+        '__PLUGIN__'=>'/indoor/public/static/plugin',
     ],
     // 默认跳转页面对应的模板文件
     'dispatch_success_tmpl'  => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',

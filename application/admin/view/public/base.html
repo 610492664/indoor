@@ -71,10 +71,10 @@
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">
-                                        <a url="{:url('User/edit')}" class="refresh btn btn-default btn-flat">修改信息</a>
+                                        <a url="{:url('system/user/edit')}" class="refresh btn btn-default btn-flat">修改信息</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="{:url('Login/out')}" class="btn btn-default btn-flat">退出登录</a>
+                                        <a href="{:url('system/login/out')}" class="btn btn-default btn-flat">退出登录</a>
                                     </div>
                                 </li>
                             </ul>
@@ -176,9 +176,9 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="#{:url('user/index')}"><i class="fa fa-fw fa-circle-o"></i> 系统用户</a></li>
-                            <li><a href="#{:url('log/index')}"><i class="fa fa-fw fa-circle-o"></i> 权限管理</a></li>
-                            <li><a href="#{:url('node/index')}"><i class="fa fa-fw fa-circle-o"></i> 节点管理</a></li>
+                            <li><a href="#{:url('system/user/index')}"><i class="fa fa-fw fa-circle-o"></i> 系统用户</a></li>
+                            <li><a href="#{:url('system/role/index')}"><i class="fa fa-fw fa-circle-o"></i> 角色管理</a></li>
+                            <li><a href="#{:url('system/node/index')}"><i class="fa fa-fw fa-circle-o"></i> 节点管理</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
@@ -222,10 +222,12 @@
     </div>
     <script>
         var PHP_DATA = {};
+        var APP = '__APP__';
         var URL = '__URL__';
         var MODULE = '__MODULE__';
         var JS_PATH = '__JS__';
         var CSS_PATH = '__CSS__';
+        var PUBLIC_PATH = '__PUBLIC__';
         var STATIC_PATH = '__STATIC__';
         var IMG_PATH = '__IMG__';
         var PLUGIN_PATH = '__PLUGIN__';

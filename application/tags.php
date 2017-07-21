@@ -18,9 +18,9 @@ return [
     // 模块初始化
     'module_init'  => [],
     // 操作开始执行
-    'action_begin' => ['app\\admin\\behavior\\AccessAuth'],
+    'action_begin' => ['behavior\\AccessAuth'],
     // 视图内容过滤
-    'view_filter'  => [],
+    'view_filter'  => ['behavior\\FilterView'],
     // 日志写入
     'log_write'    => [],
     // 应用结束
