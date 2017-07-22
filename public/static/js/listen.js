@@ -1,6 +1,21 @@
 define(['jquery','common'],function ($) {
     var $body = $('body');
 
+    $body.on('draw.dt', '#table', function () {
+        var $switch = $('input.switch')
+        $switch.bootstrapSwitch();
+        $switch.on('switchChange.bootstrapSwitch',function (event,state) {
+            return false;
+            var id = $(this).attr('e-data'), url = $(this).attr('e-action-mod');
+            var ret =  $.form.load(url, {id: id, name: this.name, value: state ? 1 : 0}, 'POST', false, function (res) {
+                if (res.code === 0) {
+                    return false;
+                }
+            });
+            return ret;
+        });
+    })
+
     //监听全选事件（自定义属性 e-check-name)
     $body.on('click', '[e-check-name]', function () {
         var checked = !!this.checked;

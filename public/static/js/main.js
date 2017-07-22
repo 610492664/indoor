@@ -22,6 +22,7 @@ require.config({
         'bootstrap': ['static/plugin/bootstrap/js/bootstrap'],
         'bootstrap-validator':['static/plugin/bootstrap-validator-1000hz/validator'],
         'bootstrap-dialog': ['static/plugin/bootstrap-dialog/js/bootstrap-dialog'],
+        'bootstrap-switch':['static/plugin/bootstrap-switch/js/bootstrap-switch'],
         'html5shiv': ['static/plugin/compatible/html5shiv'],
         'respond': ['static/plugin/compatible/respond.min'],
         'dataTables.bootstrap': ['static/plugin/datatables/dataTables.bootstrap'],
@@ -44,6 +45,7 @@ require.config({
         'bootbox': {deps: ['jquery','bootstrap']},
         'bootstrap': {deps: ['jquery']},
         'bootstrap-validator': {deps: ['bootstrap']},
+        'bootstrap-switch': {deps: ['bootstrap', 'css!' + baseUrl + '/static/plugin/bootstrap-switch/css/bootstrap-switch.css']},
         'bootstrap-dialog': {deps: ['bootstrap','css!' + baseUrl + '/static/plugin/bootstrap-dialog/css/bootstrap-dialog.css']},
         'dataTables.bootstrap': {deps: ['jquery','bootstrap','jquery.dataTables','css!' + baseUrl + '/static/plugin/datatables/dataTables.bootstrap.css']},
         'dataTables.input':  {deps: ['dataTables.bootstrap']},
@@ -63,7 +65,7 @@ require.config({
 
 
 // UI框架初始化
-require(['bootbox','bootstrap-dialog', 'fastclick', 'jquery.slimscroll','app','listen'],
+require(['bootbox','bootstrap-dialog','bootstrap-switch', 'fastclick', 'jquery.slimscroll','app','listen'],
 function (bootbox,BootstrapDialog) {
    window.bootbox = bootbox;
    window.BootstrapDialog = BootstrapDialog;

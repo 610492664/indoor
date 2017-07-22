@@ -23,15 +23,26 @@ function role() {
             { "data": "status" ,"title":"状态"},
             { "data": "rol_id","title":"操作", "width": "25%"}
         ],
-        "columnDefs": [ {
-            "targets": 0,
-            "render": function ( data, type, full, meta ) {
-                if (type === 'display') {
-                    return '<input type="checkbox" name="checkList" value="' + data + '">';
+        "columnDefs": [
+            {
+                "targets": 0,
+                "render": function ( data, type, full, meta ) {
+                    if (type === 'display') {
+                        return '<input type="checkbox" name="checkList" value="' + data + '">';
+                    }
+                    return data;
                 }
-                return data;
-            }
-        },
+            },
+            {
+                "targets": 4,
+                "render": function ( data, type, full, meta ) {
+                    if (type === 'display') {
+                        var checked = (data === 1) ? 'checked' : '';
+                        return '<input class="switch" type="checkbox" '+checked+ ' name="status" data-size="small" data-on-text="启用" data-off-text="禁用" e-action-mod="'+php_url.forbid+'" e-data="'+full.rol_id+'"/>'
+                    }
+                    return data;
+                }
+            },
             {
                 "targets": 5,
                 "render": function ( data, type, full, meta ) {
@@ -39,7 +50,7 @@ function role() {
                         return '<div class="btn-group">'+
                             '<button class="btn btn-link" e-action-modal="'+php_url.mod+'" e-data="'+data+'" ><i class="fa fa-pencil-square-o"></i></button>'+
                             '<button class="btn btn-link" e-action-del="'+php_url.del+'" e-data="'+data+'" ><i class="fa fa-trash-o"></i></button>'+
-                            '<button class="btn btn-link" e-action-del="'+php_url.del+'" e-data="'+data+'" ><i class="fa fa-cog"></i></button>'+
+                            '<a class="btn btn-link" href="'+php_url.apply+'?id='+data+'" ><i class="fa fa-cog"></i></a>'+
                             '<button class="btn btn-link" e-action-del="'+php_url.del+'" e-data="'+data+'" ><i class="fa fa-ban"></i></button>'+
                             '</div>';
                     }

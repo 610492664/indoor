@@ -82,33 +82,40 @@
      * @param url 请求的地址
      * @param data 额外请求数据
      * @param type 提交的类型 GET|POST
+     * @param async 异步或者同步
      * @param callback 成功后的回调方法
      * @param loading 是否显示加载层
      * @param tips 提示消息
      * @param time 消息提示时间
      */
-    _form.prototype.load = function (url, data, type, callback, loading, tips, time) {
+    _form.prototype.load = function (url, data, type, async, callback, loading, tips, time) {
         var self = this, dialogIndex = 0;
+        var ret = true;
         (loading !== false) && (dialogIndex = $.msg.loading(tips));
         // (typeof Pace === 'object') && Pace.restart();
         $.ajax({
             type: type || 'GET',
             url: url,
             data: data || {},
+            async: async || true,
             statusCode: {
                 404: function () {
+                    ret = false;
                     $.msg.tips(self.errMsg.replace('{status}', 'E404 - '));
                 },
                 500: function () {
+                    ret = false;
                     $.msg.tips(self.errMsg.replace('{status}', 'E500 - '));
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
+                ret = false;
                 $.msg.tips(self.errMsg.replace('{status}', 'E' + textStatus + ' - '));
             },
             success: function (res) {
                 $.msg.close(dialogIndex);
                 if (typeof callback === 'function' && callback.call(self, res) === false) {
+                    ret = false;
                     return false;
                 }
                 if (typeof (res) === 'object') {
@@ -119,6 +126,7 @@
                 }
             }
         });
+        return false;
     };
 
     /**
