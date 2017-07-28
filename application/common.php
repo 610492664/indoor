@@ -9,6 +9,9 @@
 // | Author: 流年 <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
+
+use service\NodeService;
+
 // 应用公共文件
 /**
  * 生成GUID
@@ -41,4 +44,13 @@ function result($result, $success_msg, $error_msg) {
         $return['msg'] = $error_msg;
     }
     return $return;
+}
+
+/**
+ * RBAC节点权限验证
+ * @param string $node
+ * @return bool
+ */
+function auth($node) {
+    return NodeService::checkAuthNode($node);
 }

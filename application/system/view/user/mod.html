@@ -1,5 +1,5 @@
 <form class="form-horizontal" id="form" action = "{:url('User/update')}">
-    <input name="id" value="{$detail.use_id}" hidden>
+    <input name="use_id" value="{$detail.use_id}" hidden>
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span></button>
@@ -10,6 +10,17 @@
             <label  class="col-sm-2 control-label">用户名</label>
             <div class="col-sm-10">
                 <input class="form-control" name="name" placeholder="用户名" type="text" value="{$detail.name}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">角色</label>
+            <div class="col-sm-10">
+                <select class="form-control" name="rol_id">
+                    <option value="">暂无</option>
+                    {volist name="roles" id="role"}
+                    <option value="{$role.rol_id}" {eq name="detail['rol_id']" value="$role['rol_id']"}selected{/eq}>{$role.name}</option>
+                    {/volist}
+                </select>
             </div>
         </div>
         <div class="form-group">

@@ -2,30 +2,28 @@
 namespace app\system\controller;
 
 use \Think\Loader;
-use \app\system\model\User as Model;
+use \app\system\model\User as SubModel;
 use \app\admin\controller\Base;
+use \think\Db;
 
 class User extends Base
 {
 
     public function index()
     {
+        if(input('?get.action')){
+            $org_id = input('session.user.org_id');
+            $records = SubModel::all(['org_id'=> $org_id], 'role');
+            return $records;
+        }
         return $this->fetch();
     }
-    //获取列表
-    public function getList()
-    {
-//        $org_id = input('session.org_id');
-        $org_id = '{3033D1DB-3C92-6624-DCDE-0435498BB60D}';
-        $records = Model::all(['org_id'=> $org_id]);
-//       dump($records);exit;
-        return $records;
-    }
+
     //查看详情
     public function detail()
     {
         $id = input('get.id');
-        $detail = Model::get($id);
+        $detail = SubModel::get($id);
         $this->assign('detail',$detail);
         return $this->fetch();
     }
@@ -36,7 +34,7 @@ class User extends Base
     //添加到数据库
     public function insert()
     {
-        /* @var $model Model*/
+        /* @var $model SubModel*/
         $model = Loader::model('user');
         $result = $model->data(input('post.'), true)->save();
         return result($result,'添加用户成功！', '添加用户失败！');
@@ -45,16 +43,21 @@ class User extends Base
     public function mod()
     {
         $id = input('get.id');
-        $model = Model::get($id);
+        $model = SubModel::get($id);
         $detail = $model->getData();
+        $roles = Db::name('role')
+            ->where(['status'=>1, 'org_id'=> input('session.user.org_id')])
+            ->field('rol_id,name')
+            ->select();
         $this->assign('detail',$detail);
+        $this->assign('roles',$roles);
         return $this->fetch();
     }
 
     public function update()
     {
-        $model = new Model;
-        $result = $model->save(input("post."),['id' => input('post.id')]);
+        $model = new SubModel;
+        $result = $model->save(input("post."),['use_id' => input('post.use_id')]);
         return result($result,'修改用户信息成功！', '修改用户信息失败！');
     }
 
@@ -62,7 +65,7 @@ class User extends Base
     public function del()
     {
         $ids = input('get.id/a');
-        $result = Model::destroy($ids);
+        $result = SubModel::destroy($ids);
         return result($result,'删除用户成功！', '删除用户失败！');
     }
 

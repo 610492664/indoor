@@ -4,7 +4,6 @@ namespace app\admin\model;
 class Organization extends Base
 {
     protected $type = [];
-
     protected $insert = ['org_id','p_org_id'];
 
     protected function setOrgIdAttr()

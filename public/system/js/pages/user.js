@@ -4,21 +4,20 @@
 
 function user() {
     $.table = $('#table').DataTable({
-        "language":  {"url": PLUGIN_PATH+"/datatables/Chinese.json"},
-        "lengthMenu": [[10, 25, 50, 100, -1], ["10", "25", "50", "100", "全部"]],
-        "autoWidth": false,
         "ajax": {
-            "url": php_url.getList,
-            "type":'get',
-            "data": {
-                "org_id": "123"
-            },
-            "dataSrc": ""
+            "url": php_url.index,
         },
         "columns": [
             { "data": "use_id","title":"<input type='checkbox' e-check-name = 'checkList'>", "searchable": false,"orderable": false, "width": "3px" },
             { "data": null, "title":"序号", "searchable": false,"orderable": false, "width": "2em"},
             { "data": "name","title":"用户账号"},
+            { "data": function (row, type, set, meta) {
+                if (row.role !== null) {
+                    return row.role.name;
+                } else {
+                    return '';
+                }
+            },"title":"角色"},
             { "data": "phone","title":"手机号" },
             { "data": "email","title":"email" },
             { "data": "login_num","title":"登录次数" },
@@ -37,7 +36,7 @@ function user() {
             }
         },
             {
-                "targets": 9,
+                "targets": 10,
                 "render": function ( data, type, full, meta ) {
                     if (type === 'display') {
                         return '<div class="btn-group">'+

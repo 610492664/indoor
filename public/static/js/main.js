@@ -38,6 +38,7 @@ require.config({
         'jquery': ['static/plugin/jQuery/2.2.4/jquery'],
         'jquery.form': ['static/plugin/jquery-form/jquery.form'],
         'select2': ['static/plugin/select2/js/select2.full'],
+        'jquery.ztree': ['static/plugin/zTree/js/jquery.ztree.all'],
     },
     shim: {
         'app': {deps: ['jquery','bootstrap']},
@@ -56,7 +57,8 @@ require.config({
         'jquery.form': {deps: ['jquery']},
         'dataTables.buttons': {deps: ['dataTables.bootstrap']},
         'dataTables.buttons.bootstrap': {deps: ['dataTables.buttons','css!' + baseUrl + '/static/plugin/datatables/extensions/Buttons/css/buttons.bootstrap.css']},
-        'select2':{deps: ['css!' + baseUrl + '/static/plugin/select2/css/select2.css', 'css!' + baseUrl + '/static/plugin/select2/css/AdminLTE.css']}
+        'select2':{deps: ['css!' + baseUrl + '/static/plugin/select2/css/select2.css', 'css!' + baseUrl + '/static/plugin/select2/css/AdminLTE.css']},
+        'jquery.ztree': {deps: ['jquery', 'css!' + baseUrl + '/static/plugin/zTree/css/zTreeStyle/zTreeStyle.css']},
     },
     deps: ['css!//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css'],
     // 开启debug模式，不缓存资源
@@ -65,9 +67,24 @@ require.config({
 
 
 // UI框架初始化
-require(['bootbox','bootstrap-dialog','bootstrap-switch', 'fastclick', 'jquery.slimscroll','app','listen'],
-function (bootbox,BootstrapDialog) {
-   window.bootbox = bootbox;
-   window.BootstrapDialog = BootstrapDialog;
-   window.onhashchange();
-});
+require(['bootbox','bootstrap-dialog','bootstrap-switch', 'fastclick', 'jquery.slimscroll','dataTables.bootstrap','app','listen'],
+    function (bootbox,BootstrapDialog) {
+        window.bootbox = bootbox;
+        window.BootstrapDialog = BootstrapDialog;
+        window.onhashchange();
+        $.extend( true, $.fn.dataTable.defaults, {
+            "language":  {"url": PLUGIN_PATH+"/datatables/Chinese.json"},
+            "lengthMenu": [[10, 25, 50, 100, -1], ["10", "25", "50", "100", "全部"]],
+            "autoWidth": false,
+            "processing": true,
+            "ajax": {
+                // "url": php_url.index,
+                "type":'get',
+                "data": {
+                    "action": 'list'
+                },
+                "dataSrc": "",
+            },
+        });
+    }
+);

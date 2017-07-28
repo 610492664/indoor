@@ -4,17 +4,8 @@
 
 function floor() {
     $.table = $('#table').DataTable({
-        "language":  {"url": PLUGIN_PATH+"/datatables/Chinese.json"},
-        "lengthMenu": [[10, 25, 50, 100, -1], ["10", "25", "50", "100", "全部"]],
-        "autoWidth": false,
-        "processing": true,
         "ajax": {
-            "url": php_url.getList,
-            "type":'get',
-            "data": {
-                "bui_id": "123"
-            },
-            "dataSrc": "",
+            "url": php_url.index,
         },
         "columns": [
             { "data": "flo_id","title":"<input type='checkbox' e-check-name = 'checkList'>", "searchable": false,"orderable": false, "width": "3px" },
@@ -63,7 +54,7 @@ function floor() {
                 var bui_id = $(this).val()
                 $('span[bui_id]').attr('bui_id',bui_id);
                 $('span[bui_id]').text($(this).find("option:selected").text());
-                $.table.settings()[0].ajax.data = {"bui_id" :bui_id};
+                $.table.settings()[0].ajax.data = {"bui_id" :bui_id, "action": "list"};
                 $.table.ajax.reload();
             });
             if (typeof ($('span[bui_id]').attr('bui_id')) != 'undefind'){

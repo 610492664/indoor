@@ -2,27 +2,26 @@
 namespace app\admin\controller;
 
 use \Think\Loader;
-use \app\admin\model\LocalEquipment as Model;
+use \app\admin\model\LocalEquipment as SubModel;
 
 class LocalEquipment extends Base
 {
     public function index()
     {
+        if(input('?get.action')){
+            $org_id = input('session.user.org_id');
+            $model = new SubModel();
+            $list = $model->where(['org_id'=>$org_id])->select();
+            return $list;
+        }
         return $this->fetch();
     }
-    //获取列表
-    public function getList()
-    {
-//        $org_id = input('session.org_id');
-        $model = new Model();
-        $list = $model->where(['org_id'=>'{3033D1DB-3C92-6624-DCDE-0435498BB60D}'])->select();
-        return $list;
-    }
+
     //查看详情
     public function detail()
     {
         $id = input('get.id');
-        $detail = Model::get($id);
+        $detail = SubModel::get($id);
         $this->assign('detail',$detail);
         return $this->fetch();
     }
@@ -33,7 +32,7 @@ class LocalEquipment extends Base
     //添加到数据库
     public function insert()
     {
-        /** @var $model Model */
+        /** @var $model SubModel */
         $model = Loader::model('LocalEquipment');
         $result = $model->data(input('post.'),true)->save();
         if(!empty($result)){
@@ -46,14 +45,14 @@ class LocalEquipment extends Base
     public function mod()
     {
         $id = input('get.id');
-        $detail = Model::get($id);
+        $detail = SubModel::get($id);
         $this->assign('detail',$detail);
         return $this->fetch();
     }
     //修改更新
     public function update()
     {
-        $model = new Model;
+        $model = new SubModel;
         $result = $model->save(input("post."),['lequ_id' => input('post.lequ_id')]);
         if(!empty($result)){
             $this->success('修改终端设备成功！');
@@ -65,7 +64,7 @@ class LocalEquipment extends Base
     public function del()
     {
         $ids = input('get.id/a');
-        $result = Model::destroy($ids);
+        $result = SubModel::destroy($ids);
         if(!empty($result)){
             $this->success('删除终端设备成功！');
         }else{

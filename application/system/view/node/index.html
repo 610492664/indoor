@@ -9,7 +9,7 @@
                 <table class="table table-hover">
                     <tbody>
                     {foreach $nodes as $key=>$vo}
-                    <tr data-id="{$vo.nod_id}">
+                    <tr data-id="{$vo.node}">
                         <td style="width: 550px;">
                             {$vo.spl}{$vo.node}
                             <input placeholder="输入节点名" class='title-input' style='height:28px;line-height:28px;width:auto' name='title' value="{$vo.title}"/>
@@ -50,11 +50,11 @@
     $(function () {
         $('input.title-input').on('change', function () {
             var id = $(this).parents('tr').attr('data-id');
-            $.form.load('{:url("save")}', {id: id, name: this.name, value: this.value}, 'POST');
+            $.form.load('{:url("save")}', {id: id, name: this.name, value: this.value}, 'POST', true, null, false);
         });
         $('input.check-box').on('click', function () {
             var id = $(this).parents('tr').attr('data-id');
-            $.form.load('{:url("save")}', {id: id, name: this.name, value: this.checked ? 1 : 0}, 'POST');
+            $.form.load('{:url("save")}', {id: id, name: this.name, value: this.checked ? 1 : 0}, 'POST', true, null, false);
         });
     });
 </script>

@@ -22,7 +22,34 @@
 
     //加载content内容
     $.content_load = function (href, layout_fix) {
-        $.ajax({
+        $.form.load(href, {}, 'get', true, function () {
+            if ($("#form").length > 0) {
+                //激活公共表单验证
+                require(['bootstrap-validator'],function () {
+                    $('#form').validator();
+                });
+                //激活表单上传事件
+                $("#form").ajaxForm({
+                    type: 'post',
+                    error: function () {
+                        var msg = $('<div class="alert alert-warning"><a href="#" class="close" data-dismiss="alert">&times;</a></div>')
+                            .append('服务器错误！请稍后再试！');
+                        $(".box-body").prepend(msg);
+                    },
+                    success: function(data) {
+                        if (data.code == 1) {
+                            $.msg.success(data.msg,1000, function () {
+                                window.onhashchange();
+                            });
+                        }else {
+                            $.msg.error(data.msg,1000);
+                        }
+                    }
+                });
+            }
+            layout_fix();
+        });
+        /*$.ajax({
             url: href,
             type: "get",
             beforeSend: function () {
@@ -64,7 +91,7 @@
                 }
                 layout_fix();
             },
-        });
+        });*/
     }
 
 
@@ -84,49 +111,45 @@
      * @param type 提交的类型 GET|POST
      * @param async 异步或者同步
      * @param callback 成功后的回调方法
+     * @param refresh 成功后是否刷新页面
      * @param loading 是否显示加载层
      * @param tips 提示消息
      * @param time 消息提示时间
      */
-    _form.prototype.load = function (url, data, type, async, callback, loading, tips, time) {
+    _form.prototype.load = function (url, data, type, async, callback, refresh, loading, tips, time) {
         var self = this, dialogIndex = 0;
-        var ret = true;
-        (loading !== false) && (dialogIndex = $.msg.loading(tips));
+        (loading !== false) && ($.msg.close(), dialogIndex = $.msg.loading(tips));
         // (typeof Pace === 'object') && Pace.restart();
+
         $.ajax({
             type: type || 'GET',
             url: url,
             data: data || {},
-            async: async || true,
+            async: async !== false,
             statusCode: {
                 404: function () {
-                    ret = false;
                     $.msg.tips(self.errMsg.replace('{status}', 'E404 - '));
                 },
                 500: function () {
-                    ret = false;
                     $.msg.tips(self.errMsg.replace('{status}', 'E500 - '));
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                ret = false;
                 $.msg.tips(self.errMsg.replace('{status}', 'E' + textStatus + ' - '));
             },
             success: function (res) {
                 $.msg.close(dialogIndex);
-                if (typeof callback === 'function' && callback.call(self, res) === false) {
-                    ret = false;
-                    return false;
-                }
-                if (typeof (res) === 'object') {
-                    return $.msg.auto(res, time||1000);
-                }
                 if (typeof (res) === 'string') {
                     self.show(res);
                 }
+                if (typeof (res) === 'object') {
+                    $.msg.auto(res, time||1000, refresh);
+                }
+                if (typeof callback === 'function'&&　callback.call(self, res) === false) {
+                    return false;
+                }
             }
         });
-        return false;
     };
 
     /**
@@ -305,14 +328,15 @@
      * 自动处理显示Think返回的Json数据
      * @param data JSON数据对象
      * @param time 延迟关闭时间
+     * @param refresh 成功是否刷新页面
      * @return {common_L11._msg|*}
      */
-    msg.prototype.auto = function (data, time) {
+    msg.prototype.auto = function (data, time, refresh) {
         var self = this;
         data.url = !!data.url ? '#'+ data.url.substr(APP.length) : data.url;
         if (parseInt(data.code) === 1) {
             return self.success(data.msg, time, function () {
-                data.url !== '' ? (window.location.href = data.url) : $.form.reload();
+                data.url !== '' ? (window.location.href = data.url) : ((refresh !== false) && $.form.reload());
                 /*if (self.autoSuccessCloseIndexs && self.autoSuccessCloseIndexs.length > 0) {
                     for (var i in self.autoSuccessCloseIndexs) {
                         layer.close(self.autoSuccessCloseIndexs[i]);

@@ -10,25 +10,10 @@ Target Server Type    : MYSQL
 Target Server Version : 50714
 File Encoding         : 65001
 
-Date: 2017-07-21 20:38:04
+Date: 2017-07-28 20:49:26
 */
 
 SET FOREIGN_KEY_CHECKS=0;
-
--- ----------------------------
--- Table structure for il_auth
--- ----------------------------
-DROP TABLE IF EXISTS `il_auth`;
-CREATE TABLE `il_auth` (
-  `auth` bigint(20) unsigned DEFAULT NULL COMMENT '角色ID',
-  `node` varchar(200) DEFAULT NULL COMMENT '节点路径',
-  KEY `index_system_auth_auth` (`auth`) USING BTREE,
-  KEY `index_system_auth_node` (`node`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色与节点关系表';
-
--- ----------------------------
--- Records of il_auth
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for il_building
@@ -243,152 +228,126 @@ INSERT INTO `il_locator` VALUES ('{6C2F3990-B14D-5194-FD59-1003C3656DEE}', '套�
 -- ----------------------------
 DROP TABLE IF EXISTS `il_node`;
 CREATE TABLE `il_node` (
-  `nod_id` char(38) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `node` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '节点代码',
+  `node` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '节点代码',
+  `pnode` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `title` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '节点标题',
   `is_menu` tinyint(1) unsigned DEFAULT '0' COMMENT '是否可设置为菜单',
   `is_auth` tinyint(1) unsigned DEFAULT '1' COMMENT '是启启动RBAC权限控制',
   `create_time` int(11) DEFAULT '0' COMMENT '创建时间',
-  PRIMARY KEY (`nod_id`),
+  PRIMARY KEY (`node`),
   KEY `index_system_node_node` (`node`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='系统节点表';
 
 -- ----------------------------
 -- Records of il_node
 -- ----------------------------
-INSERT INTO `il_node` VALUES ('{069750FA-00DE-974E-28EC-5F830989373D}', 'admin/outfirefacility/mod', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{07EC6521-7795-2D51-D723-4B45D0F82A24}', 'system/user/detail', '', '0', '0', '1500545127');
-INSERT INTO `il_node` VALUES ('{0A344D3A-A25C-CA65-B515-57AA2CF43AC9}', 'admin/localequipment/index', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{0CFE1625-4CE9-2D90-DF06-B1BF36F58917}', 'admin/organization/mod', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{105034DA-1502-84A7-5C94-72303F9D4567}', 'admin/building/getlist', '', '1', '1', '1500545125');
-INSERT INTO `il_node` VALUES ('{14D3E502-076D-71E3-608A-62CA16B49674}', 'system/auth/del', '', '0', '0', '1500621378');
-INSERT INTO `il_node` VALUES ('{15A8A091-9186-735C-3543-9C7223F74CE8}', 'admin/outfirefacility/getlist', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{16C05FE7-DD22-FD47-EAE5-C294E8AF3276}', 'admin/floor/insert', '', '0', '0', '1500545125');
-INSERT INTO `il_node` VALUES ('{18AD87C1-62AA-5481-F947-8ABF833541DB}', 'system/auth/index', '', '0', '0', '1500621378');
-INSERT INTO `il_node` VALUES ('{192E5201-1943-3628-78D3-4D56B0ED9A19}', 'admin/localequipment/add', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{1B96176E-0C93-1722-FE9D-91CA5E28A076}', 'admin/locationmark', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{1BD32738-E348-235A-3CF9-FD6AB79DA656}', 'admin/outfirefacility/index', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{1DB2768B-50DE-3DFA-2595-04AF338FB5CD}', 'system/user/update', '', '0', '0', '1500545127');
-INSERT INTO `il_node` VALUES ('{1F242FAB-59F1-FB44-8418-19E0722BEFFE}', 'admin/organization', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{20A64667-E633-6C32-1A5F-5646982E5DAE}', 'admin/outfirefacility/floors', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{20BFB21F-FC7D-24B6-7654-46A266CA0AC8}', 'admin/outfirefacility/add', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{20FBDCFA-9504-8BEA-0CA7-E3668F0D1968}', 'admin/group/add', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{228CEA15-9132-5F5A-34F0-110BA767C961}', 'system/node/del', '', '0', '0', '1500545127');
-INSERT INTO `il_node` VALUES ('{2719A079-ECD6-B488-7E35-E53D5B92BC64}', 'admin/localequipment/del', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{2E7B50C4-CFCE-9FDD-643D-2FFB15E8A41A}', 'admin/incident/getlist', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{2F0A569F-6F83-D5B9-5DC3-909E919A1457}', 'admin/group/update', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{307B7BBB-381E-EF32-2BC3-D7BB17E8CE33}', 'system/node/insert', '', '0', '0', '1500545127');
-INSERT INTO `il_node` VALUES ('{30D08DB5-4BD2-54F6-F208-EA712E95612C}', 'admin/locationmark/del', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{31FE8699-D314-BB41-2E87-D078C529E389}', 'admin/locationmark/index', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{3438F0B7-38D2-4FBD-2622-27F8A6B4764E}', 'system/user/getlist', '', '0', '0', '1500545127');
-INSERT INTO `il_node` VALUES ('{3449627E-388B-58A8-AF11-7F1409BCF489}', 'system/node/add', '', '0', '0', '1500545127');
-INSERT INTO `il_node` VALUES ('{348995A7-2E4E-0686-3F2D-CD0F05847F8A}', 'admin/organization/self', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{3489C2B6-C82A-AE41-088C-F96481F59DCD}', 'admin/building/del', '删除', '1', '1', '1500545125');
-INSERT INTO `il_node` VALUES ('{37AC3EC3-90BE-80B7-21AE-4EAC94ADB40A}', 'admin/floor/mod', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{3849C726-C7C2-3BB3-CE21-7AF784512582}', 'system/role/mod', '', '0', '0', '1500634163');
-INSERT INTO `il_node` VALUES ('{3CC6FBFE-A2F5-00CC-5DDB-0B7EF04B3C14}', 'admin/person/mod', '', '0', '0', '1500545127');
-INSERT INTO `il_node` VALUES ('{3D966044-A08E-3D82-3E58-CBF01E9DFA83}', 'system/auth/resume', '', '0', '0', '1500621378');
-INSERT INTO `il_node` VALUES ('{3EE7AAB8-E2D8-2DD2-DB12-BECD313B7515}', 'admin/index/dashboard', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{41AE922E-5F56-0CA2-F78F-F10C7BDBF194}', 'admin/localequipment/update', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{43E32328-5F3C-851B-1A4D-CA815268135A}', 'system/user/add', '', '0', '0', '1500545127');
-INSERT INTO `il_node` VALUES ('{4473A728-2DB3-D5C1-D4A0-75A262EA3D0C}', 'system/node', '', '0', '0', '1500545127');
-INSERT INTO `il_node` VALUES ('{45A233E3-BF34-8B20-20C8-55D7F4C95423}', 'admin/floor/detail', '', '0', '0', '1500545125');
-INSERT INTO `il_node` VALUES ('{483CFB58-484F-0870-5E5A-359035842B8E}', 'admin/organization/detail', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{4A09394F-4D08-FCA4-A554-552397A3CBE6}', 'admin/locationmark/update', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{4AB81CB6-7D33-D5B7-E188-FDE19E2A45ED}', 'admin/locationmark/getlist', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{4AC04826-992F-1C13-C3FF-5D357CED8AFE}', 'system/auth', '', '0', '0', '1500621378');
-INSERT INTO `il_node` VALUES ('{4C972FE3-00F3-5290-D512-90DA86F2A586}', 'system/auth/forbid', '', '0', '0', '1500621378');
-INSERT INTO `il_node` VALUES ('{4E08AD30-99E9-7F87-CC50-899118E5B9E2}', 'admin/outfirefacility/update', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{4F12910A-4898-B79B-5024-5EB0FCE6ED82}', 'system/node/getlist', '', '0', '0', '1500545127');
-INSERT INTO `il_node` VALUES ('{4F8EB16F-EB7D-B20C-89B8-E351552E5975}', 'admin/incident/del', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{53712F40-62A0-5E4D-D63B-DEAD7524D6D9}', 'system/user/del', '', '0', '0', '1500545127');
-INSERT INTO `il_node` VALUES ('{5517D859-34E4-61A1-53C3-9366BA152AEB}', 'admin/group/detail', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{567DC21B-03AB-00B1-EF16-57B420A6BD4A}', 'system/auth/apply', '', '0', '0', '1500621378');
-INSERT INTO `il_node` VALUES ('{568CD437-79EA-DA24-8A3B-BEC39E1AAC44}', 'system/node/detail', '', '0', '0', '1500545127');
-INSERT INTO `il_node` VALUES ('{5E67BC6F-EBA4-23BE-A164-3A46DD51F719}', 'admin/locator/update', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{613973BC-2215-1CA4-72A7-ADD77175DF75}', 'admin/locator/index', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{633E7FD0-8C04-D667-AD13-6901DE47C089}', 'admin/building/mod', '', '0', '0', '1500545125');
-INSERT INTO `il_node` VALUES ('{69424538-84EA-98EB-AAEA-4C13D5E7AADF}', 'admin/locationmark/insert', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{6AF7B38A-E91C-880B-A9CD-F913BA767474}', 'system/user/mod', '', '0', '0', '1500545127');
-INSERT INTO `il_node` VALUES ('{6BDC3943-DE94-523B-8564-594A742BA816}', 'admin/incident', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{6D20453B-100A-2134-4767-3A3258860FD4}', 'admin/group/insert', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{6DD1AB9D-D910-86FA-9E62-CEAF8E5DC83C}', 'admin/group/mod', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{6F0B8882-84F5-531E-8C1D-AD9774847C98}', 'admin/person/getlist', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{6FA024BD-D010-30A5-BE3F-257CE90BECE4}', 'admin/organization/insert', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{70229BDE-B43E-02FB-25AC-8BAE48B0D6A3}', 'admin/organization/index', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{70E53D5C-121B-5C78-7D81-4219DF004EEC}', 'admin/incident/update', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{73868870-30D9-1442-7FE6-328D265F59EE}', 'system/role', '', '0', '0', '1500634163');
-INSERT INTO `il_node` VALUES ('{75F46013-7AE5-7B2E-36AD-3924D8C42A9F}', 'system/user', '', '0', '0', '1500545127');
-INSERT INTO `il_node` VALUES ('{789576BE-764F-BE83-20E7-69D63F008BD7}', 'system/user/insert', '', '0', '0', '1500545127');
-INSERT INTO `il_node` VALUES ('{7A29EA58-7610-CDC7-E05C-09D44ECE09D6}', 'admin/incident/detail', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{7A8D3AC4-4513-3077-3441-4EDF9A31A85C}', 'admin/floor', '', '0', '0', '1500545125');
-INSERT INTO `il_node` VALUES ('{7B39D973-4144-EEB9-7481-C79E35A81BEF}', 'admin/building', '建筑管理', '0', '0', '1500545125');
-INSERT INTO `il_node` VALUES ('{7B6FCA5C-F368-1873-D921-8786EAE9C880}', 'admin/locationmark/detail', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{7F867BDC-75DE-C450-EB8E-B81B974A477E}', 'admin/person/update', '', '0', '0', '1500545127');
-INSERT INTO `il_node` VALUES ('{802BAFA0-3F73-C05B-B90A-FFB93F8D657C}', 'admin/locator/del', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{81789423-F7AA-891F-C87D-74795489518C}', 'admin/outfirefacility/del', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{83543603-22CF-4269-9D30-328BA790CE2D}', 'admin/locator/insert', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{83A3D3A7-C682-4B28-976D-D47614980A94}', 'admin/index/index', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{83AB79C8-E535-D9D8-89FF-5852F59ECDD4}', 'admin/person/del', '', '0', '0', '1500545127');
-INSERT INTO `il_node` VALUES ('{855935AE-E06E-6DF3-6261-74B1D7DE7D86}', 'admin/building/detail', '明细', '1', '1', '1500545125');
-INSERT INTO `il_node` VALUES ('{875C6C77-52A2-D824-C65E-AEBE16C62759}', 'admin/incident/insert', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{87BF7598-3E10-1A28-133F-E081A8366255}', 'admin/outfirefacility/detail', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{87CA3C6F-1F7D-EA8F-7AC6-D5018044E3F5}', 'system/role/del', '', '0', '0', '1500634163');
-INSERT INTO `il_node` VALUES ('{87DADAE4-F563-2D38-07DB-243A4F9CE30F}', 'system/node/mod', '', '0', '0', '1500545127');
-INSERT INTO `il_node` VALUES ('{89BEDFE6-6A10-9969-616B-1100CB26418E}', 'admin/outfirefacility/insert', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{8A0A8860-FAB5-E94F-F75F-B2AF1CDCE039}', 'admin', '系统管理', '0', '0', '1500545125');
-INSERT INTO `il_node` VALUES ('{8B99942E-01D0-0B7B-45F6-E4D07351B5AA}', 'admin/incident/index', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{8C9B9428-6626-0092-A0FB-28F2A090F3DE}', 'admin/organization/del', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{8CFF5078-85C9-C22F-B09B-B8C72A822407}', 'admin/floor/getlist', '', '0', '0', '1500545125');
-INSERT INTO `il_node` VALUES ('{8E2FFD69-139F-4483-1E17-19B4474FCD16}', 'system/role/resume', '', '0', '0', '1500634163');
-INSERT INTO `il_node` VALUES ('{8EDDD6B2-FE2B-EA3A-DBAE-D3C806F3D933}', 'system/role/apply', '', '0', '0', '1500634163');
-INSERT INTO `il_node` VALUES ('{8F26BBDE-CCC4-A46F-718A-3324BB027107}', 'admin/localequipment/insert', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{9063514E-6F83-32BB-6783-D1E76800FF07}', 'admin/person/index', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{93E32FED-61D6-8FA2-D510-E6944B2DE775}', 'admin/incident/mod', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{963E5E37-DE17-260F-3D92-7268B771A220}', 'system/auth/getlist', '', '0', '0', '1500621378');
-INSERT INTO `il_node` VALUES ('{9712272A-9B18-FD56-2F20-823B37ABA224}', 'admin/person/detail', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{9B0037DF-497D-FE53-7BEB-836437B25F8C}', 'admin/group', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{9DA7260B-F441-A0A6-B70E-9907C4026E46}', 'admin/floor/index', '', '0', '0', '1500545125');
-INSERT INTO `il_node` VALUES ('{9FD4D52E-C005-54E4-75B9-029F06CD719F}', 'admin/building/add', '新增', '1', '1', '1500545125');
-INSERT INTO `il_node` VALUES ('{A1FDBDEA-7A37-0611-97CF-965BDCE3C8BF}', 'admin/person', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{A42B65DF-B334-C772-1F74-EF7370C0EDEE}', 'system', '', '0', '0', '1500545127');
-INSERT INTO `il_node` VALUES ('{A513517E-1CB2-87BA-094A-C8DD45D130F1}', 'admin/localequipment/getlist', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{A7B1C429-7B75-AFD4-55EC-A966F1C9354C}', 'admin/building/insert', '', '1', '1', '1500545125');
-INSERT INTO `il_node` VALUES ('{A7CBCB7B-11DB-2230-3786-66B58920354A}', 'system/user/index', '', '0', '0', '1500545127');
-INSERT INTO `il_node` VALUES ('{A9ED82EB-CA1D-02D4-5CEE-2C6199CEBAA8}', 'system/node/update', '', '0', '0', '1500545127');
-INSERT INTO `il_node` VALUES ('{AEB3C5AF-0F39-006B-AC07-B6477D02CF12}', 'admin/locator/mod', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{AF65032C-20DB-919D-7BF5-277FE4E7F51E}', 'admin/outfirefacility', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{B0BF1130-B5F4-870F-8DD9-2DAE587B76BB}', 'system/role/forbid', '', '0', '0', '1500634163');
-INSERT INTO `il_node` VALUES ('{B1E0C4AE-F408-756D-EBF8-5D52F0B737DF}', 'admin/locationmark/mod', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{BE0F3E1E-1D40-7A21-93C2-B65DAFA7F9C4}', 'admin/locator/add', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{C0ADCD6E-0107-1979-9744-E44FE7B00080}', 'admin/floor/add', '', '0', '0', '1500545125');
-INSERT INTO `il_node` VALUES ('{C1B78E29-F089-FE85-0848-B247DEF56C1F}', 'admin/locationmark/add', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{C279DF8C-27C5-CB96-3C88-931CC8843AFE}', 'admin/organization/getlist', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{C3D19D6E-631E-187B-884A-02A7B80489A9}', 'admin/organization/add', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{CAF205C1-5572-EAF4-4ECE-D32A07FCCE6F}', 'system/auth/add', '', '0', '0', '1500621378');
-INSERT INTO `il_node` VALUES ('{CE831928-46F4-6C5A-31E9-C8A6EE9223AE}', 'admin/person/add', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{CF0972E5-E91E-994F-72CC-821494C5C593}', 'system/auth/edit', '', '0', '0', '1500621378');
-INSERT INTO `il_node` VALUES ('{D34090CC-0181-648B-0951-31D0727460B3}', 'admin/index', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{D38AA4B1-414F-1608-9027-450686D896FA}', 'admin/locator', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{D3F90B77-A12A-D251-B49D-9AA6713B5310}', 'admin/group/del', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{D5C5E09E-89AC-2F78-50C5-BBDF57007F2B}', 'system/node/save', '', '0', '0', '1500545127');
-INSERT INTO `il_node` VALUES ('{D7F9BF26-1750-8DC8-FFB0-B0EF2A2186CE}', 'admin/person/insert', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{DA1D8058-2C84-B6C3-B6AA-410F06E033D3}', 'admin/floor/del', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{DA27C065-26E2-8CD9-928D-5D580A23243A}', 'admin/localequipment/mod', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{DBF14C71-7269-2EB8-7759-B9054A646380}', 'admin/building/index', '列表', '0', '1', '1500545125');
-INSERT INTO `il_node` VALUES ('{DE726BF1-C5D0-7098-3EB9-A4B0E9A89C1A}', 'admin/building/update', '', '0', '0', '1500545125');
-INSERT INTO `il_node` VALUES ('{E65B86E8-B310-3DBD-0EF3-955CE29C6EA9}', 'admin/incident/add', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{E69EA7FC-1DAC-8285-1F93-B61ADCBDD980}', 'system/node/index', '', '0', '0', '1500545127');
-INSERT INTO `il_node` VALUES ('{E91EAA21-CBAF-9C8F-2E7E-BE8D1948947C}', 'admin/localequipment', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{EBAB2C84-6445-3CCB-6A84-45FC291DBCD1}', 'admin/group/getlist', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{F162591F-BBB6-4F6E-272C-6A7E63E14DCC}', 'admin/localequipment/detail', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{F416871F-06AB-886B-75E1-3066C2EC4208}', 'admin/organization/update', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{FB83E12E-975B-60B9-F53F-D39DBB1117B9}', 'admin/group/index', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{FD1469CF-4374-D768-B268-DC51EA16564F}', 'system/role/add', '', '0', '0', '1500634163');
-INSERT INTO `il_node` VALUES ('{FD4A57BE-08F0-5287-8F5B-B5EE57AF32BA}', 'system/role/index', '', '0', '0', '1500634163');
-INSERT INTO `il_node` VALUES ('{FDF67F88-42D4-F060-135E-E80BCF173191}', 'admin/locator/getlist', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{FF53C5B7-F123-50BD-6C2E-23214A4E361A}', 'admin/floor/update', '', '0', '0', '1500545126');
-INSERT INTO `il_node` VALUES ('{FFC3F41F-7567-FD68-0DE4-7E37491FD214}', 'admin/locator/detail', '', '0', '0', '1500545126');
+INSERT INTO `il_node` VALUES ('admin', '', '', '0', '0', '1500902361');
+INSERT INTO `il_node` VALUES ('admin/building', 'admin', '', '0', '0', '1500902361');
+INSERT INTO `il_node` VALUES ('admin/building/add', 'admin/building', '添加', '1', '1', '1500902361');
+INSERT INTO `il_node` VALUES ('admin/building/del', 'admin/building', '修改', '1', '1', '1500902361');
+INSERT INTO `il_node` VALUES ('admin/building/detail', 'admin/building', '详情', '1', '1', '1500902361');
+INSERT INTO `il_node` VALUES ('admin/building/index', 'admin/building', '', '1', '1', '1500902361');
+INSERT INTO `il_node` VALUES ('admin/building/insert', 'admin/building', '', '1', '1', '1500902361');
+INSERT INTO `il_node` VALUES ('admin/building/mod', 'admin/building', '', '1', '1', '1500902361');
+INSERT INTO `il_node` VALUES ('admin/building/update', 'admin/building', '', '1', '1', '1500902361');
+INSERT INTO `il_node` VALUES ('admin/floor', 'admin', '', '0', '0', '1500902361');
+INSERT INTO `il_node` VALUES ('admin/floor/add', 'admin/floor', '', '1', '1', '1500902361');
+INSERT INTO `il_node` VALUES ('admin/floor/del', 'admin/floor', '', '1', '1', '1500902361');
+INSERT INTO `il_node` VALUES ('admin/floor/detail', 'admin/floor', '', '1', '1', '1500902361');
+INSERT INTO `il_node` VALUES ('admin/floor/index', 'admin/floor', '', '1', '1', '1500902361');
+INSERT INTO `il_node` VALUES ('admin/floor/insert', 'admin/floor', '', '1', '1', '1500902361');
+INSERT INTO `il_node` VALUES ('admin/floor/mod', 'admin/floor', '', '1', '1', '1500902361');
+INSERT INTO `il_node` VALUES ('admin/floor/update', 'admin/floor', '', '1', '1', '1500902361');
+INSERT INTO `il_node` VALUES ('admin/group', 'admin', '', '0', '0', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/group/add', 'admin/group', '', '1', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/group/del', 'admin/group', '', '1', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/group/detail', 'admin/group', '', '1', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/group/index', 'admin/group', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/group/insert', 'admin/group', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/group/mod', 'admin/group', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/group/update', 'admin/group', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/incident', 'admin', '', '0', '0', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/incident/add', 'admin/incident', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/incident/del', 'admin/incident', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/incident/detail', 'admin/incident', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/incident/index', 'admin/incident', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/incident/insert', 'admin/incident', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/incident/mod', 'admin/incident', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/incident/update', 'admin/incident', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/index', 'admin', '', '0', '0', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/index/dashboard', 'admin/index', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/index/index', 'admin/index', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/localequipment', 'admin', '', '0', '0', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/localequipment/add', 'admin/localequipment', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/localequipment/del', 'admin/localequipment', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/localequipment/detail', 'admin/localequipment', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/localequipment/index', 'admin/localequipment', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/localequipment/insert', 'admin/localequipment', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/localequipment/mod', 'admin/localequipment', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/localequipment/update', 'admin/localequipment', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/locationmark', 'admin', '', '0', '0', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/locationmark/add', 'admin/locationmark', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/locationmark/del', 'admin/locationmark', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/locationmark/detail', 'admin/locationmark', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/locationmark/index', 'admin/locationmark', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/locationmark/insert', 'admin/locationmark', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/locationmark/mod', 'admin/locationmark', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/locationmark/update', 'admin/locationmark', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/locator', 'admin', '', '0', '0', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/locator/add', 'admin/locator', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/locator/del', 'admin/locator', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/locator/detail', 'admin/locator', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/locator/index', 'admin/locator', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/locator/insert', 'admin/locator', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/locator/mod', 'admin/locator', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/locator/update', 'admin/locator', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/organization', 'admin', '', '0', '0', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/organization/add', 'admin/organization', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/organization/del', 'admin/organization', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/organization/detail', 'admin/organization', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/organization/index', 'admin/organization', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/organization/insert', 'admin/organization', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/organization/mod', 'admin/organization', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/organization/self', 'admin/organization', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/organization/update', 'admin/organization', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/outfirefacility', 'admin', '', '0', '0', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/outfirefacility/add', 'admin/outfirefacility', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/outfirefacility/del', 'admin/outfirefacility', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/outfirefacility/detail', 'admin/outfirefacility', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/outfirefacility/floors', 'admin/outfirefacility', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/outfirefacility/index', 'admin/outfirefacility', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/outfirefacility/insert', 'admin/outfirefacility', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/outfirefacility/mod', 'admin/outfirefacility', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/outfirefacility/update', 'admin/outfirefacility', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/person', 'admin', '', '0', '0', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/person/add', 'admin/person', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/person/del', 'admin/person', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/person/detail', 'admin/person', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/person/index', 'admin/person', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/person/insert', 'admin/person', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/person/mod', 'admin/person', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('admin/person/update', 'admin/person', '', '0', '1', '1500902362');
+INSERT INTO `il_node` VALUES ('system', '', '', '0', '0', '1500902362');
+INSERT INTO `il_node` VALUES ('system/node', 'system', '', '0', '1', '1500902363');
+INSERT INTO `il_node` VALUES ('system/node/index', 'system/node', '', '0', '1', '1500902363');
+INSERT INTO `il_node` VALUES ('system/node/save', 'system/node', '', '0', '1', '1500902363');
+INSERT INTO `il_node` VALUES ('system/role', 'system', '', '0', '1', '1500902363');
+INSERT INTO `il_node` VALUES ('system/role/add', 'system/role', '', '0', '1', '1500902363');
+INSERT INTO `il_node` VALUES ('system/role/authsave', 'system/role', '', '0', '1', '1500902363');
+INSERT INTO `il_node` VALUES ('system/role/authshow', 'system/role', '', '0', '1', '1500902363');
+INSERT INTO `il_node` VALUES ('system/role/del', 'system/role', '', '0', '1', '1500902363');
+INSERT INTO `il_node` VALUES ('system/role/forbid', 'system/role', '', '0', '1', '1500902363');
+INSERT INTO `il_node` VALUES ('system/role/index', 'system/role', '', '0', '1', '1500902363');
+INSERT INTO `il_node` VALUES ('system/role/mod', 'system/role', '', '0', '1', '1500902363');
+INSERT INTO `il_node` VALUES ('system/role/resume', 'system/role', '', '0', '1', '1500902363');
+INSERT INTO `il_node` VALUES ('system/user', 'system', '', '0', '1', '1500902363');
+INSERT INTO `il_node` VALUES ('system/user/add', 'system/user', '', '0', '1', '1500902363');
+INSERT INTO `il_node` VALUES ('system/user/del', 'system/user', '', '0', '1', '1500902363');
+INSERT INTO `il_node` VALUES ('system/user/detail', 'system/user', '', '0', '1', '1500902363');
+INSERT INTO `il_node` VALUES ('system/user/index', 'system/user', '', '0', '1', '1500902363');
+INSERT INTO `il_node` VALUES ('system/user/insert', 'system/user', '', '0', '1', '1500902363');
+INSERT INTO `il_node` VALUES ('system/user/mod', 'system/user', '', '0', '1', '1500902363');
+INSERT INTO `il_node` VALUES ('system/user/update', 'system/user', '', '0', '1', '1500902363');
 
 -- ----------------------------
 -- Table structure for il_organization
@@ -488,7 +447,7 @@ CREATE TABLE `il_role` (
   `desc` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注说明',
   `sort` smallint(6) unsigned DEFAULT '0' COMMENT '排序权重',
   `org_id` char(38) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '所属单位',
-  `status` tinyint(1) unsigned DEFAULT '1' COMMENT '状态(0:禁用,1:启用)',
+  `status` tinyint(1) unsigned DEFAULT '1' COMMENT '状态(0:正常,1:禁用)',
   `create_by` char(38) COLLATE utf8mb4_unicode_ci DEFAULT '0' COMMENT '创建人',
   `create_time` int(11) DEFAULT '0' COMMENT '创建时间',
   PRIMARY KEY (`rol_id`),
@@ -499,7 +458,132 @@ CREATE TABLE `il_role` (
 -- ----------------------------
 -- Records of il_role
 -- ----------------------------
-INSERT INTO `il_role` VALUES ('{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', '普通管理员', '普通管理员', '0', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '1', '{BCC57F86-B8F5-15A5-0244-FB0B22F4B05C}', '1500637333');
+INSERT INTO `il_role` VALUES ('{193C91B4-9085-4A32-B62E-26C6A14AFBA7}', '普通用户', '拥有查看权限', '0', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0', '{BCC57F86-B8F5-15A5-0244-FB0B22F4B05C}', '1501058199');
+INSERT INTO `il_role` VALUES ('{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', '普通管理员', '普通', '0', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0', '{BCC57F86-B8F5-15A5-0244-FB0B22F4B05C}', '1500637333');
+INSERT INTO `il_role` VALUES ('{C407F15A-F477-8AF4-B830-19FEF9B95F54}', '超级管理员', '拥有所有权限', '0', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0', '{BCC57F86-B8F5-15A5-0244-FB0B22F4B05C}', '1501036927');
+INSERT INTO `il_role` VALUES ('{F8450F09-9220-8002-287D-6ED9A97F62A1}', '编辑管理员', '拥有编辑权限', '0', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '1', '{BCC57F86-B8F5-15A5-0244-FB0B22F4B05C}', '1501036959');
+
+-- ----------------------------
+-- Table structure for il_rol_nod
+-- ----------------------------
+DROP TABLE IF EXISTS `il_rol_nod`;
+CREATE TABLE `il_rol_nod` (
+  `rnod_id` char(38) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rol_id` char(38) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '角色ID',
+  `node` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '节点id',
+  PRIMARY KEY (`rnod_id`),
+  KEY `index_system_auth_auth` (`rol_id`) USING BTREE,
+  KEY `index_system_auth_node` (`node`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色与节点关系表';
+
+-- ----------------------------
+-- Records of il_rol_nod
+-- ----------------------------
+INSERT INTO `il_rol_nod` VALUES ('{00D7C68C-3576-A58F-3295-44CE69EFBCE9}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/organization/self');
+INSERT INTO `il_rol_nod` VALUES ('{01EE75AB-0899-366B-9FC2-D50C7005BFDC}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locationmark/del');
+INSERT INTO `il_rol_nod` VALUES ('{042BCF29-1F85-843A-617F-75AE8CB954B0}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/group/update');
+INSERT INTO `il_rol_nod` VALUES ('{062458C1-2AA8-A021-9850-A5F8D47EF2B0}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/building/del');
+INSERT INTO `il_rol_nod` VALUES ('{067CBA78-F092-CDFE-3887-37CEE1F73CF4}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/floor/index');
+INSERT INTO `il_rol_nod` VALUES ('{0AB856B6-7B17-FCB1-727D-FE792BD7A27E}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/outfirefacility/del');
+INSERT INTO `il_rol_nod` VALUES ('{0B3DB349-66E8-A310-DC37-FEFBA9599CCF}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locationmark/update');
+INSERT INTO `il_rol_nod` VALUES ('{0BD6293F-1FD1-BA58-3308-E705066D49B4}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locator/mod');
+INSERT INTO `il_rol_nod` VALUES ('{0CFC4ECE-F999-60FB-0D4E-8FB3FE092CC0}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/building/getlist');
+INSERT INTO `il_rol_nod` VALUES ('{0D87FC55-D0A2-7DDE-40CC-21BEF92D66FF}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/building/index');
+INSERT INTO `il_rol_nod` VALUES ('{0DC1BF54-B69F-2AC0-E00B-F91FDC80E9F0}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/localequipment');
+INSERT INTO `il_rol_nod` VALUES ('{0E8942F9-5E9E-BA33-1488-7C01F067FF04}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/localequipment/insert');
+INSERT INTO `il_rol_nod` VALUES ('{0E9460CE-0562-E76D-154E-30236E319113}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/person/update');
+INSERT INTO `il_rol_nod` VALUES ('{1887F415-4C51-BB4D-21F7-1EBE640CE166}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/floor/update');
+INSERT INTO `il_rol_nod` VALUES ('{1891E07E-F471-6BFF-138B-69D0CF938EAF}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locator/insert');
+INSERT INTO `il_rol_nod` VALUES ('{206CD88F-21F9-100F-A826-F8658003C639}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/floor/add');
+INSERT INTO `il_rol_nod` VALUES ('{20C2240F-7A49-D69E-F84C-BB5497FFC8AB}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locator/index');
+INSERT INTO `il_rol_nod` VALUES ('{2DDC8326-5E88-BFCB-8294-32D13FD3AACE}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/organization/mod');
+INSERT INTO `il_rol_nod` VALUES ('{2FC63382-E945-B930-4B89-6D4D90668D71}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/group/getlist');
+INSERT INTO `il_rol_nod` VALUES ('{30C147E9-CEAE-B7E8-0130-A62A816E49E1}', '{193C91B4-9085-4A32-B62E-26C6A14AFBA7}', 'admin/building');
+INSERT INTO `il_rol_nod` VALUES ('{30DB7FFD-3D87-B9E8-CBA3-0ED572298CFF}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/person/del');
+INSERT INTO `il_rol_nod` VALUES ('{3605EF81-3A4B-B0EB-5A0D-58B957C0F1F7}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/group/insert');
+INSERT INTO `il_rol_nod` VALUES ('{375669F0-F652-1E50-1DF9-7DA0D59D217A}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/floor/insert');
+INSERT INTO `il_rol_nod` VALUES ('{3767F5BF-9867-3A41-DE4A-9B3F98038FFB}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/person/mod');
+INSERT INTO `il_rol_nod` VALUES ('{382EF484-B8A8-30AD-98DD-D82F4101B163}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locationmark/detail');
+INSERT INTO `il_rol_nod` VALUES ('{39B2388C-EB60-C496-20E7-B868B29E74FC}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/incident/detail');
+INSERT INTO `il_rol_nod` VALUES ('{3AA517A3-4D47-A785-A578-9339E746A1C3}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/floor');
+INSERT INTO `il_rol_nod` VALUES ('{3CA4E8C9-FC2E-455C-9EC5-5A3BC4C94DFD}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/person/getlist');
+INSERT INTO `il_rol_nod` VALUES ('{3EB89CA2-D4D1-7DFB-F9AD-8EFF53F85905}', '{193C91B4-9085-4A32-B62E-26C6A14AFBA7}', 'admin/building/del');
+INSERT INTO `il_rol_nod` VALUES ('{46691D1F-8FC6-4986-31FC-E5B333402E44}', '{193C91B4-9085-4A32-B62E-26C6A14AFBA7}', 'admin/building/mod');
+INSERT INTO `il_rol_nod` VALUES ('{46FCAB82-95F7-D5BF-8163-5F0B3DF1A4D1}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/index');
+INSERT INTO `il_rol_nod` VALUES ('{4B500A21-90CA-345C-5143-B8A45D5536B1}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/index/dashboard');
+INSERT INTO `il_rol_nod` VALUES ('{4D6A48C7-74AE-6837-18E0-42F5600F9F5B}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/organization/insert');
+INSERT INTO `il_rol_nod` VALUES ('{5057DEEE-0919-92EC-2325-B405CF1FABD0}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locator/detail');
+INSERT INTO `il_rol_nod` VALUES ('{51E9C0EB-FAA1-F2C9-9C04-EE0B490FFBEC}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/person/add');
+INSERT INTO `il_rol_nod` VALUES ('{55B0F009-073C-B331-1457-862B122ACDE3}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locationmark/insert');
+INSERT INTO `il_rol_nod` VALUES ('{562BD2C5-9650-FB09-2B52-A169C71EA432}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/outfirefacility');
+INSERT INTO `il_rol_nod` VALUES ('{586BAD92-1675-79B7-46BD-E2E9D0407E98}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/outfirefacility/getlist');
+INSERT INTO `il_rol_nod` VALUES ('{593AD237-14FD-3EE5-A03B-01E3424AF948}', '{193C91B4-9085-4A32-B62E-26C6A14AFBA7}', 'admin/building/add');
+INSERT INTO `il_rol_nod` VALUES ('{599777E9-FC39-138A-5AC4-53ADDD54E74B}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/outfirefacility/update');
+INSERT INTO `il_rol_nod` VALUES ('{59DE312A-1ECD-E97E-8D98-6BB1FEC2A506}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/incident/index');
+INSERT INTO `il_rol_nod` VALUES ('{5B96663F-3A8F-DAE9-FF17-95A1FB02547C}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/incident/mod');
+INSERT INTO `il_rol_nod` VALUES ('{5F58855F-BA4F-B42C-68B1-7F3D513FC4A9}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/person/insert');
+INSERT INTO `il_rol_nod` VALUES ('{5FDBB915-2778-FADF-A0A3-3F7F671E1C45}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/localequipment/getlist');
+INSERT INTO `il_rol_nod` VALUES ('{63ACEFFC-A933-5BC4-FF9D-854199CA7237}', '{193C91B4-9085-4A32-B62E-26C6A14AFBA7}', 'admin/building/detail');
+INSERT INTO `il_rol_nod` VALUES ('{63CA572C-EE75-8F39-8A19-8C8A591D8866}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/organization/update');
+INSERT INTO `il_rol_nod` VALUES ('{63F8B1D2-7CF2-0C32-6320-EC76DC51DF3D}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/outfirefacility/index');
+INSERT INTO `il_rol_nod` VALUES ('{64A2A502-55BC-D540-AF40-A0B015227751}', '{193C91B4-9085-4A32-B62E-26C6A14AFBA7}', 'admin');
+INSERT INTO `il_rol_nod` VALUES ('{6F1BADAC-31FB-4480-3167-5F8CEBDC6E29}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/organization/detail');
+INSERT INTO `il_rol_nod` VALUES ('{72410D9C-23D7-7EB3-8D9E-A0C47E0F4E64}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/organization');
+INSERT INTO `il_rol_nod` VALUES ('{728AC20C-3BB7-CA36-D998-A2CA87516286}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/organization/del');
+INSERT INTO `il_rol_nod` VALUES ('{757C7527-C04C-C06D-834D-3E02A5DBEA58}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/group/detail');
+INSERT INTO `il_rol_nod` VALUES ('{7802E0DD-1259-0743-BC79-4793B0C6B902}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/incident/getlist');
+INSERT INTO `il_rol_nod` VALUES ('{863D6563-07DB-7258-2847-694DDA1BD538}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/organization/index');
+INSERT INTO `il_rol_nod` VALUES ('{8C4351E1-E13E-2B5F-A8FC-227025D77738}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/group/add');
+INSERT INTO `il_rol_nod` VALUES ('{9107E529-1B96-3F6B-1C60-9610413AC192}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locationmark/index');
+INSERT INTO `il_rol_nod` VALUES ('{9118750E-0D98-04D4-BA39-DA8648606BC2}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/building');
+INSERT INTO `il_rol_nod` VALUES ('{911CF0A2-1FC6-FCA9-F0F7-15E585A29521}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locator/update');
+INSERT INTO `il_rol_nod` VALUES ('{924188ED-CCF3-72A1-51C1-1AF7903185DE}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/building/add');
+INSERT INTO `il_rol_nod` VALUES ('{92C76163-6CC0-54F6-198D-08FA9E4EEACB}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locationmark/add');
+INSERT INTO `il_rol_nod` VALUES ('{93B49475-16A2-7F16-9FB6-810B4A9B0EF8}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/group');
+INSERT INTO `il_rol_nod` VALUES ('{9651CD90-047B-B047-ED7B-F36E8265378F}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/localequipment/update');
+INSERT INTO `il_rol_nod` VALUES ('{9B0547AD-F0CB-EB7E-0CBD-5BF85EFC2BC8}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/group/del');
+INSERT INTO `il_rol_nod` VALUES ('{9B2C68DB-CAB1-3687-1FCA-FB505F35D0FF}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/outfirefacility/floors');
+INSERT INTO `il_rol_nod` VALUES ('{9C42FDE6-74F2-120E-7113-CFF1993946F5}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/floor/getlist');
+INSERT INTO `il_rol_nod` VALUES ('{9DF8C6AF-3551-0DE4-25F5-1373E05917A9}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locationmark/getlist');
+INSERT INTO `il_rol_nod` VALUES ('{9ECF54D3-B185-649E-626C-3329EF431A82}', '{193C91B4-9085-4A32-B62E-26C6A14AFBA7}', 'admin/building/index');
+INSERT INTO `il_rol_nod` VALUES ('{A0D8B093-616A-F26F-55A3-5A9BC8BC3DC7}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/outfirefacility/insert');
+INSERT INTO `il_rol_nod` VALUES ('{A18CE6B1-DE1E-6EB2-B06C-6E128C211865}', '{193C91B4-9085-4A32-B62E-26C6A14AFBA7}', 'admin/building/insert');
+INSERT INTO `il_rol_nod` VALUES ('{A7F3A20C-121B-6A1F-1230-6966BD98BB72}', '{193C91B4-9085-4A32-B62E-26C6A14AFBA7}', 'admin/building/getlist');
+INSERT INTO `il_rol_nod` VALUES ('{A83942D5-6F44-B4DC-8FE1-AE12EF6895A4}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/floor/del');
+INSERT INTO `il_rol_nod` VALUES ('{A9F823D4-757F-2081-AA9D-908183C5D879}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/building/mod');
+INSERT INTO `il_rol_nod` VALUES ('{AB24BCDE-2BAE-E019-29A4-701CFB9A53B2}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locator/add');
+INSERT INTO `il_rol_nod` VALUES ('{AC24010C-512E-43AA-3F1E-7D967301B3F7}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/incident/add');
+INSERT INTO `il_rol_nod` VALUES ('{AD52285E-2739-4D8C-D8D2-58EAC1E569E4}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/incident/del');
+INSERT INTO `il_rol_nod` VALUES ('{AF5BE99B-D3BA-17B7-346F-89ACB1A5F6D2}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/group/index');
+INSERT INTO `il_rol_nod` VALUES ('{B62DED55-D63D-92FD-066D-664951BD16FE}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/outfirefacility/mod');
+INSERT INTO `il_rol_nod` VALUES ('{B68A1A80-3232-5816-6CEF-989A2B2D9BB1}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/person');
+INSERT INTO `il_rol_nod` VALUES ('{B99F4576-D9F4-4247-3E12-5CCFF967B6BF}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/organization/add');
+INSERT INTO `il_rol_nod` VALUES ('{BB448AD8-E807-9129-02AD-9F325F165B31}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locator');
+INSERT INTO `il_rol_nod` VALUES ('{BEAFFCC2-9C01-4CE0-D0D3-1974505218A5}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/index/index');
+INSERT INTO `il_rol_nod` VALUES ('{BF519895-275F-C899-AB17-274322A087FF}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/localequipment/add');
+INSERT INTO `il_rol_nod` VALUES ('{C0A5CFA4-41E6-9E1C-94AA-A82D12196A83}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locationmark/mod');
+INSERT INTO `il_rol_nod` VALUES ('{C243566D-AD70-14C3-43B8-553CB8F6AE67}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/building/insert');
+INSERT INTO `il_rol_nod` VALUES ('{C4C31765-014C-ABA0-6EC3-8D9A2DBFFDFA}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/localequipment/index');
+INSERT INTO `il_rol_nod` VALUES ('{C746ABF3-4C23-3178-CF1F-EE8FF460BF95}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/floor/mod');
+INSERT INTO `il_rol_nod` VALUES ('{CB89D3B3-7C1F-B8B3-2C67-9244991D5AF3}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/incident/update');
+INSERT INTO `il_rol_nod` VALUES ('{CDBA82D4-68BC-3802-B52A-5263922110F1}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/localequipment/detail');
+INSERT INTO `il_rol_nod` VALUES ('{CEB6B195-AA1D-01A4-8146-DEB05AC3CD74}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locator/getlist');
+INSERT INTO `il_rol_nod` VALUES ('{CF9D4B84-7953-EF0B-823B-4407D76DC325}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/outfirefacility/detail');
+INSERT INTO `il_rol_nod` VALUES ('{D2CE1335-BA28-D24A-5AAC-DBA251CD36C2}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/incident/insert');
+INSERT INTO `il_rol_nod` VALUES ('{D4ED60FA-DB40-86C2-C67E-7A02B97ED3B9}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locator/del');
+INSERT INTO `il_rol_nod` VALUES ('{D4EED91A-9436-39AD-3877-A66C249BC99A}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/incident');
+INSERT INTO `il_rol_nod` VALUES ('{DAAC1748-568A-6E87-75A8-6B162ACCCBBC}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locationmark');
+INSERT INTO `il_rol_nod` VALUES ('{DBF97F17-D473-6DF2-6A47-0277C5869C7A}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin');
+INSERT INTO `il_rol_nod` VALUES ('{DDBE1043-D8EF-292F-39E7-0A2280E61B81}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/floor/detail');
+INSERT INTO `il_rol_nod` VALUES ('{E08D6971-E6B5-09DB-EB07-A1F28EE43121}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/organization/getlist');
+INSERT INTO `il_rol_nod` VALUES ('{E2D73CCE-F0CE-47C8-3489-7DA2DF823CA7}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/building/update');
+INSERT INTO `il_rol_nod` VALUES ('{E94E524E-C0E1-3CF1-9E54-0B7A0537AC3D}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/building/detail');
+INSERT INTO `il_rol_nod` VALUES ('{EB6CBB9F-322D-1330-C436-FC72629E302C}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/localequipment/mod');
+INSERT INTO `il_rol_nod` VALUES ('{EE6B0BD7-2F3B-8D9C-5488-BDE726169C18}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/group/mod');
+INSERT INTO `il_rol_nod` VALUES ('{F230178F-1636-E3C0-EFA9-87F32DCF45CC}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/person/detail');
+INSERT INTO `il_rol_nod` VALUES ('{F9DE1FE0-608F-1A9A-9E48-C053F6D1FA07}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/person/index');
+INSERT INTO `il_rol_nod` VALUES ('{FD5AFD51-55D3-9704-C2F8-DC6E6B17A8A0}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/outfirefacility/add');
+INSERT INTO `il_rol_nod` VALUES ('{FF4C10E9-1BFF-965F-6336-E8168F91ABA1}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/localequipment/del');
 
 -- ----------------------------
 -- Table structure for il_tag
@@ -557,7 +641,7 @@ CREATE TABLE `il_user` (
   `login_ip` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '最后一次登录ip',
   `org_id` char(38) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '所属单位id',
   `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态(0:禁用,1:启用)',
-  `authorize` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `rol_id` char(38) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '角色',
   `create_by` char(38) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '创建人',
   `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
   PRIMARY KEY (`use_id`),
@@ -567,8 +651,9 @@ CREATE TABLE `il_user` (
 -- ----------------------------
 -- Records of il_user
 -- ----------------------------
-INSERT INTO `il_user` VALUES ('{31B847C6-8598-388E-9E87-C75C37F8076B}', 'yonghu3', '123456', '123456@qq.com', '13888888888', '第二个用户', '0', '0', '0.0.0.0', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0', '', '', '1499341299');
-INSERT INTO `il_user` VALUES ('{BCC57F86-B8F5-15A5-0244-FB0B22F4B05C}', 'yonghu2', 'e10adc3949ba59abbe56e057f20f883e', '123456@qq.com', '13888888888', '第二个用户', '36', '1500601326', '0.0.0.0', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0', '', '', '1499838728');
+INSERT INTO `il_user` VALUES ('{31B847C6-8598-388E-9E87-C75C37F8076B}', 'yonghu3', '123456', '123456@qq.com', '13888888888', '第二个用户', '0', '0', '0.0.0.0', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', '', '1499341299');
+INSERT INTO `il_user` VALUES ('{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', 'e10adc3949ba59abbe56e057f20f883e', 'admin@tomee.cn', '13888888888', '超级管理员', '1', '1501205060', '0.0.0.0', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0', '', '', '1501144826');
+INSERT INTO `il_user` VALUES ('{BCC57F86-B8F5-15A5-0244-FB0B22F4B05C}', 'yonghu2', 'e10adc3949ba59abbe56e057f20f883e', '123456@qq.com', '13888888888', '第二个用户', '50', '1501226744', '0.0.0.0', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', '', '1499838728');
 
 -- ----------------------------
 -- Table structure for system_config

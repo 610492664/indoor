@@ -1052,9 +1052,6 @@ if (typeof jQuery === 'undefined') {
 
     this.$dialog.off('mousedown.dismiss.bs.modal')
 
-    //将模态框从数组中移除
-    Modal.elements.pop();
-
     $.support.transition && this.$element.hasClass('fade') ?
       this.$element
         .one('bsTransitionEnd', $.proxy(this.hideModal, this))
@@ -1105,13 +1102,15 @@ if (typeof jQuery === 'undefined') {
 
   Modal.prototype.removeBackdrop = function () {
     //模态框时全部关闭时，移除遮罩层，否则修改z-index，（瞬时关闭再打开带有fade属性的模态框，会同时存在两个遮罩窗）
-    if(Modal.elements.length == 0 || $(".modal-backdrop").length > 1){
+    if(Modal.elements.length == 1 ){
         this.$backdrop && this.$backdrop.remove()
         this.$backdrop = null
     }else{
         var perviouszIndex = parseInt($(".modal-backdrop").css("z-Index"));
         this.$backdrop.attr("style","z-Index:"+(perviouszIndex-20));
     }
+      //将模态框从数组中移除
+      Modal.elements.pop();
   }
 
   Modal.prototype.backdrop = function (callback) {
@@ -1158,7 +1157,7 @@ if (typeof jQuery === 'undefined') {
 
     } else if (!this.isShown && this.$backdrop) {
       //当模态框全部关闭时
-        if( Modal.elements.length == 0){
+        if( Modal.elements.length == 1){
             this.$backdrop.removeClass('in')
         }
 

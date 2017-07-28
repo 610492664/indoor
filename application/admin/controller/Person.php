@@ -3,38 +3,33 @@ namespace app\admin\controller;
 
 use think\Db;
 use \Think\Loader;
-use \app\admin\model\Person as Model;
+use \app\admin\model\Person as SubModel;
 
 class Person extends Base
 {
     public function index()
     {
+        if(input('?get.action')){
+            $org_id = input('session.user.org_id');
+            $persons = SubModel::all(function($query)use($org_id){
+                $query->where(['org_id'=>$org_id]);
+            },'locator');
+            return $persons;
+        }
         return $this->fetch();
     }
-    //获取列表
-    public function getList()
-    {
-//        $org_id = input('session.org_id');
-//        $model = new Model();
-//        $persons = $model->where(['org_id'=>'{3033D1DB-3C92-6624-DCDE-0435498BB60D}'])->select();
-        $persons = Model::all(function($query){
-            $query->where(['org_id'=>'{3033D1DB-3C92-6624-DCDE-0435498BB60D}']);
-        },'locator');
 
-        return $persons;
-    }
     //查看详情
     public function detail()
     {
         $id = input('get.id');
-        $person = Model::get($id , 'locator');
+        $person = SubModel::get($id , 'locator');
         $this->assign('person',$person);
         return $this->fetch();
     }
     //获取添加表单
     public function add()
     {
-        $org_id = '{3033D1DB-3C92-6624-DCDE-0435498BB60D}';
         $locators = Db::name('locator')
             ->where(['status'=>0])
             ->field('loc_id,number')
@@ -57,7 +52,7 @@ class Person extends Base
                 return $return;
             }
         }
-        /* @var $person Model*/
+        /* @var $person SubModel*/
         $person = Loader::model('Person');
         $result = $person->data(input('post.'),true)->save();
         !empty($result)&&!empty($person->loc_id)&&Db::name('locator')->update(['status'=>1, 'loc_id'=>$person->loc_id]);
@@ -67,7 +62,7 @@ class Person extends Base
     public function mod()
     {
         $id = input('get.id');
-        $person = Model::get($id);
+        $person = SubModel::get($id);
         $this->assign('person',$person->getData());
         $locators = Db::name('locator')
             ->where(['status'=>0])
@@ -94,7 +89,7 @@ class Person extends Base
         }else{
             unset($data['pic']);
         }
-        $model  = Model::get($data['per_id']);
+        $model  = SubModel::get($data['per_id']);
         $old_loc_id = $model->loc_id;
         $result = $model->save($data, ['per_id'=>$data['per_id']]);
         if(!empty($result)){
@@ -116,7 +111,7 @@ class Person extends Base
     public function del()
     {
         $ids = input('get.id/a');
-        $result = Model::destroy($ids);
+        $result = SubModel::destroy($ids);
 //        $result = true;
         if(!empty($result)){
             $return['code'] = 1;

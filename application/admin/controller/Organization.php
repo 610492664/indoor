@@ -2,32 +2,31 @@
 namespace app\admin\controller;
 
 use \Think\Loader;
-use \app\admin\model\Organization as Model;
+use \app\admin\model\Organization as SubModel;
 
 class Organization extends Base
 {
     public function self()
     {
-        $detail = Model::get(input('session.user.org_id'));
+        $detail = SubModel::get(input('session.user.org_id'));
         $this->assign('detail',$detail);
         return $this->fetch();
     }
 
     public function index()
     {
+        if(input('?get.action')){
+            $records =SubModel::all(['p_org_id'=>input('session.user.org_id')]);
+            return $records;
+        }
         return $this->fetch();
     }
-    //获取列表
-    public function getList()
-    {
-        $records =Model::all(['p_org_id'=>input('session.user.org_id')]);
-        return $records;
-    }
+
     //查看详情
     public function detail()
     {
         $id = input('get.id');
-        $record = Model::get($id);
+        $record = SubModel::get($id);
         $this->assign('record',$record);
         return $this->fetch();
     }
@@ -38,7 +37,7 @@ class Organization extends Base
     //添加到数据库
     public function insert()
     {
-        /* @var $model Model*/
+        /* @var $model SubModel*/
 //        $model = Loader::model('group');
         $result = model('organization')->data(input('post.'),true)->save();
         if(!empty($result)){
@@ -51,7 +50,7 @@ class Organization extends Base
     public function mod()
     {
         $id = input('get.id');
-        $detail = Model::get($id)->getData();
+        $detail = SubModel::get($id)->getData();
         $this->assign('detail',$detail);
         return $this->fetch();
     }
@@ -67,7 +66,7 @@ class Organization extends Base
     public function del()
     {
         $ids = input('get.id/a');
-        $result = Model::destroy($ids);
+        $result = SubModel::destroy($ids);
         if(!empty($result)){
             $this->success('删除子单位成功！');
         }else{

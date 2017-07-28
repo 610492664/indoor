@@ -9,7 +9,7 @@ class Node extends Base
         'create_time'=>'timestamp'
     ];
     protected $auto = [];
-    protected $insert = ['nod_id'];
+    protected $insert = [];
     protected $update = [];
 
     // 自动写入时间戳
@@ -17,8 +17,8 @@ class Node extends Base
     // 关闭自动写入update_time字段
     protected $updateTime = false;
 
-    protected function setNodIdAttr()
+    public function roles()
     {
-        return create_guid();
+        return $this->belongsToMany('Role', 'rol_nod', 'rol_id', 'node');
     }
 }

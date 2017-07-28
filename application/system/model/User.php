@@ -43,4 +43,9 @@ class User extends Base
         $value = ($value !== 0) ? $this->readTransform($value, 'timestamp'):'从未登录';
         return $value;
     }
+
+    public function role()
+    {
+        return $this->belongsTo('role', 'rol_id', 'rol_id');
+    }
 }

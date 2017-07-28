@@ -27,12 +27,12 @@
 </div>
 <script>
     var php_url = {
-        getList: '{:url("Building/getList")}',
+        index: '{:url("Building/index")}',
         detail: '{:url("Building/detail")}',
         mod : '{:url("Building/mod")}',
         del : '{:url("Building/del")}',
     };
-    require(['dataTables.bootstrap','inputmask.date','jquery.form','admin/js/pages/building'],function () {
+    require(['inputmask.date','jquery.form','admin/js/pages/building'],function () {
         building();
     });
 </script>

@@ -31,4 +31,14 @@ class Role extends Base
     {
         return input('session.user.org_id');
     }
+
+    public function users()
+    {
+        return $this->hasMany('User', 'rol_id');
+    }
+
+    public function nodes()
+    {
+        return $this->belongsToMany('Node', 'rol_nod', 'node', 'rol_id');
+    }
 }

@@ -3,16 +3,17 @@ define(['jquery','common'],function ($) {
 
     $body.on('draw.dt', '#table', function () {
         var $switch = $('input.switch')
-        $switch.bootstrapSwitch();
-        $switch.on('switchChange.bootstrapSwitch',function (event,state) {
-            return false;
-            var id = $(this).attr('e-data'), url = $(this).attr('e-action-mod');
-            var ret =  $.form.load(url, {id: id, name: this.name, value: state ? 1 : 0}, 'POST', false, function (res) {
-                if (res.code === 0) {
-                    return false;
-                }
-            });
-            return ret;
+        $switch.bootstrapSwitch({
+            onSwitchChange: function (event, state) {
+                var id = $(this).attr('e-data'), url = $(this).attr('e-action-mod'), ret = false;
+                $.form.load(url, {id: id, name: this.name, value: state ? 1 : 0}, 'POST', false, function (res) {
+                    if(res.code === 1) {
+                        ret = true;
+                        return false;
+                    }
+                },false);
+                return ret;
+            }
         });
     })
 

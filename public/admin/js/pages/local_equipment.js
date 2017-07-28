@@ -4,16 +4,8 @@
 
 function local_equipment() {
     $.table = $('#table').DataTable({
-        "language":  {"url": PLUGIN_PATH+"/datatables/Chinese.json"},
-        "lengthMenu": [[10, 25, 50, 100, -1], ["10", "25", "50", "100", "全部"]],
-        "autoWidth": false,
         "ajax": {
-            "url": php_url.getList,
-            "type":'get',
-            "data": {
-                "org_id": "123"
-            },
-            "dataSrc": ""
+            "url": php_url.index,
         },
         "columns": [
             { "data": "lequ_id","title":"<input type='checkbox' e-check-name = 'checkList'>", "searchable": false,"orderable": false, "width": "3px" },

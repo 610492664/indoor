@@ -2,27 +2,26 @@
 namespace app\admin\controller;
 
 use \Think\Loader;
-use \app\admin\model\LocationMark as Model;
+use \app\admin\model\LocationMark as SubModel;
 
 class LocationMark extends Base
 {
     public function index()
     {
+        if(input('?get.action')){
+            $org_id = input('session.user.org_id');
+            $model = new SubModel();
+            $list = $model->where(['org_id'=>$org_id])->select();
+            return $list;
+        }
         return $this->fetch();
     }
-    //获取列表
-    public function getList()
-    {
-//        $org_id = input('session.org_id');
-        $model = new Model();
-        $list = $model->where(['org_id'=>'{3033D1DB-3C92-6624-DCDE-0435498BB60D}'])->select();
-        return $list;
-    }
+
     //查看详情
     public function detail()
     {
         $id = input('get.id');
-        $detail = Model::get($id);
+        $detail = SubModel::get($id);
         $this->assign('detail',$detail);
         return $this->fetch();
     }
@@ -41,14 +40,14 @@ class LocationMark extends Base
     public function mod()
     {
         $id = input('get.id');
-        $detail = Model::get($id);
+        $detail = SubModel::get($id);
         $this->assign('detail',$detail);
         return $this->fetch();
     }
     //修改更新
     public function update()
     {
-        $model = new Model;
+        $model = new SubModel;
         $result = $model->save(input("post."),['lmar_id' => input('post.lmar_id')]);
         return result($result,'修改信标成功！', '修改信标失败！');
     }
@@ -56,7 +55,7 @@ class LocationMark extends Base
     public function del()
     {
         $ids = input('get.id/a');
-        $result = Model::destroy($ids);
+        $result = SubModel::destroy($ids);
         return result($result,'删除信标成功！', '删除信标失败！');
     }
 

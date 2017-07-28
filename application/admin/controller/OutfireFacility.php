@@ -4,21 +4,17 @@ namespace app\admin\controller;
 use app\admin\model\Building as BuildingModel;
 use think\Db;
 use \Think\Loader;
-use \app\admin\model\OutfireFacility as Model;
+use \app\admin\model\OutfireFacility as SubModel;
 
 class OutfireFacility extends Base
 {
     public function index()
     {
-        return $this->fetch();
-    }
-    //获取列表
-    public function getList()
-    {
-//        $org_id = input('session.org_id');
-        $model = model('outfire_facility');
-        $list = $model->alias('ofac')
-            ->field('
+        if(input('?get.action')){
+            $org_id = input('session.user.org_id');
+            $model = model('outfire_facility');
+            $list = $model->alias('ofac')
+                ->field('
             ofac.ofac_id,
             ofac.number,
             ofac.name,
@@ -29,17 +25,20 @@ class OutfireFacility extends Base
             ofac.place_time,
             ofac.status
           ')
-            ->join('__BUILDING__ bui', 'ofac.bui_id = bui.bui_id','LEFT')
-            ->join('__FLOOR__ flo', 'ofac.flo_id = flo.flo_id','LEFT')
-            ->where(['bui.org_id'=>'{3033D1DB-3C92-6624-DCDE-0435498BB60D}'])
-            ->select();
-        return $list;
+                ->join('__BUILDING__ bui', 'ofac.bui_id = bui.bui_id','LEFT')
+                ->join('__FLOOR__ flo', 'ofac.flo_id = flo.flo_id','LEFT')
+                ->where(['bui.org_id'=>$org_id])
+                ->select();
+            return $list;
+        }
+        return $this->fetch();
     }
+
     //查看详情
     public function detail()
     {
         $id = input('get.id');
-        $detail = Model::get($id);
+        $detail = SubModel::get($id);
         $this->assign('detail',$detail);
         return $this->fetch();
     }
@@ -74,7 +73,7 @@ class OutfireFacility extends Base
     public function mod()
     {
         $id = input('get.id');
-        $detail = Model::get($id);
+        $detail = SubModel::get($id);
         $buildings = Db::name('building')->field('bui_id, name')->where(['org_id'=> '{3033D1DB-3C92-6624-DCDE-0435498BB60D}'])->select();
         $buildings = Db::name('floor')->field('flo_id, number')->where(['org_id'=> '{3033D1DB-3C92-6624-DCDE-0435498BB60D}'])->select();
         $this->assign('buildings', $buildings);
@@ -84,7 +83,7 @@ class OutfireFacility extends Base
     //修改更新
     public function update()
     {
-        $model = new Model;
+        $model = new SubModel;
         $result = $model->save(input("post."),['lmar_id' => input('post.lmar_id')]);
         return result($result,'修改消防设施成功！', '修改消防设施失败！');
     }
@@ -92,7 +91,7 @@ class OutfireFacility extends Base
     public function del()
     {
         $ids = input('get.id/a');
-        $result = Model::destroy($ids);
+        $result = SubModel::destroy($ids);
         return result($result,'删除消防设施成功！', '删除消防设施失败！');
     }
 

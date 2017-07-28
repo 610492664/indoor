@@ -50,8 +50,9 @@ class AccessAuth {
             }
             throw new HttpResponseException(redirect('@system/login'));
         }
+
        /* // 访问权限节点检查
-        if (!empty($vars['checkLogin']) && !auth("{$module}/{$controller}/{$action}")) {
+        if ((!in_array(strtolower("{$controller}/{$action}"), $unchecklogin)) && !auth("{$module}/{$controller}/{$action}")) {
             $result = ['code' => 0, 'msg' => '抱歉, 您没有访问该模块的权限!', 'data' => '', 'url' => '', 'wait' => 3];
             throw new HttpResponseException(json($result));
         }*/

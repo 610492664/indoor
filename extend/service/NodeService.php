@@ -14,6 +14,7 @@
 
 namespace service;
 
+use think\App;
 use think\Db;
 
 /**
@@ -52,7 +53,7 @@ class NodeService {
     public static function getAuthNode() {
         $nodes = cache('need_access_node');
         if (empty($nodes)) {
-            $nodes = Db::name('SystemNode')->where('is_auth', '1')->column('node');
+            $nodes = Db::name('node')->where('is_auth', '1')->column('node');
             cache('need_access_node', $nodes);
         }
         return $nodes;
@@ -82,33 +83,43 @@ class NodeService {
     public static function get() {
         $alias = [];
         $nodes = Db::name('Node')->order('node asc')->select();
-        foreach ($nodes as $vo) {
-            $alias["{$vo['node']}"] = $vo;
-        }
-        $ignore = [
-            'index',
-            'admin/plugs', 'system/login', 'system/index',
-        ];
-        foreach (self::getNodeTree(APP_PATH) as $thr) {
-            foreach ($ignore as $str) {
-                if (stripos($thr, $str) === 0) {
-                    continue 2;
+        if (App::$debug) {
+            foreach ($nodes as $vo) {
+                $alias["{$vo['node']}"] = $vo;
+            }
+            $ignore = [
+                'index',
+                'admin/plugs', 'system/login', 'system/index',
+            ];
+            foreach (self::getNodeTree(APP_PATH) as $thr) {
+                foreach ($ignore as $str) {
+                    if (stripos($thr, $str) === 0) {
+                        continue 2;
+                    }
+                }
+                $tmp = explode('/', $thr);
+                $exist_nodes[] = $one = $tmp[0];
+                $exist_nodes[] = $two = "{$tmp[0]}/{$tmp[1]}";
+                $exist_nodes[] = $thr;
+
+                if(!isset($alias[$one]) && !isset( $new_nodes[$one])) {
+                    $new_nodes[$one] = ['node' => $one, 'title' => '', 'is_menu' => 0, 'is_auth' => 0, 'pnode' =>''];
+                }
+                if(!isset($alias[$two]) && !isset( $new_nodes[$two])) {
+                    $new_nodes[$two] = ['node' => $two, 'title' => '', 'is_menu' => 0, 'is_auth' => 0, 'pnode' => $one];
+                }
+                if(!isset($alias[$thr]) && !isset( $new_nodes[$thr])) {
+                    $new_nodes[$thr] = ['node' => $thr, 'title' => '', 'is_menu' => 0, 'is_auth' => 0, 'pnode' => $two];
                 }
             }
-            $tmp = explode('/', $thr);
-            $one = $tmp[0];
-            $two = "{$tmp[0]}/{$tmp[1]}";
-           /* $nodes[$one] = array_merge(isset($alias[$one]) ? $alias[$one] : ['node' => $one, 'title' => '', 'is_menu' => 0, 'is_auth' => 0], ['pnode' => '']);
-            $nodes[$two] = array_merge(isset($alias[$two]) ? $alias[$two] : ['node' => $two, 'title' => '', 'is_menu' => 0, 'is_auth' => 0], ['pnode' => $one]);
-            $nodes[$thr] = array_merge(isset($alias[$thr]) ? $alias[$thr] : ['node' => $thr, 'title' => '', 'is_menu' => 0, 'is_auth' => 0], ['pnode' => $two]);*/
+            $model = model('node');
+            if(!empty($new_nodes)){
+                $model->saveAll($new_nodes, false);
+            }
+            $model->together('roles')->where('node', 'not in', $exist_nodes)->delete();
+            $model->getLastSql();
 
-            isset($alias[$one]) || $new_nodes[$one] = ['node' => $one, 'title' => '', 'is_menu' => 0, 'is_auth' => 0];
-            isset($alias[$two]) || $new_nodes[$two] = ['node' => $two, 'title' => '', 'is_menu' => 0, 'is_auth' => 0];
-            isset($alias[$thr]) || $new_nodes[$thr] = ['node' => $thr, 'title' => '', 'is_menu' => 0, 'is_auth' => 0];
-        }
-        if(!empty($new_nodes)){
-            $adds = model('node')->saveAll($new_nodes);
-            !empty($adds) && $nodes = array_merge($nodes, $adds);
+            $nodes = $model->order('node asc')->select();
         }
         return $nodes;
     }
