@@ -15,11 +15,11 @@ class Organization extends Base
 
     public function index()
     {
-        if(input('?get.action')){
-            $records =SubModel::all(['p_org_id'=>input('session.user.org_id')]);
-            return $records;
+        if(input('?param.view')){
+            return $this->fetch();
         }
-        return $this->fetch();
+        $records =SubModel::all(['p_org_id'=>input('session.user.org_id')]);
+        return $records;
     }
 
     //查看详情

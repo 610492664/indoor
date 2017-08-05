@@ -8,13 +8,13 @@ class LocalEquipment extends Base
 {
     public function index()
     {
-        if(input('?get.action')){
-            $org_id = input('session.user.org_id');
-            $model = new SubModel();
-            $list = $model->where(['org_id'=>$org_id])->select();
-            return $list;
+        if(input('?param.view')){
+            return $this->fetch();
         }
-        return $this->fetch();
+        $org_id = input('session.user.org_id');
+        $model = new SubModel();
+        $list = $model->where(['org_id'=>$org_id])->select();
+        return $list;
     }
 
     //查看详情

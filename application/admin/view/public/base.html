@@ -121,7 +121,7 @@
                         </a>
                         <ul class="treeview-menu">
                             <li><a href="#{:url('organization/self')}"><i class="fa fa-circle-o"></i>本单位信息</a></li>
-                            <li><a href="#{:url('organization/index')}"><i class="fa fa-circle-o"></i>子单位管理</a></li>
+                            <li><a href="#{:url('organization/index', 'view=index')}"><i class="fa fa-circle-o"></i>子单位管理</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
@@ -132,8 +132,8 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="#{:url('group/index')}"><i class="fa fa-circle-o"></i>分组管理</a></li>
-                            <li><a href="#{:url('person/index')}"><i class="fa fa-circle-o"></i>人员列表</a></li>
+                            <li><a href="#{:url('group/index', 'view=index')}"><i class="fa fa-circle-o"></i>分组管理</a></li>
+                            <li><a href="#{:url('person/index', 'view=index')}"><i class="fa fa-circle-o"></i>人员列表</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
@@ -144,9 +144,9 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="#{:url('locator/index')}"><i class="fa fa-circle-o"></i> 定位套件</a></li>
-                            <li><a href="#{:url('locationMark/index')}"><i class="fa fa-circle-o"></i> 信标</a></li>
-                            <li><a href="#{:url('localEquipment/index')}"><i class="fa fa-circle-o"></i> 终端管理</a></li>
+                            <li><a href="#{:url('locator/index', 'view=index')}"><i class="fa fa-circle-o"></i> 定位套件</a></li>
+                            <li><a href="#{:url('locationMark/index', 'view=index')}"><i class="fa fa-circle-o"></i> 信标</a></li>
+                            <li><a href="#{:url('localEquipment/index', 'view=index')}"><i class="fa fa-circle-o"></i> 终端管理</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
@@ -157,13 +157,13 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="#{:url('building/index')}"><i class="fa fa-fw fa-building-o"></i> 建筑物</a></li>
-                            <li><a href="#{:url('floor/index')}"><i class="fa fa-fw fa-navicon"></i> 楼层管理</a></li>
-                            <li><a href="#{:url('outfireFacility/index')}"><i class="fa fa-fw fa-circle-o"></i> 消防设施</a></li>
+                            <li><a href="#{:url('building/index', 'view=index')}"><i class="fa fa-fw fa-building-o"></i> 建筑物</a></li>
+                            <li><a href="#{:url('floor/index', 'view=index')}"><i class="fa fa-fw fa-navicon"></i> 楼层管理</a></li>
+                            <li><a href="#{:url('outfireFacility/index', 'view=index')}"><i class="fa fa-fw fa-circle-o"></i> 消防设施</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="#{:url('incident/index')}">
+                        <a href="#{:url('incident/index', 'view=index')}">
                             <i class="fa fa-circle-o"></i> <span>事件</span>
                         </a>
                     </li>
@@ -176,8 +176,8 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="#{:url('system/user/index')}"><i class="fa fa-fw fa-circle-o"></i> 系统用户</a></li>
-                            <li><a href="#{:url('system/role/index')}"><i class="fa fa-fw fa-circle-o"></i> 角色管理</a></li>
+                            <li><a href="#{:url('system/user/index', 'view=index')}"><i class="fa fa-fw fa-circle-o"></i> 系统用户</a></li>
+                            <li><a href="#{:url('system/role/index', 'view=index')}"><i class="fa fa-fw fa-circle-o"></i> 角色管理</a></li>
                             <li><a href="#{:url('system/node/index')}"><i class="fa fa-fw fa-circle-o"></i> 节点管理</a></li>
                         </ul>
                     </li>
@@ -189,8 +189,7 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="#{:url('action/index')}"><i class="fa fa-fw fa-circle-o"></i> 用户操作</a></li>
-                            <li><a href="#{:url('log/index')}"><i class="fa fa-fw fa-circle-o"></i> 系统日志</a></li>
+                            <li><a href="#{:url('system/userLog/index', 'view=index')}"><i class="fa fa-fw fa-circle-o"></i> 操作日志</a></li>
                         </ul>
                     </li>
                 </ul>

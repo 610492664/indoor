@@ -80,9 +80,6 @@ require(['bootbox','bootstrap-dialog','bootstrap-switch', 'fastclick', 'jquery.s
             "ajax": {
                 // "url": php_url.index,
                 "type":'get',
-                "data": {
-                    "action": 'list'
-                },
                 "dataSrc": "",
             },
         });

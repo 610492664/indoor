@@ -10,11 +10,13 @@ class OutfireFacility extends Base
 {
     public function index()
     {
-        if(input('?get.action')){
-            $org_id = input('session.user.org_id');
-            $model = model('outfire_facility');
-            $list = $model->alias('ofac')
-                ->field('
+        if(input('?param.view')){
+            return $this->fetch();
+        }
+        $org_id = input('session.user.org_id');
+        $model = model('outfire_facility');
+        $list = $model->alias('ofac')
+            ->field('
             ofac.ofac_id,
             ofac.number,
             ofac.name,
@@ -25,13 +27,11 @@ class OutfireFacility extends Base
             ofac.place_time,
             ofac.status
           ')
-                ->join('__BUILDING__ bui', 'ofac.bui_id = bui.bui_id','LEFT')
-                ->join('__FLOOR__ flo', 'ofac.flo_id = flo.flo_id','LEFT')
-                ->where(['bui.org_id'=>$org_id])
-                ->select();
-            return $list;
-        }
-        return $this->fetch();
+            ->join('__BUILDING__ bui', 'ofac.bui_id = bui.bui_id','LEFT')
+            ->join('__FLOOR__ flo', 'ofac.flo_id = flo.flo_id','LEFT')
+            ->where(['bui.org_id'=>$org_id])
+            ->select();
+        return $list;
     }
 
     //查看详情

@@ -8,14 +8,14 @@ class Incident extends Base
 {
     public function index()
     {
-        if(input('?get.action')){
-            $org_id = input('session.user.org_id');
-            $list = SubModel::all(function ($query) use($org_id) {
-                $query->where('org_id',$org_id)->order('start_time');
-            },'buildings');
-            return $list;
+        if(input('?param.view')){
+            return $this->fetch();
         }
-        return $this->fetch();
+        $org_id = input('session.user.org_id');
+        $list = SubModel::all(function ($query) use($org_id) {
+            $query->where('org_id',$org_id)->order('start_time');
+        },'buildings');
+        return $list;
     }
 
     //查看详情

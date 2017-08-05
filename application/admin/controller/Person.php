@@ -9,14 +9,14 @@ class Person extends Base
 {
     public function index()
     {
-        if(input('?get.action')){
-            $org_id = input('session.user.org_id');
-            $persons = SubModel::all(function($query)use($org_id){
-                $query->where(['org_id'=>$org_id]);
-            },'locator');
-            return $persons;
+        if(input('?param.view')){
+            return $this->fetch();
         }
-        return $this->fetch();
+        $org_id = input('session.user.org_id');
+        $persons = SubModel::all(function($query)use($org_id){
+            $query->where(['org_id'=>$org_id]);
+        },'locator');
+        return $persons;
     }
 
     //查看详情

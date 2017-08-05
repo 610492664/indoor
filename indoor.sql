@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50714
 File Encoding         : 65001
 
-Date: 2017-07-28 20:49:26
+Date: 2017-08-05 18:46:04
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -34,7 +34,7 @@ CREATE TABLE `il_building` (
 -- ----------------------------
 -- Records of il_building
 -- ----------------------------
-INSERT INTO `il_building` VALUES ('{BFF5481F-A3DF-F185-927A-83FF572351DB}', '建筑以', '60', '300', 'fasdf', '福华三路100号', '福田中队负责', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}');
+INSERT INTO `il_building` VALUES ('{BFF5481F-A3DF-F185-927A-83FF572351DB}', '建筑四', '60', '300', 'fasdf', '福华三路100号', '福田中队负责', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}');
 INSERT INTO `il_building` VALUES ('{6642EB69-0EC0-25FF-29A7-C2842E5AB4A7}', '建筑二', '100', '32767', 'fdsafd', '北四道1号', '', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}');
 
 -- ----------------------------
@@ -85,6 +85,7 @@ DROP TABLE IF EXISTS `il_incident`;
 CREATE TABLE `il_incident` (
   `inc_id` char(38) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '事件id',
   `name` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '事件名称',
+  `property` tinyint(1) NOT NULL DEFAULT '1' COMMENT '事件性质：0：实战，1：演习',
   `type` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '事件类型',
   `description` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '事件描述',
   `start_time` int(11) NOT NULL COMMENT '事件开始事件',
@@ -96,7 +97,7 @@ CREATE TABLE `il_incident` (
 -- ----------------------------
 -- Records of il_incident
 -- ----------------------------
-INSERT INTO `il_incident` VALUES ('{48460920-1AA0-BF9A-34DB-2358A2E7A4E4}', '事件一', '1', '突发火灾', '1462594528', '1462612528', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}');
+INSERT INTO `il_incident` VALUES ('{48460920-1AA0-BF9A-34DB-2358A2E7A4E4}', '事件一', '0', '1', '突发火灾', '1462594528', '1462612528', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}');
 
 -- ----------------------------
 -- Table structure for il_inc_bui
@@ -192,7 +193,7 @@ CREATE TABLE `il_location_mark` (
 -- Records of il_location_mark
 -- ----------------------------
 INSERT INTO `il_location_mark` VALUES ('{C7448A9E-A9CD-01D5-87FF-4FFC5DB9ECCC}', '信标一', '1', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', 'fdsaf6565', '1');
-INSERT INTO `il_location_mark` VALUES ('{50E15174-63B4-3C66-6F5C-EE3B298233E7}', '信标二', '2', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '6556+56sdf', '0');
+INSERT INTO `il_location_mark` VALUES ('{50E15174-63B4-3C66-6F5C-EE3B298233E7}', '信标二', '1', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '6556+56sdf', '0');
 
 -- ----------------------------
 -- Table structure for il_locator
@@ -348,6 +349,9 @@ INSERT INTO `il_node` VALUES ('system/user/index', 'system/user', '', '0', '1', 
 INSERT INTO `il_node` VALUES ('system/user/insert', 'system/user', '', '0', '1', '1500902363');
 INSERT INTO `il_node` VALUES ('system/user/mod', 'system/user', '', '0', '1', '1500902363');
 INSERT INTO `il_node` VALUES ('system/user/update', 'system/user', '', '0', '1', '1500902363');
+INSERT INTO `il_node` VALUES ('system/userlog', 'system', '', '0', '0', '1501923798');
+INSERT INTO `il_node` VALUES ('system/userlog/del', 'system/userlog', '', '0', '0', '1501923798');
+INSERT INTO `il_node` VALUES ('system/userlog/index', 'system/userlog', '', '0', '0', '1501923798');
 
 -- ----------------------------
 -- Table structure for il_organization
@@ -366,7 +370,7 @@ CREATE TABLE `il_organization` (
 -- ----------------------------
 -- Records of il_organization
 -- ----------------------------
-INSERT INTO `il_organization` VALUES ('{C584937A-6D3B-B762-1029-095D68D54663}', '子单位一', '一', '科技园高新北四道23号', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0');
+INSERT INTO `il_organization` VALUES ('{C584937A-6D3B-B762-1029-095D68D54663}', '子单位一', '一', '科技园高新北四道233号', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0');
 INSERT INTO `il_organization` VALUES ('{3591E0DD-5013-8640-0BFF-4E48FA697596}', '子单位一', '三', '科技园高新北四道23号', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0');
 INSERT INTO `il_organization` VALUES ('{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '淘米科技有限公司', '淘米科技', '高新北四道贝特尔大厦', null, '0');
 
@@ -479,111 +483,15 @@ CREATE TABLE `il_rol_nod` (
 -- ----------------------------
 -- Records of il_rol_nod
 -- ----------------------------
-INSERT INTO `il_rol_nod` VALUES ('{00D7C68C-3576-A58F-3295-44CE69EFBCE9}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/organization/self');
-INSERT INTO `il_rol_nod` VALUES ('{01EE75AB-0899-366B-9FC2-D50C7005BFDC}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locationmark/del');
-INSERT INTO `il_rol_nod` VALUES ('{042BCF29-1F85-843A-617F-75AE8CB954B0}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/group/update');
-INSERT INTO `il_rol_nod` VALUES ('{062458C1-2AA8-A021-9850-A5F8D47EF2B0}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/building/del');
-INSERT INTO `il_rol_nod` VALUES ('{067CBA78-F092-CDFE-3887-37CEE1F73CF4}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/floor/index');
-INSERT INTO `il_rol_nod` VALUES ('{0AB856B6-7B17-FCB1-727D-FE792BD7A27E}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/outfirefacility/del');
-INSERT INTO `il_rol_nod` VALUES ('{0B3DB349-66E8-A310-DC37-FEFBA9599CCF}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locationmark/update');
-INSERT INTO `il_rol_nod` VALUES ('{0BD6293F-1FD1-BA58-3308-E705066D49B4}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locator/mod');
-INSERT INTO `il_rol_nod` VALUES ('{0CFC4ECE-F999-60FB-0D4E-8FB3FE092CC0}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/building/getlist');
-INSERT INTO `il_rol_nod` VALUES ('{0D87FC55-D0A2-7DDE-40CC-21BEF92D66FF}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/building/index');
-INSERT INTO `il_rol_nod` VALUES ('{0DC1BF54-B69F-2AC0-E00B-F91FDC80E9F0}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/localequipment');
-INSERT INTO `il_rol_nod` VALUES ('{0E8942F9-5E9E-BA33-1488-7C01F067FF04}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/localequipment/insert');
-INSERT INTO `il_rol_nod` VALUES ('{0E9460CE-0562-E76D-154E-30236E319113}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/person/update');
-INSERT INTO `il_rol_nod` VALUES ('{1887F415-4C51-BB4D-21F7-1EBE640CE166}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/floor/update');
-INSERT INTO `il_rol_nod` VALUES ('{1891E07E-F471-6BFF-138B-69D0CF938EAF}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locator/insert');
-INSERT INTO `il_rol_nod` VALUES ('{206CD88F-21F9-100F-A826-F8658003C639}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/floor/add');
-INSERT INTO `il_rol_nod` VALUES ('{20C2240F-7A49-D69E-F84C-BB5497FFC8AB}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locator/index');
-INSERT INTO `il_rol_nod` VALUES ('{2DDC8326-5E88-BFCB-8294-32D13FD3AACE}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/organization/mod');
-INSERT INTO `il_rol_nod` VALUES ('{2FC63382-E945-B930-4B89-6D4D90668D71}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/group/getlist');
-INSERT INTO `il_rol_nod` VALUES ('{30C147E9-CEAE-B7E8-0130-A62A816E49E1}', '{193C91B4-9085-4A32-B62E-26C6A14AFBA7}', 'admin/building');
-INSERT INTO `il_rol_nod` VALUES ('{30DB7FFD-3D87-B9E8-CBA3-0ED572298CFF}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/person/del');
-INSERT INTO `il_rol_nod` VALUES ('{3605EF81-3A4B-B0EB-5A0D-58B957C0F1F7}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/group/insert');
-INSERT INTO `il_rol_nod` VALUES ('{375669F0-F652-1E50-1DF9-7DA0D59D217A}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/floor/insert');
-INSERT INTO `il_rol_nod` VALUES ('{3767F5BF-9867-3A41-DE4A-9B3F98038FFB}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/person/mod');
-INSERT INTO `il_rol_nod` VALUES ('{382EF484-B8A8-30AD-98DD-D82F4101B163}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locationmark/detail');
-INSERT INTO `il_rol_nod` VALUES ('{39B2388C-EB60-C496-20E7-B868B29E74FC}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/incident/detail');
-INSERT INTO `il_rol_nod` VALUES ('{3AA517A3-4D47-A785-A578-9339E746A1C3}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/floor');
-INSERT INTO `il_rol_nod` VALUES ('{3CA4E8C9-FC2E-455C-9EC5-5A3BC4C94DFD}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/person/getlist');
-INSERT INTO `il_rol_nod` VALUES ('{3EB89CA2-D4D1-7DFB-F9AD-8EFF53F85905}', '{193C91B4-9085-4A32-B62E-26C6A14AFBA7}', 'admin/building/del');
-INSERT INTO `il_rol_nod` VALUES ('{46691D1F-8FC6-4986-31FC-E5B333402E44}', '{193C91B4-9085-4A32-B62E-26C6A14AFBA7}', 'admin/building/mod');
-INSERT INTO `il_rol_nod` VALUES ('{46FCAB82-95F7-D5BF-8163-5F0B3DF1A4D1}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/index');
-INSERT INTO `il_rol_nod` VALUES ('{4B500A21-90CA-345C-5143-B8A45D5536B1}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/index/dashboard');
-INSERT INTO `il_rol_nod` VALUES ('{4D6A48C7-74AE-6837-18E0-42F5600F9F5B}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/organization/insert');
-INSERT INTO `il_rol_nod` VALUES ('{5057DEEE-0919-92EC-2325-B405CF1FABD0}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locator/detail');
-INSERT INTO `il_rol_nod` VALUES ('{51E9C0EB-FAA1-F2C9-9C04-EE0B490FFBEC}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/person/add');
-INSERT INTO `il_rol_nod` VALUES ('{55B0F009-073C-B331-1457-862B122ACDE3}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locationmark/insert');
-INSERT INTO `il_rol_nod` VALUES ('{562BD2C5-9650-FB09-2B52-A169C71EA432}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/outfirefacility');
-INSERT INTO `il_rol_nod` VALUES ('{586BAD92-1675-79B7-46BD-E2E9D0407E98}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/outfirefacility/getlist');
-INSERT INTO `il_rol_nod` VALUES ('{593AD237-14FD-3EE5-A03B-01E3424AF948}', '{193C91B4-9085-4A32-B62E-26C6A14AFBA7}', 'admin/building/add');
-INSERT INTO `il_rol_nod` VALUES ('{599777E9-FC39-138A-5AC4-53ADDD54E74B}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/outfirefacility/update');
-INSERT INTO `il_rol_nod` VALUES ('{59DE312A-1ECD-E97E-8D98-6BB1FEC2A506}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/incident/index');
-INSERT INTO `il_rol_nod` VALUES ('{5B96663F-3A8F-DAE9-FF17-95A1FB02547C}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/incident/mod');
-INSERT INTO `il_rol_nod` VALUES ('{5F58855F-BA4F-B42C-68B1-7F3D513FC4A9}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/person/insert');
-INSERT INTO `il_rol_nod` VALUES ('{5FDBB915-2778-FADF-A0A3-3F7F671E1C45}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/localequipment/getlist');
-INSERT INTO `il_rol_nod` VALUES ('{63ACEFFC-A933-5BC4-FF9D-854199CA7237}', '{193C91B4-9085-4A32-B62E-26C6A14AFBA7}', 'admin/building/detail');
-INSERT INTO `il_rol_nod` VALUES ('{63CA572C-EE75-8F39-8A19-8C8A591D8866}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/organization/update');
-INSERT INTO `il_rol_nod` VALUES ('{63F8B1D2-7CF2-0C32-6320-EC76DC51DF3D}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/outfirefacility/index');
-INSERT INTO `il_rol_nod` VALUES ('{64A2A502-55BC-D540-AF40-A0B015227751}', '{193C91B4-9085-4A32-B62E-26C6A14AFBA7}', 'admin');
-INSERT INTO `il_rol_nod` VALUES ('{6F1BADAC-31FB-4480-3167-5F8CEBDC6E29}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/organization/detail');
-INSERT INTO `il_rol_nod` VALUES ('{72410D9C-23D7-7EB3-8D9E-A0C47E0F4E64}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/organization');
-INSERT INTO `il_rol_nod` VALUES ('{728AC20C-3BB7-CA36-D998-A2CA87516286}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/organization/del');
-INSERT INTO `il_rol_nod` VALUES ('{757C7527-C04C-C06D-834D-3E02A5DBEA58}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/group/detail');
-INSERT INTO `il_rol_nod` VALUES ('{7802E0DD-1259-0743-BC79-4793B0C6B902}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/incident/getlist');
-INSERT INTO `il_rol_nod` VALUES ('{863D6563-07DB-7258-2847-694DDA1BD538}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/organization/index');
-INSERT INTO `il_rol_nod` VALUES ('{8C4351E1-E13E-2B5F-A8FC-227025D77738}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/group/add');
-INSERT INTO `il_rol_nod` VALUES ('{9107E529-1B96-3F6B-1C60-9610413AC192}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locationmark/index');
-INSERT INTO `il_rol_nod` VALUES ('{9118750E-0D98-04D4-BA39-DA8648606BC2}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/building');
-INSERT INTO `il_rol_nod` VALUES ('{911CF0A2-1FC6-FCA9-F0F7-15E585A29521}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locator/update');
-INSERT INTO `il_rol_nod` VALUES ('{924188ED-CCF3-72A1-51C1-1AF7903185DE}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/building/add');
-INSERT INTO `il_rol_nod` VALUES ('{92C76163-6CC0-54F6-198D-08FA9E4EEACB}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locationmark/add');
-INSERT INTO `il_rol_nod` VALUES ('{93B49475-16A2-7F16-9FB6-810B4A9B0EF8}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/group');
-INSERT INTO `il_rol_nod` VALUES ('{9651CD90-047B-B047-ED7B-F36E8265378F}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/localequipment/update');
-INSERT INTO `il_rol_nod` VALUES ('{9B0547AD-F0CB-EB7E-0CBD-5BF85EFC2BC8}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/group/del');
-INSERT INTO `il_rol_nod` VALUES ('{9B2C68DB-CAB1-3687-1FCA-FB505F35D0FF}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/outfirefacility/floors');
-INSERT INTO `il_rol_nod` VALUES ('{9C42FDE6-74F2-120E-7113-CFF1993946F5}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/floor/getlist');
-INSERT INTO `il_rol_nod` VALUES ('{9DF8C6AF-3551-0DE4-25F5-1373E05917A9}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locationmark/getlist');
-INSERT INTO `il_rol_nod` VALUES ('{9ECF54D3-B185-649E-626C-3329EF431A82}', '{193C91B4-9085-4A32-B62E-26C6A14AFBA7}', 'admin/building/index');
-INSERT INTO `il_rol_nod` VALUES ('{A0D8B093-616A-F26F-55A3-5A9BC8BC3DC7}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/outfirefacility/insert');
-INSERT INTO `il_rol_nod` VALUES ('{A18CE6B1-DE1E-6EB2-B06C-6E128C211865}', '{193C91B4-9085-4A32-B62E-26C6A14AFBA7}', 'admin/building/insert');
-INSERT INTO `il_rol_nod` VALUES ('{A7F3A20C-121B-6A1F-1230-6966BD98BB72}', '{193C91B4-9085-4A32-B62E-26C6A14AFBA7}', 'admin/building/getlist');
-INSERT INTO `il_rol_nod` VALUES ('{A83942D5-6F44-B4DC-8FE1-AE12EF6895A4}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/floor/del');
-INSERT INTO `il_rol_nod` VALUES ('{A9F823D4-757F-2081-AA9D-908183C5D879}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/building/mod');
-INSERT INTO `il_rol_nod` VALUES ('{AB24BCDE-2BAE-E019-29A4-701CFB9A53B2}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locator/add');
-INSERT INTO `il_rol_nod` VALUES ('{AC24010C-512E-43AA-3F1E-7D967301B3F7}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/incident/add');
-INSERT INTO `il_rol_nod` VALUES ('{AD52285E-2739-4D8C-D8D2-58EAC1E569E4}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/incident/del');
-INSERT INTO `il_rol_nod` VALUES ('{AF5BE99B-D3BA-17B7-346F-89ACB1A5F6D2}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/group/index');
-INSERT INTO `il_rol_nod` VALUES ('{B62DED55-D63D-92FD-066D-664951BD16FE}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/outfirefacility/mod');
-INSERT INTO `il_rol_nod` VALUES ('{B68A1A80-3232-5816-6CEF-989A2B2D9BB1}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/person');
-INSERT INTO `il_rol_nod` VALUES ('{B99F4576-D9F4-4247-3E12-5CCFF967B6BF}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/organization/add');
-INSERT INTO `il_rol_nod` VALUES ('{BB448AD8-E807-9129-02AD-9F325F165B31}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locator');
-INSERT INTO `il_rol_nod` VALUES ('{BEAFFCC2-9C01-4CE0-D0D3-1974505218A5}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/index/index');
-INSERT INTO `il_rol_nod` VALUES ('{BF519895-275F-C899-AB17-274322A087FF}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/localequipment/add');
-INSERT INTO `il_rol_nod` VALUES ('{C0A5CFA4-41E6-9E1C-94AA-A82D12196A83}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locationmark/mod');
-INSERT INTO `il_rol_nod` VALUES ('{C243566D-AD70-14C3-43B8-553CB8F6AE67}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/building/insert');
-INSERT INTO `il_rol_nod` VALUES ('{C4C31765-014C-ABA0-6EC3-8D9A2DBFFDFA}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/localequipment/index');
-INSERT INTO `il_rol_nod` VALUES ('{C746ABF3-4C23-3178-CF1F-EE8FF460BF95}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/floor/mod');
-INSERT INTO `il_rol_nod` VALUES ('{CB89D3B3-7C1F-B8B3-2C67-9244991D5AF3}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/incident/update');
-INSERT INTO `il_rol_nod` VALUES ('{CDBA82D4-68BC-3802-B52A-5263922110F1}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/localequipment/detail');
-INSERT INTO `il_rol_nod` VALUES ('{CEB6B195-AA1D-01A4-8146-DEB05AC3CD74}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locator/getlist');
-INSERT INTO `il_rol_nod` VALUES ('{CF9D4B84-7953-EF0B-823B-4407D76DC325}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/outfirefacility/detail');
-INSERT INTO `il_rol_nod` VALUES ('{D2CE1335-BA28-D24A-5AAC-DBA251CD36C2}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/incident/insert');
-INSERT INTO `il_rol_nod` VALUES ('{D4ED60FA-DB40-86C2-C67E-7A02B97ED3B9}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locator/del');
-INSERT INTO `il_rol_nod` VALUES ('{D4EED91A-9436-39AD-3877-A66C249BC99A}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/incident');
-INSERT INTO `il_rol_nod` VALUES ('{DAAC1748-568A-6E87-75A8-6B162ACCCBBC}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/locationmark');
-INSERT INTO `il_rol_nod` VALUES ('{DBF97F17-D473-6DF2-6A47-0277C5869C7A}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin');
-INSERT INTO `il_rol_nod` VALUES ('{DDBE1043-D8EF-292F-39E7-0A2280E61B81}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/floor/detail');
-INSERT INTO `il_rol_nod` VALUES ('{E08D6971-E6B5-09DB-EB07-A1F28EE43121}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/organization/getlist');
-INSERT INTO `il_rol_nod` VALUES ('{E2D73CCE-F0CE-47C8-3489-7DA2DF823CA7}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/building/update');
-INSERT INTO `il_rol_nod` VALUES ('{E94E524E-C0E1-3CF1-9E54-0B7A0537AC3D}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/building/detail');
-INSERT INTO `il_rol_nod` VALUES ('{EB6CBB9F-322D-1330-C436-FC72629E302C}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/localequipment/mod');
-INSERT INTO `il_rol_nod` VALUES ('{EE6B0BD7-2F3B-8D9C-5488-BDE726169C18}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/group/mod');
-INSERT INTO `il_rol_nod` VALUES ('{F230178F-1636-E3C0-EFA9-87F32DCF45CC}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/person/detail');
-INSERT INTO `il_rol_nod` VALUES ('{F9DE1FE0-608F-1A9A-9E48-C053F6D1FA07}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/person/index');
-INSERT INTO `il_rol_nod` VALUES ('{FD5AFD51-55D3-9704-C2F8-DC6E6B17A8A0}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/outfirefacility/add');
-INSERT INTO `il_rol_nod` VALUES ('{FF4C10E9-1BFF-965F-6336-E8168F91ABA1}', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', 'admin/localequipment/del');
+INSERT INTO `il_rol_nod` VALUES ('{06D0170D-4EB4-0720-B8C8-2591B468465A}', '{C407F15A-F477-8AF4-B830-19FEF9B95F54}', 'admin/building/insert');
+INSERT INTO `il_rol_nod` VALUES ('{13FE8398-71B7-211D-3DBC-4D0562119F6D}', '{C407F15A-F477-8AF4-B830-19FEF9B95F54}', 'admin/building');
+INSERT INTO `il_rol_nod` VALUES ('{213203E7-3A94-95F6-85FC-B3A75D4F5EE1}', '{C407F15A-F477-8AF4-B830-19FEF9B95F54}', 'admin/building/del');
+INSERT INTO `il_rol_nod` VALUES ('{6DE5BFC2-931B-6CF5-9686-B404927833DE}', '{C407F15A-F477-8AF4-B830-19FEF9B95F54}', 'admin/building/add');
+INSERT INTO `il_rol_nod` VALUES ('{84C6078F-3D01-9F87-0E62-9CA9DCB2989B}', '{C407F15A-F477-8AF4-B830-19FEF9B95F54}', 'admin');
+INSERT INTO `il_rol_nod` VALUES ('{858B8F9C-BE3A-FB94-5193-F591A815CF5C}', '{C407F15A-F477-8AF4-B830-19FEF9B95F54}', 'admin/building/detail');
+INSERT INTO `il_rol_nod` VALUES ('{9020214D-0BAE-398B-A044-61DE63DE2014}', '{C407F15A-F477-8AF4-B830-19FEF9B95F54}', 'admin/building/mod');
+INSERT INTO `il_rol_nod` VALUES ('{BDDC4A30-A864-C932-537B-68ABDC8CCC06}', '{C407F15A-F477-8AF4-B830-19FEF9B95F54}', 'admin/building/index');
+INSERT INTO `il_rol_nod` VALUES ('{E8C3AD76-A4B9-39E2-71DA-953C33CCCCAA}', '{C407F15A-F477-8AF4-B830-19FEF9B95F54}', 'admin/building/update');
 
 -- ----------------------------
 -- Table structure for il_tag
@@ -606,6 +514,29 @@ CREATE TABLE `il_tag` (
 
 -- ----------------------------
 -- Records of il_tag
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for il_track
+-- ----------------------------
+DROP TABLE IF EXISTS `il_track`;
+CREATE TABLE `il_track` (
+  `tra_id` char(38) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ID',
+  `iper_id` char(38) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '事件人员id',
+  `posture` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '姿态',
+  `power` int(3) DEFAULT NULL COMMENT '设备电量',
+  `track` varchar(4000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '轨迹',
+  `air_pressure` decimal(2,0) DEFAULT NULL COMMENT '气压',
+  `alert` tinyint(1) DEFAULT NULL COMMENT '报警状态',
+  `floor` tinyint(3) DEFAULT NULL COMMENT '人员所在的楼层',
+  `time` int(11) DEFAULT NULL COMMENT '时间',
+  `rssi` int(11) DEFAULT NULL COMMENT '信号的强度',
+  `temperature` float DEFAULT NULL COMMENT '环境温度',
+  PRIMARY KEY (`tra_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of il_track
 -- ----------------------------
 
 -- ----------------------------
@@ -651,9 +582,82 @@ CREATE TABLE `il_user` (
 -- ----------------------------
 -- Records of il_user
 -- ----------------------------
-INSERT INTO `il_user` VALUES ('{31B847C6-8598-388E-9E87-C75C37F8076B}', 'yonghu3', '123456', '123456@qq.com', '13888888888', '第二个用户', '0', '0', '0.0.0.0', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', '', '1499341299');
-INSERT INTO `il_user` VALUES ('{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', 'e10adc3949ba59abbe56e057f20f883e', 'admin@tomee.cn', '13888888888', '超级管理员', '1', '1501205060', '0.0.0.0', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0', '', '', '1501144826');
+INSERT INTO `il_user` VALUES ('{31B847C6-8598-388E-9E87-C75C37F8076B}', 'yonghu3', '123456', '123456@qq.com', '13888888888', '第二个用户', '0', '0', '0.0.0.0', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0', '', '', '1499341299');
+INSERT INTO `il_user` VALUES ('{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', 'e10adc3949ba59abbe56e057f20f883e', 'admin@tomee.cn', '13888888888', '超级管理员', '13', '1501924981', '0.0.0.0', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0', '', '', '1501144826');
 INSERT INTO `il_user` VALUES ('{BCC57F86-B8F5-15A5-0244-FB0B22F4B05C}', 'yonghu2', 'e10adc3949ba59abbe56e057f20f883e', '123456@qq.com', '13888888888', '第二个用户', '50', '1501226744', '0.0.0.0', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0', '{1D2850BD-E43F-BED2-F995-37C23EE8E49A}', '', '1499838728');
+
+-- ----------------------------
+-- Table structure for il_user_log
+-- ----------------------------
+DROP TABLE IF EXISTS `il_user_log`;
+CREATE TABLE `il_user_log` (
+  `ulog_id` char(38) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `module` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '模块',
+  `controller` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '控制器',
+  `action` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '当前操作方法',
+  `result` enum('失败','成功') COLLATE utf8mb4_unicode_ci DEFAULT '成功' COMMENT '操作结果',
+  `use_id` char(38) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '用户id',
+  `username` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '操作人用户名',
+  `org_id` char(38) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '操作人单位id',
+  `ip` char(15) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '操作者IP地址',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`ulog_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='系统用户操作日志表';
+
+-- ----------------------------
+-- Records of il_user_log
+-- ----------------------------
+INSERT INTO `il_user_log` VALUES ('{021611F4-36D7-2ECC-03E4-B201D6549CEA}', 'system', 'userlog', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:31:37');
+INSERT INTO `il_user_log` VALUES ('{04BBFD84-38E1-060E-9C98-1B168973AB74}', 'admin', 'incident', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:43:32');
+INSERT INTO `il_user_log` VALUES ('{04FF479C-A592-FD84-3033-87C187AC28EE}', 'admin', 'index', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:22:09');
+INSERT INTO `il_user_log` VALUES ('{14F293BF-3E26-02A1-FA83-E6EDFF45C453}', 'admin', 'index', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:30:07');
+INSERT INTO `il_user_log` VALUES ('{1CBE71B0-EC04-4EC2-C3C1-35398AABFAB0}', 'admin', 'building', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:43:27');
+INSERT INTO `il_user_log` VALUES ('{1DA1F503-28BB-E415-36AA-5A7709598CAE}', 'admin', 'localequipment', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:22:24');
+INSERT INTO `il_user_log` VALUES ('{26966638-AEEA-260E-9FA8-C51C694364C8}', 'system', 'userlog', 'del', '失败', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:37:20');
+INSERT INTO `il_user_log` VALUES ('{2A361677-AC25-C03D-804A-DD11D0685D47}', 'system', 'user', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:43:10');
+INSERT INTO `il_user_log` VALUES ('{2D094B9A-DEAF-1C95-1B88-842F16E61953}', 'system', 'userlog', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:40:14');
+INSERT INTO `il_user_log` VALUES ('{2D2A47E4-1419-83A8-54BA-E8322270D0E5}', 'admin', 'person', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:43:18');
+INSERT INTO `il_user_log` VALUES ('{3DAFBC35-A604-1E55-FB6F-D13976A4CA82}', 'admin', 'locationmark', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:43:23');
+INSERT INTO `il_user_log` VALUES ('{4478437E-7093-BF30-F5A7-110EBDA95E1F}', 'admin', 'locationmark', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:20:12');
+INSERT INTO `il_user_log` VALUES ('{4690515B-5040-5AE3-F985-83A775C614BF}', 'admin', 'floor', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:43:28');
+INSERT INTO `il_user_log` VALUES ('{46C8D8DC-9B52-9FAE-9778-A4D2E88609B9}', 'admin', 'locationmark', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:22:22');
+INSERT INTO `il_user_log` VALUES ('{4AC13C1D-DF44-C7A3-DD4D-A17409BB0663}', 'admin', 'organization', 'self', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:43:14');
+INSERT INTO `il_user_log` VALUES ('{4CE74AB6-BB9C-F443-6B13-3C1BAB141C80}', 'admin', 'group', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:43:17');
+INSERT INTO `il_user_log` VALUES ('{52F744EC-74FD-70FF-2EA7-645774C77B9F}', 'system', 'node', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:43:40');
+INSERT INTO `il_user_log` VALUES ('{550A84A7-8961-664E-2F6F-F856D097EE60}', 'system', 'userlog', 'del', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:39:36');
+INSERT INTO `il_user_log` VALUES ('{5C483B2F-49A2-1BF8-F977-3CF6D34626C0}', 'system', 'user', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:43:37');
+INSERT INTO `il_user_log` VALUES ('{5C5517C6-A31A-2590-12DB-A3702420A9D6}', 'system', 'node', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:20:21');
+INSERT INTO `il_user_log` VALUES ('{5F114F2C-CDD7-938D-5898-115AF642CBE0}', 'admin', 'group', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:20:06');
+INSERT INTO `il_user_log` VALUES ('{60F47C04-A0D2-93CB-8358-F2C6B9D523A2}', 'admin', 'organization', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:22:17');
+INSERT INTO `il_user_log` VALUES ('{6BB5732B-69B3-186E-B49D-22DE25969063}', 'admin', 'index', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:31:35');
+INSERT INTO `il_user_log` VALUES ('{6E758474-3708-F8A1-5937-59D11A528B41}', 'system', 'userlog', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:29:37');
+INSERT INTO `il_user_log` VALUES ('{6F2873CC-9460-E473-0C85-F87D78145E7C}', 'system', 'userlog', 'del', '失败', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:37:24');
+INSERT INTO `il_user_log` VALUES ('{71FBE49F-3245-E1AA-FDC6-5F6E6B5176FC}', 'admin', 'organization', 'self', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:19:56');
+INSERT INTO `il_user_log` VALUES ('{7B35F28B-F36A-C4AA-C39A-E3BBA7A41A58}', 'system', 'user', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:40:00');
+INSERT INTO `il_user_log` VALUES ('{8E04228F-26DD-35A6-91B7-AC52A5746C40}', 'system', 'role', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:43:08');
+INSERT INTO `il_user_log` VALUES ('{8EA30F2D-86F4-4A93-53BA-53705DB01D48}', 'system', 'userlog', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:37:16');
+INSERT INTO `il_user_log` VALUES ('{94C90CB9-FF01-6BF9-F19E-28DCBE0931C3}', 'system', 'userlog', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:27:17');
+INSERT INTO `il_user_log` VALUES ('{96DB446C-82CA-3D97-EE62-8A99A1347686}', 'system', 'node', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:22:11');
+INSERT INTO `il_user_log` VALUES ('{9BB04D5C-6DBB-BE50-CB27-3A9FF63365F8}', 'admin', 'outfirefacility', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:43:29');
+INSERT INTO `il_user_log` VALUES ('{A0E1D889-86A8-45A7-2AA4-B73345ADC168}', 'system', 'userlog', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:43:52');
+INSERT INTO `il_user_log` VALUES ('{AD60CC66-2791-F00C-754A-FF2444F6D416}', 'admin', 'organization', 'self', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:22:18');
+INSERT INTO `il_user_log` VALUES ('{B8724B67-437D-A2F2-235B-D99237C2D2C1}', 'system', 'userlog', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:31:13');
+INSERT INTO `il_user_log` VALUES ('{B9340946-00F0-8ED9-647E-676523E31DC5}', 'admin', 'locator', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:43:21');
+INSERT INTO `il_user_log` VALUES ('{BA9B3DE5-82FA-0A96-4F5A-3FF44F6FBCFB}', 'system', 'user', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:43:07');
+INSERT INTO `il_user_log` VALUES ('{BC9450B5-7BED-3E78-1BB3-7F48AE67660D}', 'admin', 'floor', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:43:28');
+INSERT INTO `il_user_log` VALUES ('{BFC31AC6-EC0B-ABEE-B2BD-08D4F5D74781}', 'system', 'role', 'authshow', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:43:45');
+INSERT INTO `il_user_log` VALUES ('{C9F176F2-D867-B639-6DE8-D4174585E705}', 'admin', 'organization', 'self', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:22:14');
+INSERT INTO `il_user_log` VALUES ('{CAF41C86-A184-E221-0E82-127D49C58574}', 'system', 'role', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:43:43');
+INSERT INTO `il_user_log` VALUES ('{D0250472-8234-1A44-55E9-9EFB015A22F1}', 'system', 'userlog', 'del', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:39:29');
+INSERT INTO `il_user_log` VALUES ('{D2307216-DAC6-4506-B5CC-39AE590B6FA9}', 'admin', 'index', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:37:14');
+INSERT INTO `il_user_log` VALUES ('{DB9184BE-B943-40FC-B659-7B6879395A5A}', 'system', 'role', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:40:02');
+INSERT INTO `il_user_log` VALUES ('{E0AF48CE-46A3-A61C-115C-E570DB5DF6DD}', 'admin', 'index', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:31:11');
+INSERT INTO `il_user_log` VALUES ('{E1984755-3CA0-5ABE-B3EB-562DBEE7A226}', 'admin', 'localequipment', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:43:24');
+INSERT INTO `il_user_log` VALUES ('{E37D283F-6F60-19BB-936E-0C58C4B3ECE7}', 'admin', 'locator', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:22:21');
+INSERT INTO `il_user_log` VALUES ('{E420E31D-8C22-9464-AC89-E9445259BFDC}', 'admin', 'organization', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:20:01');
+INSERT INTO `il_user_log` VALUES ('{E773F5C4-ED2F-7EEC-7CF6-1B33D9963269}', 'system', 'role', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:43:38');
+INSERT INTO `il_user_log` VALUES ('{F9625BBA-87CF-A30A-76CE-C17BB8280390}', 'admin', 'organization', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:43:15');
+INSERT INTO `il_user_log` VALUES ('{FB208EAE-B2DB-DDC3-3394-AD03A9D81EB7}', 'system', 'node', 'index', '成功', '{6EAADA7E-AAB5-D9F5-11D8-E915D232A81F}', 'admin', '{3033D1DB-3C92-6624-DCDE-0435498BB60D}', '0.0.0.0', '2017-08-05 18:40:04');
 
 -- ----------------------------
 -- Table structure for system_config
@@ -696,67 +700,6 @@ INSERT INTO `system_config` VALUES ('200', 'storage_oss_keyid', '');
 INSERT INTO `system_config` VALUES ('201', 'storage_oss_secret', '');
 INSERT INTO `system_config` VALUES ('202', 'storage_oss_domain', '');
 INSERT INTO `system_config` VALUES ('203', 'storage_oss_is_https', '1');
-
--- ----------------------------
--- Table structure for system_log
--- ----------------------------
-DROP TABLE IF EXISTS `system_log`;
-CREATE TABLE `system_log` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `ip` char(15) NOT NULL DEFAULT '' COMMENT '操作者IP地址',
-  `node` char(200) NOT NULL DEFAULT '' COMMENT '当前操作节点',
-  `username` varchar(32) NOT NULL DEFAULT '' COMMENT '操作人用户名',
-  `action` varchar(200) NOT NULL DEFAULT '' COMMENT '操作行为',
-  `content` text NOT NULL COMMENT '操作内容描述',
-  `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5173 DEFAULT CHARSET=utf8 COMMENT='系统操作日志表';
-
--- ----------------------------
--- Records of system_log
--- ----------------------------
-INSERT INTO `system_log` VALUES ('5131', '0.0.0.0', 'admin/login/index', 'admin', '系统管理', '用户登录系统成功', '2017-06-16 11:58:06');
-INSERT INTO `system_log` VALUES ('5132', '0.0.0.0', 'admin/login/index', 'admin', '系统管理', '用户登录系统成功', '2017-06-17 12:39:43');
-INSERT INTO `system_log` VALUES ('5133', '0.0.0.0', 'admin/login/index', 'admin', '系统管理', '用户登录系统成功', '2017-06-19 10:03:34');
-INSERT INTO `system_log` VALUES ('5134', '0.0.0.0', 'admin/login/index', 'admin', '系统管理', '用户登录系统成功', '2017-06-20 11:32:14');
-INSERT INTO `system_log` VALUES ('5135', '0.0.0.0', 'admin/login/index', 'admin', '系统管理', '用户登录系统成功', '2017-06-21 09:39:13');
-INSERT INTO `system_log` VALUES ('5136', '0.0.0.0', 'admin/login/index', 'admin', '系统管理', '用户登录系统成功', '2017-06-23 09:40:16');
-INSERT INTO `system_log` VALUES ('5137', '0.0.0.0', 'admin/login/index', 'admin', '系统管理', '用户登录系统成功', '2017-06-28 18:35:26');
-INSERT INTO `system_log` VALUES ('5138', '0.0.0.0', 'admin/login/index', 'admin', '系统管理', '用户登录系统成功', '2017-06-29 20:26:10');
-INSERT INTO `system_log` VALUES ('5139', '0.0.0.0', 'admin/login/index', 'admin', '系统管理', '用户登录系统成功', '2017-06-30 15:09:01');
-INSERT INTO `system_log` VALUES ('5140', '0.0.0.0', 'admin/login/index', 'admin', '系统管理', '用户登录系统成功', '2017-07-03 10:17:25');
-INSERT INTO `system_log` VALUES ('5141', '0.0.0.0', 'admin/login/index', 'admin', '系统管理', '用户登录系统成功', '2017-07-03 11:41:28');
-INSERT INTO `system_log` VALUES ('5142', '0.0.0.0', 'admin/login/out', 'admin', '系统管理', '用户退出系统成功', '2017-07-03 11:52:50');
-INSERT INTO `system_log` VALUES ('5143', '0.0.0.0', 'admin/login/index', 'admin', '系统管理', '用户登录系统成功', '2017-07-03 14:09:21');
-INSERT INTO `system_log` VALUES ('5144', '0.0.0.0', 'admin/login/out', 'admin', '系统管理', '用户退出系统成功', '2017-07-03 17:10:06');
-INSERT INTO `system_log` VALUES ('5145', '0.0.0.0', 'admin/login/index', 'admin', '系统管理', '用户登录系统成功', '2017-07-03 17:10:16');
-INSERT INTO `system_log` VALUES ('5146', '0.0.0.0', 'admin/login/out', 'admin', '系统管理', '用户退出系统成功', '2017-07-03 17:36:49');
-INSERT INTO `system_log` VALUES ('5147', '0.0.0.0', 'admin/login/index', 'admin', '系统管理', '用户登录系统成功', '2017-07-03 18:56:11');
-INSERT INTO `system_log` VALUES ('5148', '0.0.0.0', 'admin/login/index', 'admin', '系统管理', '用户登录系统成功', '2017-07-04 20:26:43');
-INSERT INTO `system_log` VALUES ('5149', '0.0.0.0', 'admin/login/index', 'admin', '系统管理', '用户登录系统成功', '2017-07-06 09:33:30');
-INSERT INTO `system_log` VALUES ('5150', '0.0.0.0', 'admin/login/out', 'admin', '系统管理', '用户退出系统成功', '2017-07-06 10:46:32');
-INSERT INTO `system_log` VALUES ('5151', '0.0.0.0', 'admin/login/out', '', '系统管理', '用户退出系统成功', '2017-07-06 10:46:33');
-INSERT INTO `system_log` VALUES ('5152', '0.0.0.0', 'admin/login/index', 'admin', '系统管理', '用户登录系统成功', '2017-07-06 11:01:06');
-INSERT INTO `system_log` VALUES ('5153', '0.0.0.0', 'admin/login/out', 'admin', '系统管理', '用户退出系统成功', '2017-07-06 11:09:54');
-INSERT INTO `system_log` VALUES ('5154', '0.0.0.0', 'admin/login/index', 'admin', '系统管理', '用户登录系统成功', '2017-07-06 11:10:00');
-INSERT INTO `system_log` VALUES ('5155', '0.0.0.0', 'admin/login/out', 'admin', '系统管理', '用户退出系统成功', '2017-07-06 11:10:39');
-INSERT INTO `system_log` VALUES ('5156', '0.0.0.0', 'admin/login/index', 'admin', '系统管理', '用户登录系统成功', '2017-07-06 11:10:46');
-INSERT INTO `system_log` VALUES ('5157', '0.0.0.0', 'admin/login/out', 'admin', '系统管理', '用户退出系统成功', '2017-07-06 11:10:54');
-INSERT INTO `system_log` VALUES ('5158', '0.0.0.0', 'admin/login/index', 'admin', '系统管理', '用户登录系统成功', '2017-07-06 11:11:00');
-INSERT INTO `system_log` VALUES ('5159', '0.0.0.0', 'admin/login/out', 'admin', '系统管理', '用户退出系统成功', '2017-07-06 11:12:00');
-INSERT INTO `system_log` VALUES ('5160', '0.0.0.0', 'admin/login/index', 'admin', '系统管理', '用户登录系统成功', '2017-07-06 11:15:22');
-INSERT INTO `system_log` VALUES ('5161', '0.0.0.0', 'admin/login/out', 'admin', '系统管理', '用户退出系统成功', '2017-07-06 11:16:41');
-INSERT INTO `system_log` VALUES ('5162', '0.0.0.0', 'admin/login/index', 'admin', '系统管理', '用户登录系统成功', '2017-07-06 11:16:52');
-INSERT INTO `system_log` VALUES ('5163', '0.0.0.0', 'admin/login/out', 'admin', '系统管理', '用户退出系统成功', '2017-07-06 11:17:18');
-INSERT INTO `system_log` VALUES ('5164', '0.0.0.0', 'admin/login/index', 'admin', '系统管理', '用户登录系统成功', '2017-07-06 11:17:26');
-INSERT INTO `system_log` VALUES ('5165', '0.0.0.0', 'admin/login/out', 'admin', '系统管理', '用户退出系统成功', '2017-07-06 11:18:12');
-INSERT INTO `system_log` VALUES ('5166', '0.0.0.0', 'admin/login/index', 'admin', '系统管理', '用户登录系统成功', '2017-07-06 11:18:22');
-INSERT INTO `system_log` VALUES ('5167', '0.0.0.0', 'admin/login/out', 'admin', '系统管理', '用户退出系统成功', '2017-07-06 11:20:29');
-INSERT INTO `system_log` VALUES ('5168', '0.0.0.0', 'admin/login/index', 'admin', '系统管理', '用户登录系统成功', '2017-07-06 11:20:37');
-INSERT INTO `system_log` VALUES ('5169', '0.0.0.0', 'admin/login/out', 'admin', '系统管理', '用户退出系统成功', '2017-07-06 11:20:58');
-INSERT INTO `system_log` VALUES ('5170', '0.0.0.0', 'admin/login/index', 'admin', '系统管理', '用户登录系统成功', '2017-07-06 11:21:33');
-INSERT INTO `system_log` VALUES ('5171', '0.0.0.0', 'admin/login/out', 'admin', '系统管理', '用户退出系统成功', '2017-07-06 11:28:30');
-INSERT INTO `system_log` VALUES ('5172', '0.0.0.0', 'admin/login/index', 'admin', '系统管理', '用户登录系统成功', '2017-07-06 11:28:59');
 
 -- ----------------------------
 -- Table structure for system_menu

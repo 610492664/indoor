@@ -9,16 +9,16 @@ class Floor extends Base
 {
     public function index()
     {
-        if(input('?get.action')){
-            $model = new SubModel();
-            $list = $model->where(['bui_id'=>input('get.bui_id')])->select();
-            return $list;
+        if(input('?param.view')){
+            /**@var $buildingModel BuildingModel */
+            $buildingModel = Loader::model('Building');
+            $buildings = $buildingModel->field(['bui_id','name'])->where(['org_id'=>'{3033D1DB-3C92-6624-DCDE-0435498BB60D}'])->select();
+            $this->assign('buildings', $buildings);
+            return $this->fetch();
         }
-        /**@var $buildingModel BuildingModel */
-        $buildingModel = Loader::model('Building');
-        $buildings = $buildingModel->field(['bui_id','name'])->where(['org_id'=>'{3033D1DB-3C92-6624-DCDE-0435498BB60D}'])->select();
-        $this->assign('buildings', $buildings);
-        return $this->fetch();
+        $model = new SubModel();
+        $list = $model->where(['bui_id'=>input('get.bui_id')])->select();
+        return $list;
     }
 
     //查看详情

@@ -33,12 +33,12 @@ class Role extends Base {
      * 权限列表
      */
     public function index() {
-        if(input('?get.action')){
-            $org_id = input('session.user.org_id');
-            $records = SubModel::all(['org_id'=> $org_id]);
-            return $records;
+        if(input('?param.view')){
+            return $this->fetch();
         }
-        return $this->fetch();
+        $org_id = input('session.user.org_id');
+        $records = SubModel::all(['org_id'=> $org_id]);
+        return $records;
     }
 
     /**

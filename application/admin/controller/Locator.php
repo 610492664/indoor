@@ -10,17 +10,17 @@ class Locator extends Base
 
     public function index()
     {
-        if(input('?get.action')){
-            $org_id = input('session.user.org_id');
-            $locator = model('locator');
-            $records = $locator->alias('loc')
-                ->field('loc.loc_id, loc.number, loc.mac, per.name per_name,buy_time,loc.status')
-                ->join('__PERSON__ per', 'per.loc_id = loc.loc_id','LEFT')
-                ->where(['loc.org_id'=>$org_id])
-                ->select();
-            return $records;
+        if(input('?param.view')){
+            return $this->fetch();
         }
-        return $this->fetch();
+        $org_id = input('session.user.org_id');
+        $locator = model('locator');
+        $records = $locator->alias('loc')
+            ->field('loc.loc_id, loc.number, loc.mac, per.name per_name,buy_time,loc.status')
+            ->join('__PERSON__ per', 'per.loc_id = loc.loc_id','LEFT')
+            ->where(['loc.org_id'=>$org_id])
+            ->select();
+        return $records;
     }
 
     //查看详情

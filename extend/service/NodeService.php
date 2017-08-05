@@ -67,7 +67,7 @@ class NodeService {
     public static function checkAuthNode($node) {
         list($module, $controller, $action) = explode('/', str_replace(['?', '=', '&'], '/', $node . '///'));
         $auth_node = strtolower(trim("{$module}/{$controller}/{$action}", '/'));
-        if (session('user.username') === 'admin' || stripos($node, 'admin/index') === 0) {
+        if (session('user.name') === 'admin' || stripos($node, 'admin/index') === 0) {
             return true;
         }
         if (!in_array($auth_node, self::getAuthNode())) {
@@ -116,10 +116,12 @@ class NodeService {
             if(!empty($new_nodes)){
                 $model->saveAll($new_nodes, false);
             }
-            $model->together('roles')->where('node', 'not in', $exist_nodes)->delete();
-            $model->getLastSql();
-
+            $model->where('node', 'not in', $exist_nodes)->delete();
+            dB::name('rol_nod')->where('node', 'not in', $exist_nodes)->delete();
             $nodes = $model->order('node asc')->select();
+            if($nodes) {
+                $nodes = collection($nodes)->toArray();
+            }
         }
         return $nodes;
     }
