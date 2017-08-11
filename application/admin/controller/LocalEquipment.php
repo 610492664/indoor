@@ -10,6 +10,7 @@ class LocalEquipment extends Base
     {
         if(input('?param.view')){
             $this->assign('title', '现场终端管理');
+            $this->breadCrumb();
             return $this->fetch();
         }
         $org_id = input('session.user.org_id');

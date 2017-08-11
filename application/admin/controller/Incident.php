@@ -10,6 +10,7 @@ class Incident extends Base
     {
         if(input('?param.view')){
             $this->assign('title', '事件管理');
+            $this->breadCrumb();
             return $this->fetch();
         }
         $org_id = input('session.user.org_id');

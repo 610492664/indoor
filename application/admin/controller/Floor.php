@@ -17,6 +17,7 @@ class Floor extends Base
             $this->assign('title', '楼层管理');
             $this->assign('bui_id', input('param.bui_id'));
             $this->assign('buildings', $buildings);
+            $this->breadCrumb();
             return $this->fetch();
         }
         $model = new SubModel();

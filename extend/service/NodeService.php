@@ -1,17 +1,5 @@
 <?php
 
-// +----------------------------------------------------------------------
-// | Think.Admin
-// +----------------------------------------------------------------------
-// | 版权所有 2014~2017 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
-// +----------------------------------------------------------------------
-// | 官方网站: http://think.ctolog.com
-// +----------------------------------------------------------------------
-// | 开源协议 ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | github开源项目：https://github.com/zoujingli/Think.Admin
-// +----------------------------------------------------------------------
-
 namespace service;
 
 use think\App;
@@ -21,30 +9,10 @@ use think\Db;
  * 系统权限节点读取器
  * Class NodeService
  * @package extend
- * @author Anyon <zoujingli@qq.com>
- * @date 2017/05/08 11:28
+ * @author Jan <610492664@qq.com>
+ * @date 2017/07/20 11:28
  */
 class NodeService {
-
-    /**
-     * 应用用户权限节点
-     * @return bool
-     */
-    public static function applyAuthNode() {
-        cache('need_access_node', null);
-        if (($userid = session('user.id'))) {
-            session('user', Db::name('SystemUser')->where('id', $userid)->find());
-        }
-        if (($authorize = session('user.authorize'))) {
-            $authorizeids = Db::name('SystemAuth')->where('id', 'in', explode(',', $authorize))->where('status', '1')->column('id');
-            if (empty($authorizeids)) {
-                return session('user.nodes', []);
-            }
-            $nodes = Db::name('SystemAuthNode')->where('auth', 'in', $authorizeids)->column('node');
-            return session('user.nodes', $nodes);
-        }
-        return false;
-    }
 
     /**
      * 获取授权节点
@@ -55,6 +23,19 @@ class NodeService {
         if (empty($nodes)) {
             $nodes = Db::name('node')->where('is_auth', '1')->column('node');
             cache('need_access_node', $nodes);
+        }
+        return $nodes;
+    }
+
+    /**
+     * 获取日志节点
+     * @return array
+     */
+    public static function getLogNode() {
+        $nodes = cache('need_log_node');
+        if (empty($nodes)) {
+            $nodes = Db::name('node')->where('is_log', '1')->column('node');
+            cache('need_log_node', $nodes);
         }
         return $nodes;
     }
@@ -91,6 +72,7 @@ class NodeService {
                 'index',
                 'admin/plugs', 'system/login', 'system/index',
             ];
+            $exist_nodes = [];
             foreach (self::getNodeTree(APP_PATH) as $thr) {
                 foreach ($ignore as $str) {
                     if (stripos($thr, $str) === 0) {
@@ -103,21 +85,25 @@ class NodeService {
                 $exist_nodes[] = $thr;
 
                 if(!isset($alias[$one]) && !isset( $new_nodes[$one])) {
-                    $new_nodes[$one] = ['node' => $one, 'title' => '', 'is_menu' => 0, 'is_auth' => 0, 'pnode' =>''];
+                    $new_nodes[$one] = ['node' => $one, 'title' => '', 'is_menu' => 0, 'is_auth' => 0, 'is_log' => 0, 'pnode' =>''];
                 }
                 if(!isset($alias[$two]) && !isset( $new_nodes[$two])) {
-                    $new_nodes[$two] = ['node' => $two, 'title' => '', 'is_menu' => 0, 'is_auth' => 0, 'pnode' => $one];
+                    $new_nodes[$two] = ['node' => $two, 'title' => '', 'is_menu' => 0, 'is_auth' => 0, 'is_log' => 0, 'pnode' => $one];
                 }
                 if(!isset($alias[$thr]) && !isset( $new_nodes[$thr])) {
-                    $new_nodes[$thr] = ['node' => $thr, 'title' => '', 'is_menu' => 0, 'is_auth' => 0, 'pnode' => $two];
+                    $new_nodes[$thr] = ['node' => $thr, 'title' => '', 'is_menu' => 0, 'is_auth' => 0, 'is_log' => 0, 'pnode' => $two];
                 }
             }
             $model = model('node');
             if(!empty($new_nodes)){
                 $model->saveAll($new_nodes, false);
             }
-            $model->where('node', 'not in', $exist_nodes)->delete();
-            dB::name('rol_nod')->where('node', 'not in', $exist_nodes)->delete();
+            $del = $model->where('node', 'not in', $exist_nodes)->delete();
+            if (!empty($new_nodes) || !empty($del)){
+                cache('need_access_node', null); //清除需要权限控制的节点 缓存
+                cache('need_log_node', null); //清除需要日志记录的节点 缓存
+            }
+            Db::name('rol_nod')->where('node', 'not in', $exist_nodes)->delete();
             $nodes = $model->order('node asc')->select();
             if($nodes) {
                 $nodes = collection($nodes)->toArray();

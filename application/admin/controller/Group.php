@@ -11,6 +11,7 @@ class Group extends Base
     {
         if(input('?param.view')){
             $this->assign('title', '组管理');
+            $this->breadCrumb();
             return $this->fetch();
         }
         $model = model('group');

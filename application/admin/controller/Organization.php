@@ -11,6 +11,7 @@ class Organization extends Base
         $detail = SubModel::get(input('session.user.org_id'));
         $this->assign('detail',$detail);
         $this->assign('title', '单位信息');
+        $this->breadCrumb();
         return $this->fetch();
     }
 
@@ -18,6 +19,7 @@ class Organization extends Base
     {
         if(input('?param.view')){
             $this->assign('title', '子单位管理');
+            $this->breadCrumb();
             return $this->fetch();
         }
         $records =SubModel::all(['p_org_id'=>input('session.user.org_id')]);

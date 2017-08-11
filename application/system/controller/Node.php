@@ -21,6 +21,7 @@ class Node extends Base
             'content' => '结构为系统自动生成，状态数据请勿随意修改！'
         ]);
         $this->assign('title', '系统节点管理');*/
+        $this->breadCrumb();
         $this->assign('title', '系统节点管理');
         $this->assign('nodes', ToolsService::arr2table(NodeService::get(), 'node', 'pnode'));
         return $this->fetch();
@@ -37,6 +38,8 @@ class Node extends Base
                 $model = model('node');
                 $result = $model->save($data,['node' => $post['id']]);
                 if(!empty($result)){
+                    $post['name'] === 'is_auth' && cache('need_access_node', null); //清除需要权限控制的节点 缓存
+                    $post['name'] === 'is_log' && cache('need_log_node', null); //清除需要日志记录的节点 缓存
                     $this->success('参数保存成功！','');
                 }
             }

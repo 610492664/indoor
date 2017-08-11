@@ -1,3 +1,5 @@
+{extend name="admin@public/content" /}
+{block name="box"}
 <style>
     ul.ztree li span.button.switch{margin-right:5px}
     ul.ztree ul ul li{display:inline-block;white-space:normal}
@@ -13,29 +15,25 @@
     ul.ztree>li>a>span{font-size:15px;font-weight:700}
 </style>
 
-<div class="row">
-    <div class="col-xs-12">
-        <div class="box">
-            <div class="box-header with-border">
-                <h3 class="box-title">角色列表</h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-                <ul id="zTree" class="ztree loading">
-                    <li style="height:100px;"></li>
-                </ul>
-            </div>
-            <!-- /.box-body -->
-            <div class="box-footer">
-                <button type="button" auth-save class="btn btn-default">保存数据</button>
-                <button type="button" class="btn btn-info pull-right"  onclick="window.history.back()">取消编辑</button>
-            </div>
-        </div>
-        <!-- /.box -->
+<div class="box">
+    <div class="box-header with-border">
+        <h3 class="box-title">角色列表</h3>
     </div>
-    <!-- /.col -->
+    <!-- /.box-header -->
+    <div class="box-body">
+        <ul id="zTree" class="ztree loading">
+            <li style="height:100px;"></li>
+        </ul>
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer">
+        <button type="button" auth-save class="btn btn-default">保存数据</button>
+        <button type="button" class="btn btn-info pull-right"  onclick="window.history.back()">取消编辑</button>
+    </div>
 </div>
-
+<!-- /.box -->
+{/block}
+{block name='script'}
 <script>
     require(['jquery.ztree'], function () {
         function showTree() {
@@ -105,3 +103,5 @@
         });
     });
 </script>
+{/block}
+

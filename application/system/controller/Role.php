@@ -1,17 +1,5 @@
 <?php
 
-// +----------------------------------------------------------------------
-// | Think.Admin
-// +----------------------------------------------------------------------
-// | 版权所有 2014~2017 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
-// +----------------------------------------------------------------------
-// | 官方网站: http://think.ctolog.com
-// +----------------------------------------------------------------------
-// | 开源协议 ( https://mit-license.org )
-// +----------------------------------------------------------------------
-// | github开源项目：https://github.com/zoujingli/Think.Admin
-// +----------------------------------------------------------------------
-
 namespace app\system\controller;
 
 use app\admin\controller\Base;
@@ -24,7 +12,7 @@ use think\Db;
  * 系统权限管理控制器
  * Class Auth
  * @package app\admin\controller
- * @author Anyon <zoujingli@qq.com>
+ * @author Jan <610492664@qq.com>
  * @date 2017/02/15 18:13
  */
 class Role extends Base {
@@ -35,6 +23,7 @@ class Role extends Base {
     public function index() {
         if(input('?param.view')){
             $this->assign('title', '角色管理');
+            $this->breadCrumb();
             return $this->fetch();
         }
         $org_id = input('session.user.org_id');
@@ -102,6 +91,7 @@ class Role extends Base {
         $nodes = $this->_filterNodes($nodes);
         $nodes = $this->_filterNodes($nodes);
         $this->assign('title', '节点授权');
+        $this->breadCrumb();
         $this->assign('rol_id', $rol_id);
         $this->assign('node', json_encode($nodes));
         return $this->fetch();

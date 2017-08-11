@@ -1,9 +1,9 @@
 <!-- 头部（面包屑导航） -->
 <section class="content-header clearfix" id="content-header">
     <ol class="breadcrumb" id="breadcrumb">
-        <li><i class="fa fa-dashboard"></i>首页</li>
-        <li>首页</li>
-        <li class="active">首页</li>
+        {volist name="titles" id="vo"}
+        <li {eq name="i" value=":count($titles)"}class="active"{/eq}>{eq name="i" value="1"}<i class="fa fa-dashboard"></i>{/eq} {$vo.title}</li>
+        {/volist}
     </ol>
     <h1>{$title}</h1>
 </section>

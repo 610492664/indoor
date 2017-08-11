@@ -10,6 +10,7 @@ class Index extends Base
         $userinfo = ['username'=>'admin','nickname'=>'管理员','regTime'=>time()];
         $this->assign('userInfo', $userinfo);
         $this->assign('title', '首页');
+        $this->breadCrumb();
         return $this->fetch();
    }
     public function dashBoard()

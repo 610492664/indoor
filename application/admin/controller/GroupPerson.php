@@ -20,6 +20,7 @@ class GroupPerson extends Base
                 ->where(['gro.gro_id'=>$gro_id])
                 ->find();
             $this->assign('title', '组成员管理');
+            $this->breadCrumb();
             $this->assign('detail', $detail);
             return $this->fetch();
         }
