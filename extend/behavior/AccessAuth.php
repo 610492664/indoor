@@ -41,14 +41,14 @@ class AccessAuth {
     public function run(&$params) {
         $this->request = Request::instance();
         list($module, $controller, $action) = [$this->request->module(), $this->request->controller(), $this->request->action()];
-        $unchecklogin = ['login/index'];
+        $unchecklogin = ['login/in'];
         // 用户登录状态检查
         if ((!in_array(strtolower("{$controller}/{$action}"), $unchecklogin)) && !session('user')) {
             if ($this->request->isAjax()) {
-                $result = ['code' => 0, 'msg' => '抱歉, 您还没有登录获取访问权限!', 'data' => '', 'url' => '@system/login', 'wait' => 3];
+                $result = ['code' => 0, 'msg' => '抱歉, 您还没有登录获取访问权限!', 'data' => '', 'url' => '@system/login/in', 'wait' => 3];
                 throw new HttpResponseException(json($result));
             }
-            throw new HttpResponseException(redirect('@system/login'));
+            throw new HttpResponseException(redirect('@system/login/in'));
         }
 
         // 访问权限节点检查

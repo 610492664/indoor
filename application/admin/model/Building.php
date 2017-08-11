@@ -15,7 +15,7 @@ class Building extends Base
 
     protected function setOrgIdAttr()
     {
-        return '{3033D1DB-3C92-6624-DCDE-0435498BB60D}';
+        return input('session.user.org_id');
     }
 
     public function outfireFacilitys()

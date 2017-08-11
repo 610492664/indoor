@@ -10,12 +10,14 @@ class Organization extends Base
     {
         $detail = SubModel::get(input('session.user.org_id'));
         $this->assign('detail',$detail);
+        $this->assign('title', '单位信息');
         return $this->fetch();
     }
 
     public function index()
     {
         if(input('?param.view')){
+            $this->assign('title', '子单位管理');
             return $this->fetch();
         }
         $records =SubModel::all(['p_org_id'=>input('session.user.org_id')]);
@@ -30,36 +32,38 @@ class Organization extends Base
         $this->assign('record',$record);
         return $this->fetch();
     }
-    //获取添加表单
+    //新增
     public function add(){
+        if ($this->request->isPost()) {
+            /* @var $model SubModel*/
+//        $model = Loader::model('group');
+            $result = model('organization')->data(input('post.'),true)->save();
+            if(!empty($result)){
+                $this->success('添加子单位成功！', '');
+            }else{
+                $this->error('添加子单位失败！');
+            }
+        }
         return $this->fetch();
     }
-    //添加到数据库
-    public function insert()
-    {
-        /* @var $model SubModel*/
-//        $model = Loader::model('group');
-        $result = model('organization')->data(input('post.'),true)->save();
-        if(!empty($result)){
-            $this->success('添加子单位成功！');
-        }else{
-            $this->error('添加子单位失败！');
-        }
-    }
+
     //获取修改表单
     public function mod()
     {
+        if ($this->request->isPost()) {
+            $model = model('organization');
+            $org_id = input('post.org_id');
+            $result = $model->save(input('post.'),['org_id' => $org_id]);
+            if(!empty($result)){
+                $this->success('修改信息成功！', '');
+            }else{
+                $this->error('修改信息失败！');
+            }
+        }
         $id = input('get.id');
         $detail = SubModel::get($id)->getData();
         $this->assign('detail',$detail);
         return $this->fetch();
-    }
-    public function update()
-    {
-        $model = model('organization');
-        $org_id = input('post.org_id');
-        $result = $model->save(input('post.'),['org_id' => $org_id]);
-        return result($result,'修改信息成功！', '修改信息失败！');
     }
 
     //删除
@@ -68,7 +72,7 @@ class Organization extends Base
         $ids = input('get.id/a');
         $result = SubModel::destroy($ids);
         if(!empty($result)){
-            $this->success('删除子单位成功！');
+            $this->success('删除子单位成功！', '');
         }else{
             $this->error('删除子单位失败！');
         }

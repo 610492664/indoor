@@ -8,7 +8,7 @@
 (function ($) {
     //表格添加索引列方法
     $.table_index = function (table, column_num) {
-        column_num = column_num || 1 ;
+        column_num = (typeof column_num ==='undefined')?1 : column_num ;
         table.on('order.dt search.dt',
             function () {
                 table.column(column_num, {
@@ -19,6 +19,8 @@
                 });
             }).draw();
     };
+
+
 
     //加载content内容
     $.content_load = function (href, layout_fix) {
@@ -49,49 +51,6 @@
             }
             layout_fix();
         });
-        /*$.ajax({
-            url: href,
-            type: "get",
-            beforeSend: function () {
-                $.msg.close();
-                $.msg.loading();
-            },
-            error: function () {
-                $.msg.close();
-                $.msg.error('页面未找到！',1000, function () {
-                    // history.back();
-                });
-            },
-            success: function(data){
-                $.msg.close();
-                $("section.content").html(data);
-                if ($("#form").length > 0) {
-                    //激活公共表单验证
-                    require(['bootstrap-validator'],function () {
-                        $('#form').validator();
-                    });
-                    //激活表单上传事件
-                    $("#form").ajaxForm({
-                        type: 'post',
-                        error: function () {
-                            var msg = $('<div class="alert alert-warning"><a href="#" class="close" data-dismiss="alert">&times;</a></div>')
-                                .append('服务器错误！请稍后再试！');
-                            $(".box-body").prepend(msg);
-                        },
-                        success: function(data) {
-                            if (data.code == 1) {
-                                $.msg.success(data.msg,1000, function () {
-                                    window.onhashchange();
-                                });
-                            }else {
-                                $.msg.error(data.msg,1000);
-                            }
-                        }
-                    });
-                }
-                layout_fix();
-            },
-        });*/
     }
 
 
@@ -157,7 +116,7 @@
      * @param html
      */
     _form.prototype.show = function (html) {
-        var $container = $('section.content').html(html);
+        var $container = $('div.content-wrapper').html(html);
         $.AdminLTE.layout.fix();
         /*reinit.call(this), setTimeout(reinit, 500), setTimeout(reinit, 1000);
         function reinit() {
@@ -167,9 +126,14 @@
 
     /**
      * 刷新当前页面
+     * @param force 强制页面刷新
      */
-    _form.prototype.reload = function () {
-        ($('#table').length > 0) ? $.table.ajax.reload(null, false) : window.onhashchange.call(this);
+    _form.prototype.reload = function (force) {
+        if(force === true ) {
+            window.onhashchange.call(this);
+        }else{
+            ($('#table').length > 0) ? $.table.ajax.reload(null, false) : window.onhashchange.call(this);
+        }
     };
 
     /*!表单实例挂载*/
@@ -332,11 +296,22 @@
      * @return {common_L11._msg|*}
      */
     msg.prototype.auto = function (data, time, refresh) {
-        var self = this;
-        data.url = !!data.url ? '#'+ data.url.substr(APP.length) : data.url;
+        var self = this, force_refresh = false;
+        // data.url = !!data.url ? '#'+ data.url.substr(APP.length) : data.url;
+       switch (data.url) {
+           case '':
+               data.url = '';
+               break;
+           case '/':
+               data.url = '';
+               force_refresh  = true;
+               break;
+           default:
+               data.url = '#'+ data.url.substr(APP.length);break;
+       }
         if (parseInt(data.code) === 1) {
             return self.success(data.msg, time, function () {
-                data.url !== '' ? (window.location.href = data.url) : ((refresh !== false) && $.form.reload());
+                data.url !== '' ? (window.location.href = data.url) : (((refresh !== false) || force_refresh )&& $.form.reload(force_refresh));
                 /*if (self.autoSuccessCloseIndexs && self.autoSuccessCloseIndexs.length > 0) {
                     for (var i in self.autoSuccessCloseIndexs) {
                         layer.close(self.autoSuccessCloseIndexs[i]);

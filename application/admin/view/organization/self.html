@@ -1,11 +1,54 @@
+{extend name="public/content" /}
+{block name="box"}
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">本单位信息</h3>
+    </div>
+    <!-- /.box-header -->
+    <!-- form start -->
+    <form class="form-horizontal" id="form" action = "{:url('organization/mod')}">
+        <input name="org_id" value="{$Think.session.user.org_id}" hidden>
+        <div class="box-body">
+            <div class="form-group">
+                <label  class="col-sm-2 control-label">单位名</label>
+                <div class="col-sm-10 col-md-6">
+                    <input class="form-control" name="name" placeholder="单位名" type="text"  value="{$detail.name}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label  class="col-sm-2 control-label">简称</label>
+                <div class="col-sm-10 col-md-6">
+                    <input class="form-control" name="abbr" placeholder="简称" type="text"  value="{$detail.abbr}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label  class="col-sm-2 control-label">地址</label>
+                <div class="col-sm-10 col-md-6">
+                    <input class="form-control" name="address" placeholder="地址" type="text"  value="{$detail.address}">
+                </div>
+            </div>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer col-sm-offset-2">
+            <button type="submit" class="btn btn-info">保存</button>
+            <button type="reset" class="btn btn-default">重置</button>
+        </div>
+        <!-- /.box-footer -->
+    </form>
+</div>
+{/block}
+{block name='script'}
+{/block}
+
+<!--
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-info">
             <div class="box-header with-border">
                 <h3 class="box-title">本单位信息</h3>
             </div>
-            <!-- /.box-header -->
-            <!-- form start -->
+            &lt;!&ndash; /.box-header &ndash;&gt;
+            &lt;!&ndash; form start &ndash;&gt;
             <form class="form-horizontal" id="form" action = "{:url('organization/update')}">
                 <input name="org_id" value="{$Think.session.user.org_id}" hidden>
                 <div class="box-body">
@@ -28,15 +71,15 @@
                         </div>
                     </div>
                 </div>
-                <!-- /.box-body -->
+                &lt;!&ndash; /.box-body &ndash;&gt;
                 <div class="box-footer col-sm-offset-2">
                     <button type="submit" class="btn btn-info">保存</button>
                     <button type="reset" class="btn btn-default">重置</button>
                 </div>
-                <!-- /.box-footer -->
+                &lt;!&ndash; /.box-footer &ndash;&gt;
             </form>
         </div>
     </div>
-    <!-- /.col -->
+    &lt;!&ndash; /.col &ndash;&gt;
 </div>
-<!-- /.row -->
+&lt;!&ndash; /.row &ndash;&gt;-->

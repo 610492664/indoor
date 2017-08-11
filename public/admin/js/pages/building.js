@@ -33,7 +33,7 @@ function building() {
                         return '<div class="btn-group">'+
                             '<button class="btn btn-link" e-action-modal="'+php_url.mod+'" e-data="'+data+'" ><i class="fa fa-pencil-square-o"></i></button>'+
                             '<button class="btn btn-link" e-action-del="'+php_url.del+'" e-data="'+data+'" ><i class="fa fa-trash-o"></i></button>'+
-                            '<button class="btn btn-link " e-action-modal="'+php_url.detail+'" e-data="'+data+'" title="楼层管理" ><i class="fa fa-fw fa-navicon"></i></button>'+
+                            '<a class="btn btn-link" href="'+php_url.floor.replace('__ID__', data)+'" title="楼层管理" ><i class="fa fa-fw fa-navicon"></i></a>'+
                             '</div>';
                     }
                     return data;

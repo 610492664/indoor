@@ -11,6 +11,7 @@ class OutfireFacility extends Base
     public function index()
     {
         if(input('?param.view')){
+            $this->assign('title', '消防设备管理');
             return $this->fetch();
         }
         $org_id = input('session.user.org_id');
@@ -45,9 +46,18 @@ class OutfireFacility extends Base
     //获取添加表单
     public function add()
     {
-//        Db::name('building')->where(['orgid'=>'{3033D1DB-3C92-6624-DCDE-0435498BB60D}'])->select();
-//        BuildingModel::all(['orgid'=>'{3033D1DB-3C92-6624-DCDE-0435498BB60D}']);
-        $buildings = Db::name('building')->field('bui_id, name')->where(['org_id'=> '{3033D1DB-3C92-6624-DCDE-0435498BB60D}'])->select();
+        if ($this->request->isPost()) {
+            $model = Loader::model('OutfireFacility');
+            $result = $model->data(input('post.'))->save();
+            if(!empty($result)){
+                $this->success('添加消防设施成功！', '');
+            }else{
+                $this->error('添加消防设施失败！');
+            }
+        }
+//        Db::name('building')->where(['orgid'=>input('session.user.org_id')])->select();
+//        BuildingModel::all(['orgid'=>input('session.user.org_id')]);
+        $buildings = Db::name('building')->field('bui_id, name')->where(['org_id'=> input('session.user.org_id')])->select();
         $this->assign('buildings', $buildings);
         return $this->fetch();
     }
@@ -62,37 +72,37 @@ class OutfireFacility extends Base
         return $floorStr;
     }
 
-    //添加到数据库
-    public function insert()
-    {
-        $model = Loader::model('OutfireFacility');
-        $result = $model->data(input('post.'))->save();
-        return result($result,'添加消防设施成功！', '添加消防设施失败！');
-    }
     //获取修改表单
     public function mod()
     {
+        if ($this->request->isPost()) {
+            $model = new SubModel;
+            $result = $model->save(input("post."),['lmar_id' => input('post.lmar_id')]);
+            if(!empty($result)){
+                $this->success('修改消防设施成功！', '');
+            }else{
+                $this->error('修改消防设施失败！');
+            }
+        }
         $id = input('get.id');
         $detail = SubModel::get($id);
-        $buildings = Db::name('building')->field('bui_id, name')->where(['org_id'=> '{3033D1DB-3C92-6624-DCDE-0435498BB60D}'])->select();
-        $buildings = Db::name('floor')->field('flo_id, number')->where(['org_id'=> '{3033D1DB-3C92-6624-DCDE-0435498BB60D}'])->select();
+        $buildings = Db::name('building')->field('bui_id, name')->where(['org_id'=> input('session.user.org_id')])->select();
+        $buildings = Db::name('floor')->field('flo_id, number')->where(['org_id'=> input('session.user.org_id')])->select();
         $this->assign('buildings', $buildings);
         $this->assign('detail',$detail);
         return $this->fetch();
     }
-    //修改更新
-    public function update()
-    {
-        $model = new SubModel;
-        $result = $model->save(input("post."),['lmar_id' => input('post.lmar_id')]);
-        return result($result,'修改消防设施成功！', '修改消防设施失败！');
-    }
+
     //删除
     public function del()
     {
         $ids = input('get.id/a');
         $result = SubModel::destroy($ids);
-        return result($result,'删除消防设施成功！', '删除消防设施失败！');
+        if(!empty($result)){
+            $this->success('删除消防设施成功！', '');
+        }else{
+            $this->error('删除消防设施失败！');
+        }
     }
 
 }

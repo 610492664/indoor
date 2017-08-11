@@ -1,29 +1,10 @@
-<div class="row">
-    <div class="col-xs-12">
-        <div class="box">
-            <div class="box-header with-border">
-                <h3 class="box-title">访问日志</h3>
-                <button e-action-del="{:url('userLog/del')}">删除</button>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-                <table id="table" class="table table-bordered table-striped"></table>
-            </div>
-            <!-- /.box-body -->
-        </div>
-        <!-- /.box -->
-    </div>
-    <!-- /.col -->
-</div>
-<!-- /.row -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
+{extend name="admin@public/content_table" /}
+{block name="box-header"}{/block}
+{block name="button"}
+<button class="btn btn-link" e-action-del="{:url('userLog/del')}"><i class="fa fa-fw fa-close"></i> 删除</button>
+<button type="button" class="btn btn-link" url="{:url('userLog/delAll')}"><i class="fa fa-trash"></i> 清空</button>
+{/block}
+{block name='script'}
 <script>
     var php_url = {
         getList: '{:url("userLog/index")}',
@@ -33,3 +14,44 @@
         user_log();
     });
 </script>
+{/block}
+<!--
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">访问日志</h3>
+            </div>
+            &lt;!&ndash; /.box-header &ndash;&gt;
+            <div class="box-body">
+                <div style="height:0px">
+                    <button class="btn btn-link" e-action-del="{:url('userLog/del')}"><i class="fa fa-fw fa-close"></i> 删除</button>
+                    <button type="button" class="btn btn-link" url="{:url('userLog/delAll')}"><i class="fa fa-trash"></i> 清空</button>
+                </div>
+                <table id="table" class="table table-bordered table-striped"></table>
+            </div>
+            &lt;!&ndash; /.box-body &ndash;&gt;
+        </div>
+        &lt;!&ndash; /.box &ndash;&gt;
+    </div>
+    &lt;!&ndash; /.col &ndash;&gt;
+</div>
+&lt;!&ndash; /.row &ndash;&gt;
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+        &lt;!&ndash; /.modal-content &ndash;&gt;
+    </div>
+    &lt;!&ndash; /.modal-dialog &ndash;&gt;
+</div>
+<script>
+    var php_url = {
+        getList: '{:url("userLog/index")}',
+        del : '{:url("userLog/del")}',
+    };
+    require(['dataTables.bootstrap','inputmask.date','jquery.form','system/js/pages/user_log'],function () {
+        user_log();
+    });
+
+</script>-->

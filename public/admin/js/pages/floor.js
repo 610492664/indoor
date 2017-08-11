@@ -52,18 +52,17 @@ function floor() {
             });
             $("#build").on("change", function (e) {
                 var bui_id = $(this).val()
-                $('span[bui_id]').attr('bui_id',bui_id);
-                $('span[bui_id]').text($(this).find("option:selected").text());
-                $.table.settings()[0].ajax.data = {"bui_id" :bui_id, "action": "list"};
+                $.table.settings()[0].ajax.data = {"bui_id" :bui_id};
                 $.table.ajax.reload();
             });
-            if (typeof ($('span[bui_id]').attr('bui_id')) != 'undefind'){
-                $select.val($('span[bui_id]').attr('bui_id')).trigger("change");
-            }
+            $select.trigger("change");
+            /*if ($('span[bui_id]').attr('bui_id') !== ''){
+
+            }*/
         });
     });
     //add、mod模态框初始化
     $('#myModal').on('show.bs.modal', function () {
-        $('input[name="bui_id"]').val($('span[bui_id]').attr('bui_id'));
+        $('input[name="bui_id"]').val($("#build").val());
     });
 }

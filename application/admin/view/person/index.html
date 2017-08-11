@@ -1,31 +1,60 @@
-<div class="person-index">
+{extend name="public/content_table" /}
+{block name="box-header"}{/block}
+{block name="button"}
+<button type="button" class="btn btn-link" e-action-modal="{:url('person/add')}"><i class="fa fa-plus"></i> 新增</button>
+<button class="btn btn-link" e-action-del="{:url('person/del')}"><i class="fa fa-fw fa-trash"></i> 删除</button>
+{/block}
+{block name='script'}
+<script>
+    var php_url = {
+        index : '{:url("person/index")}',
+        detail : '{:url("person/detail")}',
+        mod : '{:url("person/mod")}',
+        del : '{:url("person/del")}',
+    };
+</script>
+<script>
+    require(['dataTables.bootstrap','inputmask.date','jquery.form','css!__MSTATIC__/css/pages/person.css','admin/js/pages/person'],function () {
+        $(person);
+    });
+</script>
+{/block}
+{block name='modal'}
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+{/block}
+<!--<div class="person-index">
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
-                <div class="box-header with-border">
-                    <h3 class="box-title">人员列表</h3>
-                    <button e-action-del="{:url('person/del')}">删除</button>
-                    <button type="button" class="btn btn-primary pull-right" e-action-modal="{:url('person/add')}"><span><i class="fa fa-plus"></i>添加人员</span></button>
-                </div>
-                <!-- /.box-header -->
                 <div class="box-body">
+                    <div style="height:0px">
+                    <button type="button" class="btn btn-link" e-action-modal="{:url('person/add')}"><i class="fa fa-plus"></i> 新增</button>
+                    <button class="btn btn-link" e-action-del="{:url('person/del')}"><i class="fa fa-fw fa-trash"></i> 删除</button>
+                    </div>
                     <table id="table" class="table table-bordered table-striped">
                     </table>
                 </div>
-                <!-- /.box-body -->
+                &lt;!&ndash; /.box-body &ndash;&gt;
             </div>
-            <!-- /.box -->
+            &lt;!&ndash; /.box &ndash;&gt;
         </div>
-        <!-- /.col -->
+        &lt;!&ndash; /.col &ndash;&gt;
     </div>
-    <!-- /.row -->
+    &lt;!&ndash; /.row &ndash;&gt;
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
             </div>
-            <!-- /.modal-content -->
+            &lt;!&ndash; /.modal-content &ndash;&gt;
         </div>
-        <!-- /.modal-dialog -->
+        &lt;!&ndash; /.modal-dialog &ndash;&gt;
     </div>
 </div>
 <script>
@@ -40,4 +69,4 @@
     require(['dataTables.bootstrap','inputmask.date','jquery.form','css!__MSTATIC__/css/pages/person.css','admin/js/pages/person'],function () {
         $(person);
     });
-</script>
+</script>-->

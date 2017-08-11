@@ -10,6 +10,7 @@ class Group extends Base
     public function index()
     {
         if(input('?param.view')){
+            $this->assign('title', '组管理');
             return $this->fetch();
         }
         $model = model('group');
@@ -27,46 +28,54 @@ class Group extends Base
     }
     //获取添加表单
     public function add(){
+        if ($this->request->isPost()) {
+            /* @var $model SubModel*/
+            $model = Loader::model('group');
+            $data['gro_id'] = create_guid();
+            $data['name'] = input('post.name');
+            $data['org_id'] = input('session.user.org_id');
+            $data['status'] = input('post.status');
+            $result = $model->data($data)->save();
+            if(!empty($result)){
+                $this->success('添加成功！','');
+            }else{
+                $this->error('添加失败！');
+            }
+        }
         return $this->fetch();
-    }
-    //添加到数据库
-    public function insert()
-    {
-        /* @var $model SubModel*/
-        $model = Loader::model('group');
-        $data['gro_id'] = create_guid();
-        $data['name'] = input('post.name');
-        $data['org_id'] = '{3033D1DB-3C92-6624-DCDE-0435498BB60D}';
-        $data['status'] = input('post.status');
-        $result = $model->data($data)->save();
-        return result($result,'添加成功！', '添加失败！');
     }
     //获取修改表单
     public function mod()
     {
+        if ($this->request->isPost()) {
+            $model = Loader::model('group');
+            $gro_id = input('post.gro_id');
+            $data['name'] = input('post.name');
+            $data['org_id'] = input('session.user.org_id');
+            $data['status'] = input('post.status');
+            $result = $model->save($data,['gro_id' => $gro_id]);
+            if(!empty($result)){
+                $this->success('修改成功！','');
+            }else{
+                $this->error('修改失败！');
+            }
+        }
         $id = input('get.id');
         $record = SubModel::get($id)->getData();
         $this->assign('group',$record);
         return $this->fetch();
     }
-    public function update()
-    {
-        $model = Loader::model('group');
-        $gro_id = input('post.gro_id');
-        $data['name'] = input('post.name');
-        $data['org_id'] = '{3033D1DB-3C92-6624-DCDE-0435498BB60D}';
-        $data['status'] = input('post.status');
-        $result = $model->save($data,['gro_id' => $gro_id]);
-        return result($result,'修改成功！', '修改失败！');
-    }
-
     //删除
     public function del()
     {
         $ids = input('get.id/a');
         $result = SubModel::destroy($ids);
 //        $result = true;
-        return result($result,'删除成功！', '删除失败！');
+        if(!empty($result)){
+            $this->success('删除成功！','');
+        }else{
+            $this->error('删除失败！');
+        }
     }
 
 }

@@ -10,6 +10,7 @@ class Building extends Base
     public function index()
     {
         if(input('?param.view')){
+            $this->assign('title', '建筑管理');
             return $this->fetch();
         }
         $org_id = input('session.user.org_id');
@@ -28,38 +29,35 @@ class Building extends Base
     }
     //获取添加表单
     public function add(){
+        if ($this->request->isPost()) {
+            /* @var $model SubModel*/
+            $model = Loader::model('Building');
+            $result = $model->data(input('post.'))->save();
+            if(!empty($result)){
+                $this->success('添加建筑成功！');
+            }else{
+                $this->error('添加建筑失败！');
+            }
+        }
         return $this->fetch();
     }
-    //添加到数据库
-    public function insert()
-    {
-       /* @var $model SubModel*/
-        $model = Loader::model('Building');
-        $result = $model->data(input('post.'))->save();
-        if(!empty($result)){
-            $this->success('添加建筑成功！');
-        }else{
-            $this->error('添加建筑失败！');
-        }
-    }
+
     //获取修改表单
     public function mod()
     {
+        if ($this->request->isPost()) {
+            $model = new SubModel;
+            $result = $model->save(input("post."),['bui_id' => input('post.bui_id')]);
+            if(!empty($result)){
+                $this->success('修改建筑信息成功！');
+            }else{
+                $this->error('修改建筑信息失败！');
+            }
+        }
         $id = input('get.id');
         $detail = SubModel::get($id);
         $this->assign('detail',$detail);
         return $this->fetch();
-    }
-    //修改更新
-    public function update()
-    {
-        $model = new SubModel;
-        $result = $model->save(input("post."),['bui_id' => input('post.bui_id')]);
-        if(!empty($result)){
-            $this->success('修改建筑信息成功！');
-        }else{
-            $this->error('修改建筑信息失败！');
-        }
     }
     //删除
     public function del()

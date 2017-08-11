@@ -1,29 +1,48 @@
+{extend name="admin@public/content_table" /}
+{block name="box-header"}{/block}
+{block name="button"}
+<button type="button" class="btn btn-link" e-action-modal="{:url('User/add')}"><i class="fa fa-plus"></i> 新增</button>
+<button class="btn btn-link" e-action-del="{:url('User/del')}"><i class="fa fa-fw fa-trash"></i> 删除</button>
+{/block}
+{block name='script'}
+<script>
+    var php_url = {
+        index: '{:url("User/index")}',
+        detail: '{:url("User/detail")}',
+        mod : '{:url("User/mod")}',
+        del : '{:url("User/del")}',
+        forbid : '{:url("user/forbid")}',
+    };
+    require(['dataTables.bootstrap','inputmask.date','jquery.form','system/js/pages/user'],function () {
+        user();
+    });
+</script>
+{/block}
+<!--
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
-            <div class="box-header with-border">
-                <h3 class="box-title">用户列表</h3>
-                <button e-action-del="{:url('LocationMark/del')}">删除</button>
-                <button type="button" class="btn btn-primary pull-right" e-action-modal="{:url('User/add')}"><span><i class="fa fa-plus"></i>添加</span></button>
-            </div>
-            <!-- /.box-header -->
             <div class="box-body">
+                <div style="height:0px">
+                    <button type="button" class="btn btn-link" e-action-modal="{:url('User/add')}"><i class="fa fa-plus"></i> 新增</button>
+                    <button class="btn btn-link" e-action-del="{:url('User/del')}"><i class="fa fa-fw fa-trash"></i> 删除</button>
+                </div>
                 <table id="table" class="table table-bordered table-striped"></table>
             </div>
-            <!-- /.box-body -->
+            &lt;!&ndash; /.box-body &ndash;&gt;
         </div>
-        <!-- /.box -->
+        &lt;!&ndash; /.box &ndash;&gt;
     </div>
-    <!-- /.col -->
+    &lt;!&ndash; /.col &ndash;&gt;
 </div>
-<!-- /.row -->
+&lt;!&ndash; /.row &ndash;&gt;
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
         </div>
-        <!-- /.modal-content -->
+        &lt;!&ndash; /.modal-content &ndash;&gt;
     </div>
-    <!-- /.modal-dialog -->
+    &lt;!&ndash; /.modal-dialog &ndash;&gt;
 </div>
 <script>
     var php_url = {
@@ -31,8 +50,9 @@
         detail: '{:url("User/detail")}',
         mod : '{:url("User/mod")}',
         del : '{:url("User/del")}',
+        forbid : '{:url("user/forbid")}',
     };
     require(['dataTables.bootstrap','inputmask.date','jquery.form','system/js/pages/user'],function () {
         user();
     });
-</script>
+</script>-->

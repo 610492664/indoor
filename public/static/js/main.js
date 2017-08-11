@@ -67,14 +67,14 @@ require.config({
 
 
 // UI框架初始化
-require(['bootbox','bootstrap-dialog','bootstrap-switch', 'fastclick', 'jquery.slimscroll','dataTables.bootstrap','app','listen'],
+require(['bootbox','bootstrap-dialog','bootstrap-switch', 'fastclick', 'jquery.form', 'jquery.slimscroll','dataTables.bootstrap','app','listen'],
     function (bootbox,BootstrapDialog) {
         window.bootbox = bootbox;
         window.BootstrapDialog = BootstrapDialog;
         window.onhashchange();
         $.extend( true, $.fn.dataTable.defaults, {
             "language":  {"url": PLUGIN_PATH+"/datatables/Chinese.json"},
-            "lengthMenu": [[10, 25, 50, 100, -1], ["10", "25", "50", "100", "全部"]],
+            "lengthMenu": [[1, 25, 50, 100, -1], ["1", "25", "50", "100", "全部"]],
             "autoWidth": false,
             "processing": true,
             "ajax": {
@@ -82,6 +82,7 @@ require(['bootbox','bootstrap-dialog','bootstrap-switch', 'fastclick', 'jquery.s
                 "type":'get',
                 "dataSrc": "",
             },
+            "dom": '<<"pull-right"l><"pull-right"f>>t<<"pull-left"i><"pull-right"p><"clearfix">>'
         });
     }
 );

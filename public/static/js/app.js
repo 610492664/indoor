@@ -466,7 +466,7 @@ function _init() {
                     var parent_li = $this.parent("li");
                     parent_li.addClass('active');
 
-                    //生成面包屑导航
+                  /*  //生成面包屑导航
                     var breadcrumb = $('ol.breadcrumb');
                     breadcrumb.html('');
                     var $li = $this.parent('li');
@@ -479,7 +479,7 @@ function _init() {
                         }
                         $li = $li.parents('li:first');
                     }
-                    breadcrumb.prepend('<li><i class="fa fa-dashboard"></i>　首页</li>');
+                    breadcrumb.prepend('<li><i class="fa fa-dashboard"></i>　首页</li>');*/
                    /* //加载content页面
                     var href = $this.attr('href');
                     PHP_DATA.url = href;

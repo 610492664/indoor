@@ -44,8 +44,9 @@ class AccessLog {
         list($module, $controller, $action) = [strtolower($request->module()), strtolower($request->controller()), strtolower($request->action())];
         if($module !== '' && $controller !== '' && $action !== '') {
             $node = strtolower(join('/', [$module, $controller, $action]));
+            $post_action = ['in', 'add', 'mod'];
             //$action 为index时，只在获取数据列表时记录log，登录post记录log
-            if (($action === 'index') && (input('?param.view')|| ($controller === 'login' && !$request->isPost()))) {
+            if ((($action === 'index') && input('?param.view'))|| (in_array($action, $post_action) && !$request->isPost())) {
                 return true;
             }
             $data = $params->getData();

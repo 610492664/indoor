@@ -10,8 +10,19 @@
 <section class="content" id="content">
     <div class="row">
         <div class="col-xs-12">
-            {block name="box"}
-            {/block}
+            <div class="box">
+                {block name="box-header"}
+                {/block}
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div style="height:0px">
+                        {block name="button"}
+                        {/block}
+                    </div>
+                    <table id="table" class="table table-bordered table-striped"></table>
+                </div>
+                <!-- /.box-body -->
+            </div>
         </div>
         <!-- /.col -->
     </div>

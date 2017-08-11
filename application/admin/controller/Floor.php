@@ -12,7 +12,10 @@ class Floor extends Base
         if(input('?param.view')){
             /**@var $buildingModel BuildingModel */
             $buildingModel = Loader::model('Building');
-            $buildings = $buildingModel->field(['bui_id','name'])->where(['org_id'=>'{3033D1DB-3C92-6624-DCDE-0435498BB60D}'])->select();
+            $org_id = input('session.user.org_id');
+            $buildings = $buildingModel->field(['bui_id','name'])->where(['org_id'=> $org_id])->select();
+            $this->assign('title', '楼层管理');
+            $this->assign('bui_id', input('param.bui_id'));
             $this->assign('buildings', $buildings);
             return $this->fetch();
         }
@@ -31,37 +34,46 @@ class Floor extends Base
     }
     //获取添加表单
     public function add(){
+        if ($this->request->isPost()) {
+            /* @var $model SubModel*/
+            $model = Loader::model('Floor');
+            $result = $model->data(input('post.'))->save();
+            if(!empty($result)){
+                $this->success('添加楼层成功！', '');
+            }else{
+                $this->error('添加楼层失败！');
+            }
+        }
         return $this->fetch();
-    }
-    //添加到数据库
-    public function insert()
-    {
-       /* @var $model SubModel*/
-        $model = Loader::model('Floor');
-        $result = $model->data(input('post.'))->save();
-        return result($result,'添加楼层成功！', '添加楼层失败！');
     }
     //获取修改表单
     public function mod()
     {
+        if ($this->request->isPost()) {
+            $model = new SubModel;
+            $result = $model->save(input("post."),['flo_id' => input('post.flo_id')]);
+            if(!empty($result)){
+                $this->success('修改楼层信息成功！','');
+            }else{
+                $this->error('修改楼层信息失败！');
+            }
+        }
         $id = input('get.id');
         $detail = SubModel::get($id);
         $this->assign('detail',$detail);
         return $this->fetch();
     }
-    //修改更新
-    public function update()
-    {
-        $model = new SubModel;
-        $result = $model->save(input("post."),['flo_id' => input('post.flo_id')]);
-        return result($result,'修改楼层信息成功！', '修改楼层信息失败！');
-    }
+
     //删除
     public function del()
     {
         $ids = input('get.id/a');
         $result = SubModel::destroy($ids);
-        return result($result,'删除楼层信息成功！', '删除楼层信息失败！');
+        if(!empty($result)){
+            $this->success('删除楼层信息成功！','');
+        }else{
+            $this->error('删除楼层信息失败！');
+        }
     }
 
 }

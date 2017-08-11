@@ -1,37 +1,21 @@
-<div class="row">
-    <div class="col-xs-12">
-        <div class="box">
-            <div class="box-header with-border"  lang="zh-CN">
-                <h3 class="box-title"><span bui_id="{BFF5481F-A3DF-F185-927A-83FF572351DB}">建筑以</span>楼层管理</h3>
-                <div class="form-group">
-                    <select id="build" class="form-control" name="building" style="width: 200px">
-                        {volist name="buildings" id="building" empty="暂时没有数据"}
-                        <option value="{$building.bui_id}">{$building.name}</option>
-                        {/volist}
-                    </select>
-                </div>
-                <button e-action-del="{:url('Floor/del')}">删除</button>
-                <button type="button" class="btn btn-primary pull-right" e-action-modal="{:url('Floor/add')}"><span><i class="fa fa-plus"></i>添加</span></button>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-                <table id="table" class="table table-bordered table-striped"></table>
-            </div>
-            <!-- /.box-body -->
-        </div>
-        <!-- /.box -->
+{extend name="public/content_table" /}
+{block name="box-header"}
+<div class="box-header with-border"  lang="zh-CN">
+    <h3 class="box-title">选择建筑：</h3>
+    <div class="form-group">
+        <select id="build" class="form-control" name="building" style="width: 200px">
+            {volist name="buildings" id="building" empty="暂时没有数据"}
+            <option value="{$building.bui_id}" {eq name="bui_id" value="$building['bui_id']"}selected="selected"{/eq}>{$building.name}</option>
+            {/volist}
+        </select>
     </div>
-    <!-- /.col -->
 </div>
-<!-- /.row -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
+{/block}
+{block name="button"}
+<button type="button" class="btn btn-link" e-action-modal="{:url('Floor/add')}"><i class="fa fa-plus"></i> 新增</button>
+<button class="btn btn-link" e-action-del="{:url('Floor/del')}"><i class="fa fa-fw fa-trash"></i> 删除</button>
+{/block}
+{block name='script'}
 <script>
     var php_url = {
         index: '{:url("Floor/index")}',
@@ -43,3 +27,53 @@
         floor();
     });
 </script>
+{/block}
+
+<!--
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header with-border"  lang="zh-CN">
+                <h3 class="box-title">选择建筑：</h3>
+                <div class="form-group">
+                    <select id="build" class="form-control" name="building" style="width: 200px">
+                        {volist name="buildings" id="building" empty="暂时没有数据"}
+                        <option value="{$building.bui_id}" {eq name="bui_id" value="$building['bui_id']"}selected="selected"{/eq}>{$building.name}</option>
+                        {/volist}
+                    </select>
+                </div>
+            </div>
+            &lt;!&ndash; /.box-header &ndash;&gt;
+            <div class="box-body">
+                <div style="height:0px">
+                    <button type="button" class="btn btn-link" e-action-modal="{:url('Floor/add')}"><i class="fa fa-plus"></i> 新增</button>
+                    <button class="btn btn-link" e-action-del="{:url('Floor/del')}"><i class="fa fa-fw fa-trash"></i> 删除</button>
+                </div>
+                <table id="table" class="table table-bordered table-striped"></table>
+            </div>
+            &lt;!&ndash; /.box-body &ndash;&gt;
+        </div>
+        &lt;!&ndash; /.box &ndash;&gt;
+    </div>
+    &lt;!&ndash; /.col &ndash;&gt;
+</div>
+&lt;!&ndash; /.row &ndash;&gt;
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+        &lt;!&ndash; /.modal-content &ndash;&gt;
+    </div>
+    &lt;!&ndash; /.modal-dialog &ndash;&gt;
+</div>
+<script>
+    var php_url = {
+        index: '{:url("Floor/index")}',
+        detail: '{:url("Floor/detail")}',
+        mod : '{:url("Floor/mod")}',
+        del : '{:url("Floor/del")}',
+    };
+    require(['dataTables.bootstrap','inputmask.date','jquery.form','admin/js/pages/floor'],function () {
+        floor();
+    });
+</script>-->

@@ -13,7 +13,7 @@ use app\admin\controller\Base;
 
 class Login extends Base
 {
-    public function index()
+    public function in()
     {
         if ($this->request->isGet()) {
             $this->assign('title', '用户登录');
@@ -66,6 +66,6 @@ class Login extends Base
             );
         }
         session_destroy();
-        $this->success('退出登录成功！', '@system/login');
+        $this->success('退出登录成功！', '@system/login/in');
     }
 }

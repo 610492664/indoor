@@ -34,6 +34,7 @@ class Role extends Base {
      */
     public function index() {
         if(input('?param.view')){
+            $this->assign('title', '角色管理');
             return $this->fetch();
         }
         $org_id = input('session.user.org_id');

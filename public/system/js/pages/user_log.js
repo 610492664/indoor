@@ -17,7 +17,7 @@ function user_log() {
             { "data": "username" ,"title":"用户"},
             { "data": "create_time" ,"title":"访问时间"},
             { "data": "ip" ,"title":"访问ip"},
-            { "data": "ulog_id","title":"操作", "width": "25%"}
+            { "data": "ulog_id","title":"操作", "width": "5%"}
         ],
         "columnDefs": [
             {
@@ -40,8 +40,37 @@ function user_log() {
                     return data;
                 }
             }
-        ]
+        ],
+        initComplete: function () {
+            var api = this.api();
+            api.columns().indexes().flatten().each( function ( i ) {
+                if (i != 0 && i != 1 && i != 9) {
+                    var column = api.column(i);
+                    var header = $(column.header()).text();
+                    var select = $('<select><option value="">' + header + '</option></select>')
+                        .appendTo($(column.header()).empty())
+                        .on('click', function (evt) {
+                            evt.stopPropagation();
+                        })
+                        .on('change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+                            column
+                                .search(val ? '^' + val + '$' : '', true, false)
+                                .draw();
+                        });
+                    column.data().unique().sort().each(function (d, j) {
+                        select.append('<option value="' + d + '">' + d + '</option>')
+                    });
+                }
+            } );
+        }
     });
     //添加索引列
     $.table_index($.table);
+    $("button[url]").click(function () {
+        var url = $(this).attr('url');
+        $.form.load(url, {}, 'POST');
+    })
 }

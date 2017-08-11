@@ -14,6 +14,7 @@ class Index extends Base
    }
     public function dashBoard()
     {
+        $this->assign('title', '首页');
         return $this->fetch();
     }
 }

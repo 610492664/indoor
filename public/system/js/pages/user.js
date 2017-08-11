@@ -26,15 +26,26 @@ function user() {
             { "data": "status" ,"title":"状态"},
             { "data": "use_id","title":"操作", "width": "25%"}
         ],
-        "columnDefs": [ {
-            "targets": 0,
-            "render": function ( data, type, full, meta ) {
-                if (type === 'display') {
-                    return '<input type="checkbox" name="checkList" value="' + data + '">';
+        "columnDefs": [
+            {
+                "targets": 0,
+                "render": function ( data, type, full, meta ) {
+                    if (type === 'display') {
+                        return '<input type="checkbox" name="checkList" value="' + data + '">';
+                    }
+                    return data;
                 }
-                return data;
-            }
-        },
+            },
+            {
+                "targets": 9,
+                "render": function ( data, type, full, meta ) {
+                    if (type === 'display') {
+                        var checked = (data === 1) ? 'checked' : '';
+                        return '<input class="switch" type="checkbox" '+checked+ ' name="status" data-size="small" data-on-text="启用" data-off-text="禁用" e-action-mod="'+php_url.forbid+'" e-data="'+full.use_id+'"/>'
+                    }
+                    return data;
+                }
+            },
             {
                 "targets": 10,
                 "render": function ( data, type, full, meta ) {

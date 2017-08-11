@@ -35,17 +35,6 @@ function password_encrypt($password)
     return md5($password);
 }
 
-function result($result, $success_msg, $error_msg) {
-    if(!empty($result)){
-        $return['code'] = 1;
-        $return['msg'] = $success_msg;
-    }else{
-        $return['code'] = 0;
-        $return['msg'] = $error_msg;
-    }
-    return $return;
-}
-
 /**
  * RBAC节点权限验证
  * @param string $node

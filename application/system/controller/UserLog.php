@@ -34,6 +34,7 @@ class UserLog extends Base {
      */
     public function index() {
         if(input('?param.view')){
+            $this->assign('title', '访问日志管理');
             return $this->fetch();
         }
         $org_id = input('session.user.org_id');
@@ -79,6 +80,19 @@ class UserLog extends Base {
             $this->success('日志删除成功！');
         }else{
             $this->error('日志删除失败，请稍候再试！');
+        }
+    }
+
+    //删除
+    public function delAll()
+    {
+        $org_id = input('session.user.org_id');
+//        $result = SubModel::destroy(['org_id'=>$org_id]);
+        $result = Db::name('user_log')->where(['org_id'=>$org_id])->delete();
+        if(!empty($result)){
+            $this->success('日志清空成功！',"");
+        }else{
+            $this->error('日志清空失败，请稍候再试！');
         }
     }
 

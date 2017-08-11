@@ -1,0 +1,37 @@
+<style>
+    table tbody tr.selected {
+        background-color: #B0BED9 !important;
+    }
+</style>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span></button>
+    <h4 class="modal-title">添加成员</h4>
+</div>
+<div class="modal-body">
+    <div style="height:0px">
+        <button type="button" id="checkedAll" class="btn btn-link"><i class="fa fa-plus"></i> <span>全选</span></button>
+    </div>
+    <table id="add" class="table table-bordered table-striped" style="width: 100%">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>证件号</th>
+            <th>姓名</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="records" id="vo" }
+        <tr>
+            <td>{$vo.per_id}</td>
+            <td>{$vo.pidtype}：{$vo.pid}</td>
+            <td>{$vo.name}</td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+</div>
+<div class="modal-footer">
+    <button type="reset" class="btn btn-default"  data-dismiss="modal">取消</button>
+    <button type="submit" class="btn btn-primary">提交</button>
+</div>

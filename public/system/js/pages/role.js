@@ -4,6 +4,7 @@
 
 function role() {
     $.table = $('#table').DataTable({
+        "lengthMenu": [[1, 25, 50, 100, -1], ["1", "25", "50", "100", "全部"]],
         "ajax": {
             "url": php_url.getList,
         },

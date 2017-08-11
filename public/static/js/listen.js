@@ -1,8 +1,19 @@
 define(['jquery','common'],function ($) {
     var $body = $('body');
 
-    $body.on('draw.dt', '#table', function () {
-        var $switch = $('input.switch')
+    $body.on( 'draw.dt', "#table", function () {
+        var $table = $(this);
+        var $checked = $table.find('th input[type="checkbox"]');
+        var $tbody_checked = $table.find('tbody input[type="checkbox"]');
+        if( $tbody_checked.length == 0 || $tbody_checked.not(':checked').length > 0){
+            $checked.prop("checked",false);
+        }else {
+            $checked.prop("checked",true);
+        }
+    } );
+
+    $body.on('init.dt', '#table', function () {
+        var $switch = $.table.rows({"page": "all"}).nodes().to$().find('input.switch');
         $switch.bootstrapSwitch({
             onSwitchChange: function (event, state) {
                 var id = $(this).attr('e-data'), url = $(this).attr('e-action-mod'), ret = false;
@@ -15,7 +26,7 @@ define(['jquery','common'],function ($) {
                 return ret;
             }
         });
-    })
+    });
 
     //监听全选事件（自定义属性 e-check-name)
     $body.on('click', '[e-check-name]', function () {
@@ -26,10 +37,34 @@ define(['jquery','common'],function ($) {
         });
     });
 
+
+    $body.on('click', '[e-action-set]', function () {
+        $this =$(this);
+        var url = $(this).attr('e-action-set'), type = $(this).attr('e-type'), value = $(this).attr('e-value');
+        type = (typeof(type) === 'undefined') ? "" : type;
+        value = (typeof(type) === 'undefined') ? "" : value;
+        var id = [], row = [];
+        var targetname = $("[e-check-name]").attr('e-check-name');
+        $("input[name='"+targetname+"']:checked").each(function () {
+            id.push(this.value);
+            row.push($(this).parents('tr'));
+        });
+        if(id.length < 1) {
+            $.msg.error('请选择需要操作的数据！',2000 );
+            return false;
+        }
+        if(id.length > 1) {
+            $.msg.error('本操作只能选择一行数据！',2000 );
+            return false;
+        }
+        $.form.load(url, {id: id, type: type, value: value}, 'POST', true, function (res) {});
+    });
+
     //监听删除事件（定义属性e-atcion-del、单删e-data)
     $body.on('click', '[e-action-del]', function () {
         $this =$(this);
         var id = [], row = [];
+        var url = $this.attr('e-action-del');
         if(typeof ($this.attr('e-data')) !== 'undefined'){
             id.push($this.attr('e-data'));
             row.push($this.parents('tr'));
@@ -45,21 +80,9 @@ define(['jquery','common'],function ($) {
             return false;
         }
         $.msg.confirm("确认删除？",function () {
-            var url = $this.attr('e-action-del');
-            $.ajax({
-                url: url,
-                type: "get",
-                data: {"id": id},
-                success: function(data){
-                    if (data.code == 1) {
-                        $.msg.success(data.msg,1000, function () {
-                            $.table.rows(row).remove().draw( false );
-                        });
-                    }else{
-                        $.msg.error(data.msg,1000);
-                    }
-                }
-            });
+            $.form.load(url, {id: id}, 'get', true, function () {
+                $.table.rows(row).remove().draw( false );
+            },false);
         });
     });
 
