@@ -20,27 +20,24 @@ class User extends Base
         $records = SubModel::all(['org_id'=> $org_id], 'role');
         return $records;
     }
-
-    //查看详情
-    public function detail()
-    {
-        $id = input('get.id');
-        $detail = SubModel::get($id);
-        $this->assign('detail',$detail);
-        return $this->fetch();
-    }
     //获取添加表单
     public function add(){
         if(request()->isPost()){
             /* @var $model SubModel*/
             $model = Loader::model('user');
-            $result = $model->data(input('post.'), true)->save();
+            $result = $model->validate(true, [], true)->allowField(true)->save(input('post.'));
             if(!empty($result)){
                 $this->success('添加用户成功！', '');
             }else{
+                $result === false && $this->error($model->getError());
                 $this->error('添加用户失败！');
             }
         }
+        $roles = Db::name('role')
+            ->where(['status'=>0, 'org_id'=> input('session.user.org_id')])
+            ->field('rol_id,name')
+            ->select();
+        $this->assign('roles',$roles);
         return $this->fetch();
     }
 
@@ -49,10 +46,12 @@ class User extends Base
     {
         if(request()->isPost()){
             $model = new SubModel;
-            $result = $model->save(input("post."),['use_id' => input('post.use_id')]);
+            $result = $model->validate(true, [], true)->save(input("post."),['use_id' => input('post.use_id')]);
             if(!empty($result)){
                 $this->success('修改用户信息成功！', '');
             }else{
+                $result === 0 && $this->error('未做任何修改！');
+                $result === false && $this->error($model->getError());
                 $this->error('修改用户信息失败！');
             }
         }
@@ -60,7 +59,7 @@ class User extends Base
         $model = SubModel::get($id);
         $detail = $model->getData();
         $roles = Db::name('role')
-            ->where(['status'=>1, 'org_id'=> input('session.user.org_id')])
+            ->where(['status'=>0, 'org_id'=> input('session.user.org_id')])
             ->field('rol_id,name')
             ->select();
         $this->assign('detail',$detail);
@@ -89,10 +88,6 @@ class User extends Base
         $data = ['use_id' => $post['id'], $post['name'] => $post['value']];
         $result = $model->save($data,['use_id' => input('post.id')]);
         !empty($result) ? $this->success('操作成功！', '') : $this->error('操作失败！');
-        /*if (DataService::update($this->table)) {
-            $this->success("权限禁用成功！", '');
-        }
-        $this->error("权限禁用失败，请稍候再试！");*/
     }
 
 }

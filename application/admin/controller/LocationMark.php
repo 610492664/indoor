@@ -18,23 +18,17 @@ class LocationMark extends Base
         $list = $model->where(['org_id'=>$org_id])->select();
         return $list;
     }
-
-    //查看详情
-    public function detail()
-    {
-        $id = input('get.id');
-        $detail = SubModel::get($id);
-        $this->assign('detail',$detail);
-        return $this->fetch();
-    }
     //获取添加表单
     public function add(){
         if ($this->request->isPost()) {
             $model = Loader::model('LocationMark');
-            $result = $model->data(input('post.'))->save();
+            $post = input('post.');
+            $post['org_id'] = input('session.user.org_id');
+            $result = $model->validate(true, [], true)->save($post);
             if(!empty($result)){
-                $this->success('添加信标成功！');
+                $this->success('添加信标成功！','');
             }else{
+                $result === false && $this->error($model->getError());
                 $this->error('添加信标失败！');
             }
         }
@@ -44,11 +38,17 @@ class LocationMark extends Base
     public function mod()
     {
         if ($this->request->isPost()) {
-            $model = new SubModel;
-            $result = $model->save(input("post."),['lmar_id' => input('post.lmar_id')]);
+            /* @var $model SubModel*/
+            $model = Loader::model('location_mark');
+            $lmar_id = input('post.lmar_id');
+            $post = input('post.');
+            $post['org_id'] = input('session.user.org_id');
+            $result = $model->validate(true, [], true)->save($post,['lmar_id' => $lmar_id]);
             if(!empty($result)){
-                $this->success('修改信标成功！');
+                $this->success('修改信标成功！','');
             }else{
+                $result === 0 && $this->error('未做任何修改！');
+                $result === false && $this->error($model->getError());
                 $this->error('修改信标失败！');
             }
         }

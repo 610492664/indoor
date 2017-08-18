@@ -48,7 +48,7 @@ function floor() {
             var $select = $("#build").select2({
                 placeholder: "选择建筑",
                 // language: "zh-CN",
-                allowClear: true
+                // allowClear: true
             });
             $("#build").on("change", function (e) {
                 var bui_id = $(this).val()
@@ -56,9 +56,6 @@ function floor() {
                 $.table.ajax.reload();
             });
             $select.trigger("change");
-            /*if ($('span[bui_id]').attr('bui_id') !== ''){
-
-            }*/
         });
     });
     //add、mod模态框初始化

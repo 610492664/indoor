@@ -86,25 +86,6 @@
         <!-- 左侧导航栏 -->
         <aside class="main-sidebar" id="main-sidebar">
             <section class="sidebar">
-                <!--管理员信息-->
-                <div class="user-panel">
-                    <div class="pull-left image">
-                        <img src="__IMG__/logo.jpg" class="img-circle" alt="头像">
-                    </div>
-                    <div class="pull-left info">
-                        <p>{$Think.session.user.name}</p>
-                        <a href="javascript:void(0);"><i class="fa fa-circle text-success"></i> Online</a>
-                    </div>
-                </div>
-                <!--搜索表单-->
-                <form action="#" method="get" class="sidebar-form">
-                    <div class="input-group">
-                        <input type="text" name="q" class="form-control" placeholder="Search...">
-                        <span class="input-group-btn">
-                            <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
-                        </span>
-                    </div>
-                </form>
                 <ul class="sidebar-menu">
                     <li class="header">业务管理</li>
                     <li class="active">
@@ -162,10 +143,17 @@
                             <li><a href="#{:url('outfireFacility/index', 'view=index')}"><i class="fa fa-fw fa-circle-o"></i> 消防设施</a></li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="#{:url('incident/index', 'view=index')}">
-                            <i class="fa fa-circle-o"></i> <span>事件</span>
+                    <li class="treeview">
+                        <a href="javascript:void(0);">
+                            <i class="fa fa-files-o"></i> <span>事件管理</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
                         </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#{:url('incident/index', 'view=index')}"><i class="fa fa-fw fa-circle-o"></i> 事件列表</a></li>
+                            <li><a href="#{:url('tag/index', 'view=index')}"><i class="fa fa-fw fa-circle-o"></i> 标记物类型</a></li>
+                        </ul>
                     </li>
                     <li class="header">系统管理</li>
                     <li class="treeview">

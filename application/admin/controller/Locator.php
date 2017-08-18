@@ -25,27 +25,19 @@ class Locator extends Base
         return $records;
     }
 
-    //查看详情
-    public function detail()
-    {
-        $id = input('get.id');
-        $record = SubModel::get($id);
-        $this->assign('record',$record);
-        return $this->fetch();
-    }
     //获取添加表单
     public function add(){
         if ($this->request->isPost()) {
             $model = Loader::model('Locator');
-            $result = $model->data(input('post.'), true)->save();
+            $post = input('post.');
+            $post['org_id'] = input('session.user.org_id');
+            $result = $model->validate(true, [], true)->save($post);
             if(!empty($result)){
-                $return['code'] = 1;
-                $return['msg'] = '添加成功！';
+                $this->success('添加成功！', '');
             }else{
-                $return['code'] = 0;
-                $return['msg'] = '添加失败！';
+                $result === false && $this->error($model->getError());
+                $this->error('添加失败！');
             }
-            return $return;
         }
         return $this->fetch();
     }
@@ -57,10 +49,14 @@ class Locator extends Base
             /* @var $model SubModel*/
             $model = Loader::model('Locator');
             $loc_id = input('post.loc_id');
-            $result = $model->save(input('post.'),['loc_id' => $loc_id]);
+            $post = input('post.');
+            $post['org_id'] = input('session.user.org_id');
+            $result = $model->validate(true, [], true)->save($post,['loc_id' => $loc_id]);
             if(!empty($result)){
                 $this->success('修改成功！','');
             }else{
+                $result === 0 && $this->error('未做任何修改！');
+                $result === false && $this->error($model->getError());
                 $this->error('修改失败！');
             }
         }
@@ -74,11 +70,17 @@ class Locator extends Base
     public function del()
     {
         $ids = input('get.id/a');
-        $result = SubModel::destroy($ids);
+        $personModel = model('person');
+        $loc_ids = $personModel->where(['loc_id'=>['in', $ids]])->column('loc_id');
+        if (!empty($loc_ids)) {
+            $this->error('删除的套件已绑定人员，请先解除绑定！');
+        }
+        $model = Db::name('locator');
+        $result = $model->where(['loc_id'=>['in',$ids]])->delete();
         if(!empty($result)){
-            $this->success('删除定位模块成功！');
+            $this->success('删除定位模块成功！', '');
         }else{
-            $this->error('删除删除定位模块失败！');
+            $this->error('删除定位模块失败！');
         }
     }
 

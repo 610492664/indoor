@@ -7,6 +7,7 @@ function user_log() {
         "ajax": {
             "url": php_url.getList,
         },
+        "order": [[7, 'desc']],
         "columns": [
             { "data": "ulog_id","title":"<input type='checkbox' e-check-name = 'checkList'>", "searchable": false,"orderable": false, "width": "3px" },
             { "data": null, "title":"序号", "searchable": false,"orderable": false, "width": "2em"},
@@ -17,7 +18,7 @@ function user_log() {
             { "data": "username" ,"title":"用户"},
             { "data": "create_time" ,"title":"访问时间"},
             { "data": "ip" ,"title":"访问ip"},
-            { "data": "ulog_id","title":"操作", "width": "5%"}
+            { "data": "ulog_id","title":"操作", "searchable": false,"orderable": false, "width": "5%"}
         ],
         "columnDefs": [
             {

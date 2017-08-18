@@ -6,16 +6,18 @@ function person() {
         "ajax": {
             "url": php_url.index,
         },
+        "order": [[5, 'desc'],[2, 'asc']],
         "columns": [
             { "data": "per_id", "title": '<input type="checkbox" e-check-name="checkList">',"searchable": false,"orderable": false, "width": "3px" },
-            { "data": null, "title": "序号", "searchable": false,"orderable": false, "width": "3px"},
+            { "data": null, "title": "序号", "searchable": false,"orderable": false, "width": "2em"},
             { "data": "name" , "title": "姓名"},
-            { "data": "pid" , "title": "证件"},
+            { "data": "pidtype" , "title": "证件类型"},
+            { "data": "pid" , "title": "证件号"},
             { "data": "birthday" , "title": "出生日期"},
             { "data": "position" , "title": "职务"},
             { "data": "rank" , "title": "警衔"},
             { "data": "loc_id" , "title": "定位模块"},
-            { "data": "per_id", "title": "操作", "width": "25%"}
+            { "data": "per_id", "title": "操作", "searchable": false,"orderable": false, "width": "25%"}
         ],
         "columnDefs": [
             {
@@ -28,25 +30,13 @@ function person() {
                 }
             },
             {
-                "targets": 3,
-                "render": function ( data, type, full, meta ) {
-                    if (type === 'display') {
-                        return full.pidtype+'：'+data;
-                    }
-                    return data;
-                }
-            },
-            {
-                "targets": 7,
-                "render": function ( data, type, full, meta ) {
-                    if (type === 'display') {
-                        return (data != '') ? full.loc_number :'无';
-                    }
-                    return data;
-                }
-            },
-            {
                 "targets": 8,
+                "render": function ( data, type, full, meta ) {
+                    return (data != '') ? full.loc_number :'无';
+                }
+            },
+            {
+                "targets": 9,
                 "render": function ( data, type, full, meta ) {
                     if (type === 'display') {
                         return '<div class="btn-group">'+

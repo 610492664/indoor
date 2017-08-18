@@ -4,17 +4,18 @@
 
 function role() {
     $.table = $('#table').DataTable({
-        "lengthMenu": [[1, 25, 50, 100, -1], ["1", "25", "50", "100", "全部"]],
+        "lengthMenu": [[10, 25, 50, 100, -1], ["10", "25", "50", "100", "全部"]],
         "ajax": {
             "url": php_url.getList,
         },
+        "order": [[2, 'asc']],
         "columns": [
             { "data": "rol_id","title":"<input type='checkbox' e-check-name = 'checkList'>", "searchable": false,"orderable": false, "width": "3px" },
             { "data": null, "title":"序号", "searchable": false,"orderable": false, "width": "2em"},
             { "data": "name","title":"角色名"},
             { "data": "desc","title":"描述" },
             { "data": "status" ,"title":"修改状态"},
-            { "data": "rol_id","title":"操作", "width": "25%"}
+            { "data": "rol_id","title":"操作", "searchable": false,"orderable": false, "width": "25%"}
         ],
         "columnDefs": [
             {

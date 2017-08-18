@@ -25,21 +25,15 @@ class Organization extends Base
         $records =SubModel::all(['p_org_id'=>input('session.user.org_id')]);
         return $records;
     }
-
-    //查看详情
-    public function detail()
-    {
-        $id = input('get.id');
-        $record = SubModel::get($id);
-        $this->assign('record',$record);
-        return $this->fetch();
-    }
     //新增
     public function add(){
         if ($this->request->isPost()) {
             /* @var $model SubModel*/
-//        $model = Loader::model('group');
-            $result = model('organization')->data(input('post.'),true)->save();
+            $model = model('organization');
+            $result = $model->validate(true)->save(input('post.'));
+            if(false === $result){
+                $this->error($model->getError());
+            }
             if(!empty($result)){
                 $this->success('添加子单位成功！', '');
             }else{
@@ -55,10 +49,16 @@ class Organization extends Base
         if ($this->request->isPost()) {
             $model = model('organization');
             $org_id = input('post.org_id');
-            $result = $model->save(input('post.'),['org_id' => $org_id]);
+            $result = $model->validate(true)->save(input('post.'),['org_id' => $org_id]);
+            if(false === $result){
+                $this->error($model->getError());
+            }
             if(!empty($result)){
                 $this->success('修改信息成功！', '');
             }else{
+                if($result === 0 ) {
+                    $this->error('未作任何修改！');
+                }
                 $this->error('修改信息失败！');
             }
         }

@@ -74,7 +74,7 @@ require(['bootbox','bootstrap-dialog','bootstrap-switch', 'fastclick', 'jquery.f
         window.onhashchange();
         $.extend( true, $.fn.dataTable.defaults, {
             "language":  {"url": PLUGIN_PATH+"/datatables/Chinese.json"},
-            "lengthMenu": [[1, 25, 50, 100, -1], ["1", "25", "50", "100", "全部"]],
+            "lengthMenu": [[10, 25, 50, 100, -1], ["10", "25", "50", "100", "全部"]],
             "autoWidth": false,
             "processing": true,
             "ajax": {
@@ -82,7 +82,7 @@ require(['bootbox','bootstrap-dialog','bootstrap-switch', 'fastclick', 'jquery.f
                 "type":'get',
                 "dataSrc": "",
             },
-            "dom": '<<"pull-right"l><"pull-right"f>>t<<"pull-left"i><"pull-right"p><"clearfix">>'
+            "dom": '<<"pull-right"l><"pull-right"f>>tr<<"pull-left"i><"pull-right"p><"clearfix">>'
         });
     }
 );

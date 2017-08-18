@@ -27,6 +27,7 @@
             <label  class="col-sm-2 control-label">所属建筑</label>
             <div class="col-sm-10">
                 <select class="form-control select2" name="bui_id" style="width: 100%">
+                    <option value="">选择建筑</option>
                     {volist name="buildings" id="building"}
                     <option value="{$building.bui_id}">{$building.name}</option>
                     {/volist}
@@ -36,7 +37,7 @@
         <div class="form-group">
             <label  class="col-sm-2 control-label">所在楼层</label>
             <div class="col-sm-10">
-                <select class="form-control" name="flo_id" placeholder="所在楼层"></select>
+                <select class="form-control" name="flo_id" placeholder="所在楼层" disabled></select>
             </div>
         </div>
         <div class="form-group">

@@ -12,17 +12,17 @@ define(['jquery','common'],function ($) {
         }
     } );
 
-    $body.on('init.dt', '#table', function () {
-        var $switch = $.table.rows({"page": "all"}).nodes().to$().find('input.switch');
+    $body.on('draw.dt', '#table', function () {
+        var $switch = $(this).find('input.switch');
         $switch.bootstrapSwitch({
             onSwitchChange: function (event, state) {
                 var id = $(this).attr('e-data'), url = $(this).attr('e-action-mod'), ret = false;
                 $.form.load(url, {id: id, name: this.name, value: state ? 1 : 0}, 'POST', false, function (res) {
                     if(res.code === 1) {
                         ret = true;
-                        return false;
                     }
-                },false);
+                    return false;
+                },false,false);
                 return ret;
             }
         });
@@ -126,15 +126,11 @@ define(['jquery','common'],function ($) {
                             $(".modal-body").prepend(msg);
                         },
                         success: function(data) {
-                            if (data.code == 1) {
-                                $.msg.success(data.msg,1000, function () {
-                                    $modal.off('hide.bs.modal');
-                                    $modal.modal('hide');
-                                    $.table.ajax.reload(null, false);
-                                });
-                            }else {
-                                $.msg.error(data.msg,1000);
-                            }
+                            $.msg.auto(data, 1000, true, function () {
+                                $modal.off('hide.bs.modal');
+                                $modal.modal('hide');
+                                // $.table.ajax.reload(null, false);
+                            });
                         }
                     });
                 }

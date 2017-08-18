@@ -38,8 +38,15 @@ class Role extends Base {
         if(request()->isPost()){
             /* @var $model SubModel*/
             $model = model('role');
-            $result = $model->data(input('post.'), true)->save();
-            !empty($result) ? $this->success('添加角色成功！') : $this->error('添加角色失败！');
+            $post = input('post.');
+            $post['org_id'] = input('session.user.org_id');
+            $result = $model->validate(true,[], true)->save($post);
+            if(!empty($result)){
+                $this->success('添加角色成功！', '');
+            }else{
+                $result === false && $this->error($model->getError());
+                $this->error('添加角色失败！');
+            }
         }
         return $this->fetch();
     }
@@ -50,8 +57,16 @@ class Role extends Base {
     public function mod() {
         if(request()->isPost()){
             $model = new SubModel;
-            $result = $model->save(input("post."),['rol_id' => input('post.rol_id')]);
-            !empty($result) ? $this->success('修改角色成功！') : $this->error('修改角色失败！');
+            $post = input('post.');
+            $post['org_id'] = input('session.user.org_id');
+            $result = $model->validate(true, [], true)->save($post,['rol_id' => $post('rol_id')]);
+            if(!empty($result)){
+                $this->success('修改角色成功！', '');
+            }else{
+                $result === 0 && $this->error('未做任何修改！');
+                $result === false && $this->error($model->getError());
+                $this->error('修改角色失败！');
+            }
         }
         $id = input('get.id');
         $model = SubModel::get($id);
@@ -65,8 +80,17 @@ class Role extends Base {
      */
     public function del() {
         $ids = input('get.id/a');
+        $userModel = model('user');
+        $model = model('role');
+        //查询角色是否存在用户
+        $rol_ids = $userModel->where(['rol_id'=>['in', $ids]])->column('rol_id');
+        if (!empty($rol_ids)) {
+            $rol_names = $model->where(['rol_id'=>['in', $rol_ids]])->column('name');
+            $this->error('角色名：“'.implode('”，“',$rol_names).'”存在关联用户，请先解除用户关联！');
+        }
         if (SubModel::destroy($ids)) {
-//            Db::name('SystemAuthNode')->where('auth', 'in', $ids)->delete();
+            //删除角色对应节点权限
+            Db::name('rol_nod')->where('rol_id', 'in', $ids)->delete();
             $this->success("删除角色成功！", '');
         }
         $this->error("删除角色失败，请稍候再试！");
@@ -95,7 +119,6 @@ class Role extends Base {
         $this->assign('rol_id', $rol_id);
         $this->assign('node', json_encode($nodes));
         return $this->fetch();
-//            return $this->_form($this->table, 'apply');
     }
 
     public function authSave() {
@@ -136,21 +159,17 @@ class Role extends Base {
         $data = ['rol_id' => $post['id'], $post['name'] => $post['value']];
         $result = $model->save($data,['rol_id' => input('post.id')]);
         !empty($result) ? $this->success('操作成功！', '') : $this->error('操作失败！');
-        /*if (DataService::update($this->table)) {
-            $this->success("权限禁用成功！", '');
-        }
-        $this->error("权限禁用失败，请稍候再试！");*/
     }
 
     /**
      * 权限恢复
      */
-    public function resume() {
+   /* public function resume() {
         if (DataService::update($this->table)) {
             $this->success("权限启用成功！", '');
         }
         $this->error("权限启用失败，请稍候再试！");
-    }
+    }*/
 
 
 }

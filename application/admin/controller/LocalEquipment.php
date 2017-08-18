@@ -19,23 +19,17 @@ class LocalEquipment extends Base
         return $list;
     }
 
-    //查看详情
-    public function detail()
-    {
-        $id = input('get.id');
-        $detail = SubModel::get($id);
-        $this->assign('detail',$detail);
-        return $this->fetch();
-    }
     //获取添加表单
     public function add(){
         if ($this->request->isPost()) {
-            /** @var $model SubModel */
             $model = Loader::model('LocalEquipment');
-            $result = $model->data(input('post.'),true)->save();
+            $post = input('post.');
+            $post['org_id'] = input('session.user.org_id');
+            $result = $model->validate(true, [], true)->save($post);
             if(!empty($result)){
-                $this->success('添加终端设备成功！');
+                $this->success('添加终端设备成功！', '');
             }else{
+                $result === false && $this->error($model->getError());
                 $this->error('添加终端设备失败！');
             }
         }
@@ -46,12 +40,18 @@ class LocalEquipment extends Base
     public function mod()
     {
         if ($this->request->isPost()) {
-            $model = new SubModel;
-            $result = $model->save(input("post."),['lequ_id' => input('post.lequ_id')]);
+            /* @var $model SubModel*/
+            $model = Loader::model('LocalEquipment');
+            $lequ_id = input('post.lequ_id');
+            $post = input('post.');
+            $post['org_id'] = input('session.user.org_id');
+            $result = $model->validate(true, [], true)->save($post,['lequ_id' => $lequ_id]);
             if(!empty($result)){
-                $this->success('修改终端设备成功！');
+                $this->success('修改终端设备成功！','');
             }else{
-                $this->error('修改终端设备成功！');
+                $result === 0 && $this->error('未做任何修改！');
+                $result === false && $this->error($model->getError());
+                $this->error('修改失败！');
             }
         }
         $id = input('get.id');

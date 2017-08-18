@@ -8,6 +8,7 @@
 </div>
 {/block}
 {block name="button"}
+<a class="btn btn-link" href="#{:url('group/index', 'view=index')}"><i class="fa fa-fw fa-chevron-circle-left"></i>返回组列表</a>
 <button type="button" class="btn btn-link" e-action-modal="{:url('GroupPerson/add')}"><i class="fa fa-plus"></i> 添加成员</button>
 <button class="btn btn-link" e-action-del="{:url('GroupPerson/del', 'id='.$detail['gro_id'])}"><i class="fa fa-fw fa-trash"></i> 移除成员</button>
 <button class="btn btn-link" e-action-set="{:url('GroupPerson/set', 'id='.$detail['gro_id'])}"><i class="fa fa-user"></i> 设为组长</button>
@@ -27,50 +28,3 @@
     });
 </script>
 {/block}
-
-<!--
-<div class="row">
-    <div class="col-xs-12">
-        <div class="box">
-            <div class="box-header with-border">
-                <ul class="list-inline">
-                    <li><b>组名：</b>{$detail.name}</li>
-                    <li><b>组长：</b>{$detail.leader|default="未设定"}</li>
-                </ul>
-            </div>
-            <div class="box-body">
-                <div style="height:0px">
-                    <button type="button" class="btn btn-link" e-action-modal="{:url('GroupPerson/add')}"><i class="fa fa-plus"></i> 添加成员</button>
-                    <button class="btn btn-link" e-action-del="{:url('GroupPerson/del', 'id='.$detail['gro_id'])}"><i class="fa fa-fw fa-trash"></i> 移除成员</button>
-                    <button class="btn btn-link" e-action-set="{:url('GroupPerson/set', 'id='.$detail['gro_id'])}"><i class="fa fa-user"></i> 设为组长</button>
-                </div>
-                <table id="table" class="table table-bordered table-striped" width="100%"></table>
-            </div>
-            &lt;!&ndash; /.box-body &ndash;&gt;
-        </div>
-        &lt;!&ndash; /.box &ndash;&gt;
-    </div>
-    &lt;!&ndash; /.col &ndash;&gt;
-</div>
-&lt;!&ndash; /.row &ndash;&gt;
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        </div>
-        &lt;!&ndash; /.modal-content &ndash;&gt;
-    </div>
-    &lt;!&ndash; /.modal-dialog &ndash;&gt;
-</div>
-<script>
-    PHP_DATA.gro_id = '{$detail.gro_id}';
-    var php_url = {
-        index : '{:url("GroupPerson/index", "id=".$detail["gro_id"])}',
-        del :  '{:url("GroupPerson/del", "id=".$detail["gro_id"])}',
-        set :  '{:url("GroupPerson/set")}',
-    };
-    require(['dataTables.buttons.bootstrap','inputmask.date','jquery.form'],function () {
-        require(['domready!','admin/js/pages/group_person'],function () {
-            group_person();
-        });
-    });
-</script>-->

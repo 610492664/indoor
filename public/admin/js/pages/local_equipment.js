@@ -7,13 +7,14 @@ function local_equipment() {
         "ajax": {
             "url": php_url.index,
         },
+        "order": [[3, 'asc'],[2, 'asc']],
         "columns": [
             { "data": "lequ_id","title":"<input type='checkbox' e-check-name = 'checkList'>", "searchable": false,"orderable": false, "width": "3px" },
             { "data": null, "title":"序号", "searchable": false,"orderable": false, "width": "2em"},
             { "data": "name","title":"名称"},
             { "data": "buy_time","title":"购入时间" },
             { "data": "status" ,"title":"状态"},
-            { "data": "lequ_id","title":"操作", "width": "25%"}
+            { "data": "lequ_id","title":"操作", "searchable": false,"orderable": false, "width": "25%"}
         ],
         "columnDefs": [ {
             "targets": 0,

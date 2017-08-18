@@ -20,14 +20,14 @@ class Incident extends Base
         return $list;
     }
 
-    //查看详情
+  /*  //查看详情
     public function detail()
     {
         $id = input('get.id');
         $detail = SubModel::get($id);
         $this->assign('detail',$detail);
         return $this->fetch();
-    }
+    }*/
     //获取添加表单
     public function add(){
         if ($this->request->isPost()) {

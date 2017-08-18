@@ -50,28 +50,37 @@ function outfire_facility() {
     $('#myModal').on('show.bs.modal', function () {
         if ($("#form").length > 0) {
             require(['select2'],function () {
-                require(['plugin/select2/js/i18n/zh-CN'], function () {
+                require(['static/plugin/select2/js/i18n/zh-CN'], function () {
                     var $building = $("select[name='bui_id']");
                     $building.select2({
-                        placeholder: "选择建筑",
-                        language: "zh-CN",
-                        allowClear: true
+                       /* placeholder: {
+                            id: '-1',
+                            text: "选择建筑"
+                        },*/
+                        language: "zh-CN"
                     });
                     $building.on("change", function (e) {
                         var bui_id = $(this).val();
                         var $floor = $("select[name='flo_id']");
+                        if($floor.attr("disabled") == "disabled"){
+                            $floor.attr("disabled", false);
+                        }
                         $floor.empty();
-                        $.ajax({
-                            url: MODULE+ "/outfire_facility/floors",
-                            data: {"bui_id": bui_id},
-                            success: function (data) {
-                                $floor.append(data);
-                            }
-                        });
+                        if(bui_id !== ''){
+                            $.ajax({
+                                url: "/indoor/public/floorlist/"+bui_id,
+                                // data: {"bui_id": bui_id},
+                                success: function (data) {
+                                    $floor.append(data);
+                                }
+                            });
+                        }else{
+                            $floor.attr("disabled", "disabled");
+                        }
                     });
                 });
             });
         }
     });
-
+    // MODULE+ "/outfire_facility/floors"
 }

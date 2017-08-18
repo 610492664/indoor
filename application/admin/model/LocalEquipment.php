@@ -22,7 +22,7 @@ class LocalEquipment extends Base
 
     public function getStatusAttr($value)
     {
-        $status = [0=>'未使用',1=>'正常使用',2=>'正常停用', 3=>'故障'];
+        $status = [0=>'正常可用',1=>'正常停用',2=>'故障停用', 3=>'报废', 4=>'遗失'];
         return $status[$value];
     }
 }

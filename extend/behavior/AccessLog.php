@@ -31,7 +31,7 @@ class AccessLog {
         $unlog = [];
         $request = Request::instance();
         list($module, $controller, $action) = [strtolower($request->module()), strtolower($request->controller()), strtolower($request->action())];
-        if($module !== '' && $controller !== '' && $action !== '') {
+        if($module !== '' && $controller !== '' && $action !== '') { //跳转，路由到闭包等请求，不进行log记录
             $node = strtolower(join('/', [$module, $controller, $action]));
             $post_action = ['in', 'add', 'mod'];
             //$action 为index时，只在获取数据列表时记录log，登录post记录log

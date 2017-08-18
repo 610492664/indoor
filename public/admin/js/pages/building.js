@@ -7,6 +7,7 @@ function building() {
         "ajax": {
             "url": php_url.index,
         },
+        "order": [[2, 'asc']],
         "columns": [
             { "data": "bui_id","title":"<input type='checkbox' e-check-name = 'checkList'>", "searchable": false,"orderable": false, "width": "3px" },
             { "data": null, "title":"序号", "searchable": false,"orderable": false, "width": "2em"},
@@ -15,7 +16,7 @@ function building() {
             { "data": "totalfloor","title":"层数" },
             { "data": "address","title":"地址" },
             { "data": "comment" ,"title":"备注"},
-            { "data": "bui_id","title":"操作", "width": "25%"}
+            { "data": "bui_id","title":"操作", "searchable": false,"orderable": false, "width": "25%"}
         ],
         "columnDefs": [ {
             "targets": 0,

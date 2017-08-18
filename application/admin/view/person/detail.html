@@ -7,9 +7,10 @@
 <div class="modal-body">
     <div class="row">
         <div class="col-sm-3">
-            <a href="#" class="thumbnail">
-                <img src="{$person.pic}" alt="通用的占位符缩略图">
-            </a>
+            <div style="text-align: center">
+                <img src="{$person.pic}" alt="通用的占位符缩略图" style="width: 100px; height: 140px; padding: 4px; border-radius: 4px; border: 1px solid #000000;">
+                <p style="margin-top: 5px">({$person.name})</p>
+            </div>
         </div>
         <div class="col-sm-9">
             <ul class="list-group list-group-unbordered">
@@ -26,7 +27,7 @@
                     入伍日期： {$person.join_time}
                 </li>
                 <li class="col-sm-6 list-group-item">
-                    证件： {$person.pidtype}（证件号：{$person.pid}）
+                    证件： {$person.pidtype}（{$person.pid}）
                 </li>
                 <li class="col-sm-6 list-group-item">
                     职务： {$person.position}

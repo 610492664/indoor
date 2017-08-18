@@ -7,15 +7,21 @@ class Group extends Base
         'buy_time' => 'timestamp:Y-m-d'
     ];
 
+    protected $insert = ['gro_id', 'org_id'];
+
     public function getStatusAttr($value)
     {
-        $status = [0=>'未使用',1=>'正常使用',2=>'正常停用', 3=>'故障'];
+        $status = [0 => '正常', 1 => '撤销'];
         return $status[$value];
     }
 
-    public function person()
+    protected function setGroIdAttr()
     {
-      return $this->hasOne('Person', 'loc_id')->bind(['per_name'=>'name']);
+        return create_guid();
     }
 
+    protected function setOrgIdAttr()
+    {
+        return input('session.user.org_id');
+    }
 }

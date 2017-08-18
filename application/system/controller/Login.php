@@ -45,8 +45,17 @@ class Login extends Base
                 $this->assign('data', $data);
                 return $this->fetch();
             }
+            if($user['status'] === 1){
+                $data['msg'] = $msg.'该用户已被禁用，暂时不能登录!'.'</div>';
+                $this->assign('data', $data);
+                return $this->fetch();
+            }
             Db::name('User')->where('use_id', $user['use_id'])->update(['login_time' => time(), 'login_num' => ['exp', 'login_num+1']]);
-            $user['nodes'] = Db::name('user')->alias('user')->join('__ROL_NOD__ auth', 'auth.rol_id=user.rol_id', 'LEFT')->where('use_id', $user['use_id'])
+            $user['nodes'] = Db::name('user')
+                ->alias('user')
+                ->join('__ROLE__ role', 'role.rol_id=user.rol_id')
+                ->join('__ROL_NOD__ auth', 'auth.rol_id=user.rol_id', 'LEFT')
+                ->where(['use_id'=>$user['use_id'],'role.status'=>0])
                 ->column('node');
             session('user', $user);
             $url = url('/#/admin/index/dashBoard.html','',false);

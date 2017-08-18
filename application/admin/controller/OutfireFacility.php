@@ -36,14 +36,14 @@ class OutfireFacility extends Base
         return $list;
     }
 
-    //查看详情
+   /* //查看详情
     public function detail()
     {
         $id = input('get.id');
         $detail = SubModel::get($id);
         $this->assign('detail',$detail);
         return $this->fetch();
-    }
+    }*/
     //获取添加表单
     public function add()
     {
@@ -62,7 +62,7 @@ class OutfireFacility extends Base
         $this->assign('buildings', $buildings);
         return $this->fetch();
     }
-    //获取楼层
+    /*//获取楼层
     public function floors()
     {
         $floors = Db::name('floor')->field('flo_id, number')->where(['bui_id'=>input('get.bui_id')])->order('number')->select();
@@ -71,7 +71,7 @@ class OutfireFacility extends Base
             $floorStr .= '<option value="'.$floor['flo_id'].'">第'.$floor['number'].'层</option>';
         }
         return $floorStr;
-    }
+    }*/
 
     //获取修改表单
     public function mod()

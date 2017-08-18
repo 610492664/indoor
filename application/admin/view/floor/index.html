@@ -1,8 +1,8 @@
 {extend name="public/content_table" /}
 {block name="box-header"}
 <div class="box-header with-border"  lang="zh-CN">
-    <h3 class="box-title">选择建筑：</h3>
     <div class="form-group">
+        <label>选择建筑：</label>
         <select id="build" class="form-control" name="building" style="width: 200px">
             {volist name="buildings" id="building" empty="暂时没有数据"}
             <option value="{$building.bui_id}" {eq name="bui_id" value="$building['bui_id']"}selected="selected"{/eq}>{$building.name}</option>

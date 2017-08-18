@@ -36,7 +36,7 @@ class Person extends Base
             // 获取表单上传文件 例如上传了001.jpg
             $file = $this->request->file('pic');
             if(!empty($file)){
-                $info = $file->validate(['size'=>512000,'ext'=>'jpg,png,gif'])->move(ROOT_PATH . 'public' . DS . 'admin' . DS .'static'. DS .'upload');
+                $info = $file->validate(['size'=>512000,'ext'=>'jpg,png,gif'])->move(ROOT_PATH . 'public' . DS .'static'. DS .'upload');
                 if($info){
                     $this->request->post(['pic'=>$info->getSaveName()]);
                 }else{
@@ -47,11 +47,13 @@ class Person extends Base
             }
             /* @var $person SubModel*/
             $person = Loader::model('Person');
-            $result = $person->data(input('post.'),true)->save();
-            !empty($result)&&!empty($person->loc_id)&&Db::name('locator')->update(['status'=>1, 'loc_id'=>$person->loc_id]);
+            $result = $person->validate(true, [], true)->save(input('post.'));
             if(!empty($result)){
+                //修改locator使用状态
+                !empty($person->loc_id)&&Db::name('locator')->update(['status'=>1, 'loc_id'=>$person->loc_id]);
                 $this->success('添加人员成功！', '');
             }else{
+                $result === false && $this->error($person->getError());
                 $this->error('添加人员失败！');
             }
         }
@@ -70,7 +72,7 @@ class Person extends Base
             $file = $this->request->file('pic');
             $data = input('post.');
             if(!empty($file)){
-                $info = $file->validate(['size'=>512000,'ext'=>'jpg,png,gif'])->move(ROOT_PATH . 'public' . DS . 'admin' . DS .'static'. DS .'upload');
+                $info = $file->validate(['size'=>512000,'ext'=>'jpg,png,gif'])->move(ROOT_PATH . 'public' . DS .'static'. DS .'upload');
                 if($info){
                     $data['pic'] = $info->getSaveName();
                 }else{
@@ -83,22 +85,21 @@ class Person extends Base
             }
             $model  = SubModel::get($data['per_id']);
             $old_loc_id = $model->loc_id;
-            $result = $model->save($data, ['per_id'=>$data['per_id']]);
+            $result = $model->validate(true, [], true)->save($data, ['per_id'=>$data['per_id']]);
             if(!empty($result)){
-                if(!empty($model->loc_id)){
-                    Db::name('locator')->update(['status'=>1, 'loc_id'=>$model->loc_id]);
-                }
-                if(!empty($old_loc_id)){
-                    Db::name('locator')->update(['status'=>0, 'loc_id'=>$old_loc_id]);
-                }
+                //修改locator使用状态
+                !empty($model->loc_id)&&Db::name('locator')->update(['status'=>1, 'loc_id'=>$model->loc_id]);
+                !empty($old_loc_id)&&Db::name('locator')->update(['status'=>0, 'loc_id'=>$old_loc_id]);
                 $this->success('修改成功！', '');
             }else{
+                $result === 0 && $this->error('未做任何修改！');
+                $result === false && $this->error($model->getError());
                 $this->error('修改失败！');
             }
         }
         $id = input('get.id');
         $person = SubModel::get($id);
-        $this->assign('person',$person->getData());
+        $this->assign('person',$person);
         $locators = Db::name('locator')
             ->where(['status'=>0])
             ->whereOr(['loc_id'=>$person->loc_id])
@@ -111,9 +112,11 @@ class Person extends Base
     public function del()
     {
         $ids = input('get.id/a');
-        $result = SubModel::destroy($ids);
-//        $result = true;
+        $model = model('person');
+        $loc_ids = $model->where(['per_id'=>['in', $ids], 'loc_id'=>['neq','']])->column('loc_id');
+        $result = $model->where(['per_id'=>['in',$ids]])->delete();
         if(!empty($result)){
+            !empty($loc_ids)&&Db::name('locator')->where(['loc_id'=>['in',$loc_ids]])->setField('status', 0);
             $this->success('删除人员成功！', '');
         }else{
             $this->error('删除人员失败！');

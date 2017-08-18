@@ -33,6 +33,12 @@ class Person extends Base
         return $status[$value];
     }
 
+    public function getSexAttr($value)
+    {
+        $status = [0=>'男',1=>'女'];
+        return $status[$value];
+    }
+
     public function getRankAttr($value)
     {
         $status = [1=>'警衔一',2=>'警衔二', 3=>'警衔三'];
@@ -41,8 +47,8 @@ class Person extends Base
 
     public function getPicAttr($value)
     {
-        $directory = '/indoor/public' . DS . 'admin' . DS .'static'. DS .'upload/';
-        return (empty($value)) ? ('/indoor/public/admin/static/img/headpic.png') : ($directory.$value);
+        $directory = '/indoor/public'. DS .'static'. DS .'upload/';
+        return (empty($value)) ? ('/indoor/public/static/img/headpic.png') : ($directory.$value);
     }
 
     public function locator()

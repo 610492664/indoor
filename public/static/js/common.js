@@ -98,15 +98,21 @@
             },
             success: function (res) {
                 $.msg.close(dialogIndex);
+                if(async === false){
+                    if(typeof callback === 'function'&&　callback.call(self, res) === false){
+                        return false;
+                    }
+                    callback = null;
+                }
                 if (typeof (res) === 'string') {
-                    self.show(res);
+                    self.show(res, callback);
                 }
                 if (typeof (res) === 'object') {
-                    $.msg.auto(res, time||1000, refresh);
+                    $.msg.auto(res, time||3000, refresh, callback);
                 }
-                if (typeof callback === 'function'&&　callback.call(self, res) === false) {
+               /* if (typeof callback === 'function'&&　callback.call(self, res) === false) {
                     return false;
-                }
+                }*/
             }
         });
     };
@@ -114,9 +120,11 @@
     /**
      * 显示HTML到中主内容区
      * @param html
+     * @param callback
      */
-    _form.prototype.show = function (html) {
+    _form.prototype.show = function (html, callback) {
         var $container = $('div.content-wrapper').html(html);
+        typeof callback === 'function' &&　callback();
         $.AdminLTE.layout.fix();
         /*reinit.call(this), setTimeout(reinit, 500), setTimeout(reinit, 1000);
         function reinit() {
@@ -163,7 +171,25 @@
      */
     msg.prototype.alert = function (msg, callback) {
         // this.close();
-        return this.index;
+        var msgstr = '';
+        if (typeof (msg) === 'object'){
+            $.each(msg, function (index, value) {
+                msgstr += value + '</br>';
+            })
+        } else {
+            msgstr = msg;
+        }
+        return this.index = bootbox.alert({
+            size: "small",
+            title: "提示信息",
+            message: msgstr,
+            buttons: {
+                ok: {
+                    label: '确定'
+                }
+            },
+            callback: callback
+        });
     };
 
     /**
@@ -230,8 +256,16 @@
      */
     msg.prototype.error = function (msg, time, callback) {
         // this.close();
+        var msgstr = '';
+        if (typeof (msg) === 'object'){
+            $.each(msg, function (index, value) {
+                msgstr += value + '</br>';
+            })
+        } else {
+            msgstr = msg;
+        }
         var dialog = bootbox.dialog({
-            message:  '<h4><i class="icon fa fa-warning"></i> '+msg+'</h4>',
+            message:  '<h4><i class="icon fa fa-warning"></i> '+msgstr+'</h4>',
             size: 'small',
             backdrop: true,
             onEscape: true,
@@ -292,35 +326,32 @@
      * 自动处理显示Think返回的Json数据
      * @param data JSON数据对象
      * @param time 延迟关闭时间
+     * @param ok 成功回调
+     * @param no 失败回调
      * @param refresh 成功是否刷新页面
      * @return {common_L11._msg|*}
      */
-    msg.prototype.auto = function (data, time, refresh) {
+    msg.prototype.auto = function (data, time, refresh, ok, no) {
         var self = this, force_refresh = false;
-        // data.url = !!data.url ? '#'+ data.url.substr(APP.length) : data.url;
-       switch (data.url) {
-           case '':
-               data.url = '';
-               break;
-           case '/':
-               data.url = '';
-               force_refresh  = true;
-               break;
-           default:
-               data.url = '#'+ data.url.substr(APP.length);break;
-       }
         if (parseInt(data.code) === 1) {
+            switch (data.url) {
+                case '':
+                    data.url = '';
+                    break;
+                case '/':
+                    data.url = '';
+                    force_refresh  = true;
+                    break;
+                default:
+                    data.url = '#'+ data.url.substr(APP.length);break;
+            }
             return self.success(data.msg, time, function () {
+                typeof ok === 'function' && ok();
                 data.url !== '' ? (window.location.href = data.url) : (((refresh !== false) || force_refresh )&& $.form.reload(force_refresh));
-                /*if (self.autoSuccessCloseIndexs && self.autoSuccessCloseIndexs.length > 0) {
-                    for (var i in self.autoSuccessCloseIndexs) {
-                        layer.close(self.autoSuccessCloseIndexs[i]);
-                    }
-                    self.autoSuccessCloseIndexs = [];
-                }*/
             });
         }
-        self.error(data.msg, time, function () {
+        self.alert(data.msg, function () {
+            typeof no === 'function' && no();
             !!data.url && (window.location.href = data.url);
         });
     };

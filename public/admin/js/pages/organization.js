@@ -7,14 +7,15 @@ function organization() {
         "ajax": {
             "url": php_url.index,
         },
+        "order": [[5, 'asc'],[2, 'asc']],
         "columns": [
             { "data": "org_id","title":"<input type='checkbox' e-check-name = 'checkList'>", "searchable": false,"orderable": false, "width": "3px" },
-            { "data": null, "title":"序号", "searchable": false,"orderable": false, "width": "2em"},
+            { "data": null, "title":"序号", "searchable": false,"orderable": false, "width": "5em", "defaultContent": ""},
             { "data": "name","title":"单位名"},
             { "data": "abbr","title":"单位简称" },
             { "data": "address","title":"单位地址" },
             { "data": "status" ,"title":"状态"},
-            { "data": "org_id","title":"操作", "width": "25%"}
+            { "data": "org_id","title":"操作", "searchable": false,"orderable": false, "width": "25%"}
         ],
         "columnDefs": [ {
             "targets": 0,
@@ -39,8 +40,6 @@ function organization() {
             }
         ]
     });
-    $.table.buttons().container()
-        .appendTo( $('.col-sm-6:eq(0)', $.table.table().container() ) );
     //添加索引列
     $.table_index($.table);
 

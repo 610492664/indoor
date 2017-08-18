@@ -7,6 +7,7 @@ function locator() {
         "ajax": {
             "url": php_url.index,
         },
+        "order": [[4, 'asc'],[1, 'asc']],
         "columns": [
             { "data": "loc_id","title":"<input type='checkbox' e-check-name = 'checkList'>", "searchable": false,"orderable": false, "width": "3px" },
             { "data": "number","title":"编号"},
@@ -14,7 +15,7 @@ function locator() {
             { "data": "buy_time","title":"购入日期" },
             { "data": "status" ,"title":"状态"},
             { "data": "per_name","title":"当前使用人" },
-            { "data": "loc_id","title":"操作", "width": "25%"}
+            { "data": "loc_id","title":"操作", "searchable": false,"orderable": false, "width": "25%"}
         ],
         "columnDefs": [ {
             "targets": 0,

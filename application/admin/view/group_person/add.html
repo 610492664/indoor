@@ -16,16 +16,18 @@
         <thead>
         <tr>
             <th>序号</th>
-            <th>证件号</th>
             <th>姓名</th>
+            <th>证件类型</th>
+            <th>证件号</th>
         </tr>
         </thead>
         <tbody>
         {volist name="records" id="vo" }
         <tr>
             <td>{$vo.per_id}</td>
-            <td>{$vo.pidtype}：{$vo.pid}</td>
             <td>{$vo.name}</td>
+            <td>{$vo.pidtype}</td>
+            <td>{$vo.pid}</td>
         </tr>
         {/volist}
         </tbody>
