@@ -46,7 +46,7 @@ class User extends Base
     {
         if(request()->isPost()){
             $model = new SubModel;
-            $result = $model->validate(true, [], true)->save(input("post."),['use_id' => input('post.use_id')]);
+            $result = $model->validate('User.mod', [], true)->save(input("post."),['use_id' => input('post.use_id')]);
             if(!empty($result)){
                 $this->success('修改用户信息成功！', '');
             }else{
@@ -64,6 +64,52 @@ class User extends Base
             ->select();
         $this->assign('detail',$detail);
         $this->assign('roles',$roles);
+        return $this->fetch();
+    }
+
+    //用户修改信息
+    public function selfInfo()
+    {
+        if(request()->isPost()){
+            $model = new SubModel;
+            $result = $model->validate('User.self_info', [], true)->save(input("post."),['use_id' => input('post.use_id')]);
+            if(!empty($result)){
+                $this->success('修改用户信息成功！', '');
+            }else{
+                $result === 0 && $this->error('未做任何修改！');
+                $result === false && $this->error($model->getError());
+                $this->error('修改用户信息失败！');
+            }
+        }
+        $id = input('get.id');
+        $model = SubModel::get($id);
+        $detail = $model->getData();
+        $this->assign('detail',$detail);
+        return $this->fetch();
+    }
+
+    //用户修改密码
+    public function selfPass()
+    {
+        if(request()->isPost()){
+            $post = input("post.");
+            $use_id = $post['use_id'];
+            $model = new SubModel;
+            $checkpass = $model->where(['use_id'=>$use_id, 'password'=>password_encrypt($post['oldpassword'])])->find();
+            empty($checkpass)&&$this->error('修改失败，旧密码错误！', '');
+            $result = $model->validate('User.self_pass', [], true)->allowField(true)->save($post,['use_id' => $use_id]);
+            if(!empty($result)){
+                $this->success('修改密码成功！', '');
+            }else{
+                $result === 0 && $this->error('未做任何修改！');
+                $result === false && $this->error($model->getError());
+                $this->error('修改密码失败！');
+            }
+        }
+        $id = input('get.id');
+        $model = SubModel::get($id);
+        $detail = $model->getData();
+        $this->assign('detail',$detail);
         return $this->fetch();
     }
 

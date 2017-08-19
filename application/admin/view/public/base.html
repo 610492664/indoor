@@ -30,6 +30,24 @@
         a{
             cursor:pointer;
         }
+        /*用户信息修改下拉样式*/
+        li.user-menu ul{
+            width:100% !important;
+            min-width: 0 !important;
+            font-size: 12px;
+        }
+        li.user-menu ul li{
+            height: 40px;
+            border: 1px solid #eaedf1;
+        }
+        li.user-menu ul li a{
+            line-height: 32px;
+            color:#333;
+            text-align: center;
+        }
+        li.user-menu ul li a i{
+            margin-right: 5px !important;
+        }
     </style>
     {block name="myStyle"}{/block}
     <!--[if lt IE 9]>
@@ -59,8 +77,11 @@
                                 <span class="hidden-xs">{$Think.session.user.name}</span>
                             </a>
                             <ul class="dropdown-menu">
+                                <li><a e-action-modal="{:url('system/user/selfPass')}" e-data="{$Think.session.user.use_id}"><i class="glyphicon glyphicon-lock"></i>修改密码</a></li>
+                                <li><a e-action-modal="{:url('system/user/selfInfo')}"  e-data="{$Think.session.user.use_id}"><i class="glyphicon glyphicon-edit"></i>修改信息</a></li>
+                                <li><a href="{:url('system/login/out')}" class=""><i class="glyphicon glyphicon-log-out"></i>退出登录</a></li>
                                 <!-- User image -->
-                                <li class="user-header">
+                                <!--<li class="user-header">
                                     <img src="__IMG__/logo.jpg" class="img-circle" alt="User Image">
 
                                     <p>
@@ -68,7 +89,7 @@
                                         <small>注册时间：{$Think.session.user.create_time | date='Y-m-d',###}</small>
                                     </p>
                                 </li>
-                                <!-- Menu Footer-->
+                                &lt;!&ndash; Menu Footer&ndash;&gt;
                                 <li class="user-footer">
                                     <div class="pull-left">
                                         <a url="{:url('system/user/edit')}" class="refresh btn btn-default btn-flat">修改信息</a>
@@ -76,7 +97,7 @@
                                     <div class="pull-right">
                                         <a href="{:url('system/login/out')}" class="btn btn-default btn-flat">退出登录</a>
                                     </div>
-                                </li>
+                                </li>-->
                             </ul>
                         </li>
                     </ul>

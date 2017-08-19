@@ -26,6 +26,12 @@ class User extends Validate
         'phone'=> '手机号',
     ];
 
+    protected $scene = [
+        'self_info' => ['name','email','phone'],
+        'self_pass' => ['password'],
+        'mod' => ['name', 'email', 'phone']
+    ];
+
     /**
      * 验证手机号是否正确
      */
