@@ -7,6 +7,7 @@ function outfire_facility() {
         "ajax": {
             "url": php_url.index,
         },
+        "order": [[4, 'asc'],[2, 'asc']],
         "columns": [
             { "data": "ofac_id","title":"<input type='checkbox' e-check-name = 'checkList'>", "searchable": false,"orderable": false, "width": "3px" },
             { "data": null, "title":"序号", "searchable": false,"orderable": false, "width": "2em"},
@@ -18,7 +19,7 @@ function outfire_facility() {
             { "data": "coordinate","title":"坐标" },
             { "data": "place_time","title":"安装日期" },
             { "data": "status" ,"title":"状态"},
-            { "data": "ofac_id","title":"操作", "width": "25%"}
+            { "data": "ofac_id","title":"操作", "searchable": false,"orderable": false, "width": "25%"}
         ],
         "columnDefs": [ {
             "targets": 0,

@@ -78,7 +78,7 @@ class OutfireFacility extends Base
     {
         if ($this->request->isPost()) {
             $model = new SubModel;
-            $result = $model->save(input("post."),['lmar_id' => input('post.lmar_id')]);
+            $result = $model->save(input("post."),['ofac_id' => input('post.ofac_id')]);
             if(!empty($result)){
                 $this->success('修改消防设施成功！', '');
             }else{
@@ -88,8 +88,9 @@ class OutfireFacility extends Base
         $id = input('get.id');
         $detail = SubModel::get($id);
         $buildings = Db::name('building')->field('bui_id, name')->where(['org_id'=> input('session.user.org_id')])->select();
-        $buildings = Db::name('floor')->field('flo_id, number')->where(['org_id'=> input('session.user.org_id')])->select();
+        $floors = Db::name('floor')->field('flo_id, number')->where(['bui_id'=>$detail['bui_id']])->order('number')->select();
         $this->assign('buildings', $buildings);
+        $this->assign('floors', $floors);
         $this->assign('detail',$detail);
         return $this->fetch();
     }

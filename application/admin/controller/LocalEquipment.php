@@ -65,7 +65,7 @@ class LocalEquipment extends Base
         $ids = input('get.id/a');
         $result = SubModel::destroy($ids);
         if(!empty($result)){
-            $this->success('删除终端设备成功！');
+            $this->success('删除终端设备成功！','');
         }else{
             $this->error('删除终端设备失败！');
         }

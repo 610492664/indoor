@@ -7,6 +7,7 @@ function floor() {
         "ajax": {
             "url": php_url.index,
         },
+        "order": [[2, 'asc']],
         "columns": [
             { "data": "flo_id","title":"<input type='checkbox' e-check-name = 'checkList'>", "searchable": false,"orderable": false, "width": "3px" },
             { "data": null, "title":"序号", "searchable": false,"orderable": false, "width": "2em"},
@@ -14,7 +15,7 @@ function floor() {
             { "data": "height","title":"层高" },
             { "data": "layout","title":"三维模型" },
             { "data": "comment" ,"title":"备注"},
-            { "data": "flo_id","title":"操作", "width": "25%"}
+            { "data": "flo_id","title":"操作", "searchable": false,"orderable": false, "width": "25%"}
         ],
         "columnDefs": [ {
             "targets": 0,

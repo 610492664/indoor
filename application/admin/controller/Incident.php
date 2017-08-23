@@ -33,6 +33,7 @@ class Incident extends Base
         if ($this->request->isPost()) {
             /* @var $model SubModel*/
             $model = Loader::model('incident');
+            //测试的建筑，此功能后面会删除
             $buiding = \app\admin\model\Building::get('{BFF5481F-A3DF-F185-927A-83FF572351DB}');
             $result = $model->data(input('post.'),true)->save();
             $model->buildings()->save($buiding,['ibui_id'=>create_guid()] );

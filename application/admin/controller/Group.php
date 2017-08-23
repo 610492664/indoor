@@ -15,7 +15,11 @@ class Group extends Base
             return $this->fetch();
         }
         $model = model('group');
-        $records = $model->alias('gro')->field('gro.gro_id, gro.name, per.name per_name,gro.status')->join('__PERSON__ per', 'per.per_id = gro.per_id','LEFT')->select();
+        $records = $model->alias('gro')
+            ->field('gro.gro_id, gro.name, per.name per_name,gro.status')
+            ->join('__PERSON__ per', 'per.per_id = gro.per_id','LEFT')
+            ->where(['gro.org_id'=>input('session.user.org_id')])
+            ->select();
         return $records;
     }
 

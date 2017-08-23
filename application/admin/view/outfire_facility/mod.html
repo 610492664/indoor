@@ -1,13 +1,19 @@
-<form class="form-horizontal" id="form" action = "{:url('LocationMark/mod')}">
-    <input name="lmar_id" value="{$detail.lmar_id}" hidden/>
+<form class="form-horizontal" id="form" action = "{:url('OutfireFacility/mod')}">
+    <input name="ofac_id" value="{$detail.ofac_id}" hidden>
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span></button>
-        <h4 class="modal-title">修改信标</h4>
+        <h4 class="modal-title">修改消防设施信息</h4>
     </div>
     <div class="modal-body">
         <div class="form-group">
-            <label  class="col-sm-2 control-label">信标名称</label>
+            <label  class="col-sm-2 control-label">编码</label>
+            <div class="col-sm-10">
+                <input class="form-control" name="number" placeholder="编码" type="text" value="{$detail.number}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">名称</label>
             <div class="col-sm-10">
                 <input class="form-control" name="name" placeholder="名称" type="text" value="{$detail.name}">
             </div>
@@ -15,24 +21,54 @@
         <div class="form-group">
             <label  class="col-sm-2 control-label">类型</label>
             <div class="col-sm-10">
-                <input class="form-control" name="type" placeholder="类型" type="text"  value="{$detail.type}">
+                <input class="form-control" name="type" placeholder="类型" type="text" value="{$detail.type}">
             </div>
         </div>
         <div class="form-group">
-            <label  class="col-sm-2 control-label">mac地址</label>
+            <label  class="col-sm-2 control-label">所属建筑</label>
             <div class="col-sm-10">
-                <input class="form-control" name="mac" placeholder="mac地址" type="text"  value="{$detail.mac}">
+                <select class="form-control select2" name="bui_id" style="width: 100%">
+                    <option value="">选择建筑</option>
+                    {volist name="buildings" id="building"}
+                    <option value="{$building.bui_id}" {eq name="building['bui_id']" value="$detail['bui_id']"}selected{/eq}>{$building.name}</option>
+                    {/volist}
+                </select>
             </div>
         </div>
         <div class="form-group">
-            <label  class="col-sm-2 control-label">是否启用</label>
+            <label  class="col-sm-2 control-label">所在楼层</label>
+            <div class="col-sm-10">
+                <select class="form-control" name="flo_id" placeholder="所在楼层">
+                    {volist name="floors" id="floor"}
+                    <option value="{$floor.flo_id}" {eq name="floor['flo_id']" value="$detail['flo_id']"}selected{/eq}>第{$floor.number}层</option>
+                    {/volist}
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">坐标</label>
+            <div class="col-sm-10">
+                <input class="form-control" name="coordinate" placeholder="坐标" type="text" value="{$detail.coordinate}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">安装日期</label>
+            <div class="col-sm-10">
+                <input class="form-control" name="place_time" placeholder="安装日期" type="text" value="{$detail.place_time}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">状态</label>
             <div class="col-sm-10">
                 <div class="checkbox">
                     <label>
-                        <input type="radio" name="status" value="0"  {eq name="detail['status']" value="0"}checked{/eq}>是
+                        <input type="radio" name="status" value="0">正常
                     </label>
                     <label>
-                        <input type="radio" name="status"  value="1"  {eq name="detail['status']" value="1"}checked{/eq}>否
+                        <input type="radio" name="status"  value="1">故障
+                    </label>
+                    <label>
+                        <input type="radio" name="status"  value="1">已移除
                     </label>
                 </div>
             </div>

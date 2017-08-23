@@ -47,26 +47,13 @@ class UserLog extends Base {
         return parent::_list($db);*/
     }
 
-    /**
-     * 列表数据处理
-     * @param $data
-     */
-    protected function _index_data_filter(&$data) {
-        $ip = new \Ip2Region();
-        foreach ($data as &$vo) {
-            $result = $ip->btreeSearch($vo['ip']);
-            $vo['isp'] = isset($result['region']) ? $result['region'] : '';
-            $vo['isp'] = str_replace(['|0|0|0|0', '|'], ['', ' '], $vo['isp']);
-        }
-    }
-
     //删除
     public function del()
     {
         $ids = input('get.id/a');
         $result = SubModel::destroy($ids);
         if(!empty($result)){
-            $this->success('日志删除成功！');
+            $this->success('日志删除成功！','');
         }else{
             $this->error('日志删除失败，请稍候再试！');
         }

@@ -21,6 +21,12 @@ class Incident extends Base
         return input('session.user.org_id');
     }
 
+    protected function getTypeAttr($value)
+    {
+        $status = [0=>'演习',1=>'实战'];
+        return $status[$value];
+    }
+
     public function buildings()
     {
         return $this->belongsToMany('Building','inc_bui', 'bui_id', 'inc_id');

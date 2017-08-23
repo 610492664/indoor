@@ -41,6 +41,11 @@ class AccessLog {
             if(in_array($node, NodeService::getLogNode())){
                 $data = $params->getData();
                 $result = (isset($data['code']) && $data['code'] === 0 ) ? '失败' : '成功';
+                $node = [$module, "$module/$controller", "$module/$controller/$action"];
+                $titles = Db::name('node')->field('node, title')->where(['node'=>['in', $node]])->order('node asc')->select();
+                $module = $titles[0]['title']!=='' ? $titles[0]['title'] : $module;
+                $controller = $titles[1]['title']!=='' ? $titles[1]['title'] : $controller;
+                $action = $titles[2]['title']!=='' ? $titles[2]['title'] : $action;
                 $data = [
                     'ulog_id'=>create_guid() ,
                     'ip' => $request->ip(),

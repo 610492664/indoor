@@ -7,6 +7,7 @@ function incident() {
         "ajax": {
             "url": php_url.index,
         },
+        "order": [[6, 'desc'], [3, 'asc']],
         "columns": [
             { "data": "inc_id","title":"<input type='checkbox' e-check-name = 'checkList'>", "searchable": false,"orderable": false, "width": "3px" },
             { "data": null, "title":"序号", "searchable": false,"orderable": false, "width": "2em"},
@@ -16,7 +17,7 @@ function incident() {
             { "data": "buildings[, ].name","title":"地点" },
             { "data": "start_time" ,"title":"开始时间"},
             { "data": "end_time" ,"title":"结束时间"},
-            { "data": "inc_id","title":"操作", "width": "25%"}
+            { "data": "inc_id","title":"操作", "searchable": false,"orderable": false, "width": "25%"}
         ],
         "columnDefs": [ {
             "targets": 0,

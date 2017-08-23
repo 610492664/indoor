@@ -64,7 +64,7 @@ class LocationMark extends Base
         $ids = input('get.id/a');
         $result = SubModel::destroy($ids);
         if(!empty($result)){
-            $this->success('删除信标成功！');
+            $this->success('删除信标成功！', '');
         }else{
             $this->error('删除信标失败！');
         }

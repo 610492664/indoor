@@ -48,7 +48,8 @@ class NodeService {
     public static function checkAuthNode($node) {
         list($module, $controller, $action) = explode('/', str_replace(['?', '=', '&'], '/', $node . '///'));
         $auth_node = strtolower(trim("{$module}/{$controller}/{$action}", '/'));
-        if (session('user.name') === 'admin' || stripos($node, 'admin/index') === 0) {
+        //rol_id={C407F15A-F477-8AF4-B830-19FEF9B95F54}系统超级管理员 拥有所有访问权限
+        if (session('user.rol_id') === '{C407F15A-F477-8AF4-B830-19FEF9B95F54}' || stripos($node, 'admin/index') === 0) {
             return true;
         }
         if (!in_array($auth_node, self::getAuthNode())) {

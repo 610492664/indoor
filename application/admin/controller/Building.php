@@ -26,7 +26,7 @@ class Building extends Base
             $model = Loader::model('Building');
             $result = $model->data(input('post.'))->save();
             if(!empty($result)){
-                $this->success('添加建筑成功！');
+                $this->success('添加建筑成功！', '');
             }else{
                 $this->error('添加建筑失败！');
             }
@@ -41,7 +41,7 @@ class Building extends Base
             $model = new SubModel;
             $result = $model->save(input("post."),['bui_id' => input('post.bui_id')]);
             if(!empty($result)){
-                $this->success('修改建筑信息成功！');
+                $this->success('修改建筑信息成功！', '');
             }else{
                 $this->error('修改建筑信息失败！');
             }
@@ -57,7 +57,7 @@ class Building extends Base
         $ids = input('get.id/a');
         $result = SubModel::destroy($ids);
         if(!empty($result)){
-            $this->success('删除建筑信息成功！');
+            $this->success('删除建筑信息成功！', '');
         }else{
             $this->error('删除建筑信息失败！');
         }

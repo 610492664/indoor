@@ -40,6 +40,9 @@ function user() {
             {
                 "targets": 9,
                 "render": function ( data, type, full, meta ) {
+                    if (full.rol_id === '{C407F15A-F477-8AF4-B830-19FEF9B95F54}') {
+                        return '';
+                    }
                     if (type === 'display') {
                         var checked = (data === 1) ? 'checked' : '';
                         return '<input class="switch" type="checkbox" '+checked+ ' name="status" data-size="small" data-on-text="启用" data-off-text="禁用" e-action-mod="'+php_url.forbid+'" e-data="'+full.use_id+'"/>'
@@ -50,6 +53,9 @@ function user() {
             {
                 "targets": 10,
                 "render": function ( data, type, full, meta ) {
+                    if (full.rol_id === '{C407F15A-F477-8AF4-B830-19FEF9B95F54}') {
+                        return '';
+                    }
                     if (type === 'display') {
                         return '<div class="btn-group">'+
                             '<button class="btn btn-link" e-action-modal="'+php_url.mod+'" e-data="'+data+'" ><i class="fa fa-pencil-square-o"></i></button>'+

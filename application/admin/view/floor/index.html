@@ -12,6 +12,7 @@
 </div>
 {/block}
 {block name="button"}
+<a class="btn btn-link" href="#{:url('building/index', 'view=index')}"><i class="fa fa-fw fa-chevron-circle-left"></i>返回建筑列表</a>
 <button type="button" class="btn btn-link" e-action-modal="{:url('Floor/add')}"><i class="fa fa-plus"></i> 新增</button>
 <button class="btn btn-link" e-action-del="{:url('Floor/del')}"><i class="fa fa-fw fa-trash"></i> 删除</button>
 {/block}
@@ -28,52 +29,3 @@
     });
 </script>
 {/block}
-
-<!--
-<div class="row">
-    <div class="col-xs-12">
-        <div class="box">
-            <div class="box-header with-border"  lang="zh-CN">
-                <h3 class="box-title">选择建筑：</h3>
-                <div class="form-group">
-                    <select id="build" class="form-control" name="building" style="width: 200px">
-                        {volist name="buildings" id="building" empty="暂时没有数据"}
-                        <option value="{$building.bui_id}" {eq name="bui_id" value="$building['bui_id']"}selected="selected"{/eq}>{$building.name}</option>
-                        {/volist}
-                    </select>
-                </div>
-            </div>
-            &lt;!&ndash; /.box-header &ndash;&gt;
-            <div class="box-body">
-                <div style="height:0px">
-                    <button type="button" class="btn btn-link" e-action-modal="{:url('Floor/add')}"><i class="fa fa-plus"></i> 新增</button>
-                    <button class="btn btn-link" e-action-del="{:url('Floor/del')}"><i class="fa fa-fw fa-trash"></i> 删除</button>
-                </div>
-                <table id="table" class="table table-bordered table-striped"></table>
-            </div>
-            &lt;!&ndash; /.box-body &ndash;&gt;
-        </div>
-        &lt;!&ndash; /.box &ndash;&gt;
-    </div>
-    &lt;!&ndash; /.col &ndash;&gt;
-</div>
-&lt;!&ndash; /.row &ndash;&gt;
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        </div>
-        &lt;!&ndash; /.modal-content &ndash;&gt;
-    </div>
-    &lt;!&ndash; /.modal-dialog &ndash;&gt;
-</div>
-<script>
-    var php_url = {
-        index: '{:url("Floor/index")}',
-        detail: '{:url("Floor/detail")}',
-        mod : '{:url("Floor/mod")}',
-        del : '{:url("Floor/del")}',
-    };
-    require(['dataTables.bootstrap','inputmask.date','jquery.form','admin/js/pages/floor'],function () {
-        floor();
-    });
-</script>-->

@@ -23,9 +23,10 @@ class User extends Base
         return create_guid();
     }
 
-    protected function setOrgIdAttr()
+    protected function setOrgIdAttr($value)
     {
-        return input('session.user.org_id');
+        $value = !empty($value) ? $value : input('session.user.org_id');
+        return $value;
     }
 
     protected function setPasswordAttr($value)
