@@ -1,16 +1,39 @@
-<form class="form-horizontal" id="form" action = "{:url('group/add')}">
+<form class="form-horizontal" id="form" action = "__SELF__">
+    {notempty name='detail'}<input type='hidden' value='{$detail.gro_id}' name='gro_id'/>{/notempty}
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span></button>
-        <h4 class="modal-title">添加组</h4>
+        <h4 class="modal-title">{$title}</h4>
     </div>
     <div class="modal-body">
-        <div class="form-group">
+        <div class="form-group has-feedback">
             <label  class="col-sm-2 control-label">组名</label>
             <div class="col-sm-10">
-                <input class="form-control" name="name" placeholder="组名" type="text">
+                <input
+                        class="form-control" name="name" placeholder="组名" type="text" value='{$detail.name|default=""}'
+                        data-remote="{empty name='detail'}{:url('group/_exist')}{else /}{:url('group/_exist', 'gro_id='.$detail['gro_id'])}{/empty}"
+                        data-remote-error="该组名已存在"
+                        required
+                >
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
             </div>
         </div>
+        {eq name="Request.action" value="mod"}
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">状态</label>
+            <div class="col-sm-10">
+                <div class="checkbox">
+                    <label>
+                        <input type="radio" name="status" value="0" {notempty name='detail'}{eq name="detail['status']" value="正常"}checked{/eq}{/notempty}>正常
+                    </label>
+                    <label>
+                        <input type="radio" name="status"  value="1" {notempty name='detail'}{eq name="detail['status']" value="撤销"}checked{/eq}{/notempty}>撤销
+                    </label>
+                </div>
+            </div>
+        </div>
+        {/eq}
     </div>
     <div class="modal-footer">
         <button type="reset" class="btn btn-default">重置</button>

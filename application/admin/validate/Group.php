@@ -18,16 +18,14 @@ class Group extends Validate
     ];
 
     protected $scene = [
-        'add' => []
+        'add' => [],
+        'exist' => [
+            'name' => 'unique:group,name^org_id'
+        ]
     ];
 
     protected $field = [
         'name' => '组名',
         'org_id' => '单位id',
     ];
-
-    protected function checkUnique($value, $rule, $data, $field, $desc)
-    {
-        return $this->unique($value, $rule, $data, $field);
-    }
 }

@@ -32,6 +32,7 @@ class LocationMark extends Base
                 $this->error('添加信标失败！');
             }
         }
+        $this->assign('title', '添加信标');
         return $this->fetch();
     }
     //获取修改表单
@@ -55,7 +56,8 @@ class LocationMark extends Base
         $id = input('get.id');
         $detail = SubModel::get($id);
         $this->assign('detail',$detail);
-        return $this->fetch();
+        $this->assign('title', '修改信标信息');
+        return $this->fetch('add');
     }
 
     //删除

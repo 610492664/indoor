@@ -19,7 +19,11 @@ class Organization extends Validate
     ];
 
     protected $scene = [
-        'add' => []
+        'add' => [],
+        'exist' => [
+            'name' => 'unique:organization',
+            'abbr'=> 'unique:organization'
+        ]
     ];
 
     protected $field = [

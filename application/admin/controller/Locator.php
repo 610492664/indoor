@@ -39,6 +39,7 @@ class Locator extends Base
                 $this->error('添加失败！');
             }
         }
+        $this->assign('title', '添加定位模块');
         return $this->fetch();
     }
 
@@ -62,8 +63,9 @@ class Locator extends Base
         }
         $id = input('get.id');
         $record = SubModel::get($id);
-        $this->assign('record',$record);
-        return $this->fetch();
+        $this->assign('detail',$record);
+        $this->assign('title', '修改定位模块信息');
+        return $this->fetch('add');
     }
 
     //删除
@@ -84,4 +86,11 @@ class Locator extends Base
         }
     }
 
+    /*public function _exist()
+    {
+        $data = input('get.');
+        $data['org_id'] = input('session.user.org_id');
+        $result = $this->validate($data, 'Locator.exist');
+        true !== $result ? abort(400,$result) : $this->result('没有占用', 200);
+    }*/
 }

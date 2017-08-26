@@ -67,7 +67,7 @@ require.config({
 
 
 // UI框架初始化
-require(['bootbox','bootstrap-dialog','bootstrap-switch', 'fastclick', 'jquery.form', 'jquery.slimscroll','dataTables.bootstrap','app','listen'],
+require(['bootbox','bootstrap-dialog','bootstrap-switch', 'fastclick', 'jquery.form','bootstrap-validator', 'jquery.slimscroll','dataTables.bootstrap','app','listen'],
     function (bootbox,BootstrapDialog) {
         window.bootbox = bootbox;
         window.BootstrapDialog = BootstrapDialog;

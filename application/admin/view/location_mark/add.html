@@ -1,34 +1,70 @@
-<form class="form-horizontal" id="form" action = "{:url('LocationMark/add')}">
+<form class="form-horizontal" id="form" action = "__SELF__">
+    {notempty name='detail'}<input name="lmar_id" value="{$detail.lmar_id}" hidden/>{/notempty}
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span></button>
-        <h4 class="modal-title">添加信标</h4>
+        <h4 class="modal-title">{$title}</h4>
     </div>
     <div class="modal-body">
-        <div class="form-group">
+        <div class="form-group has-feedback">
             <label  class="col-sm-2 control-label">信标名称</label>
             <div class="col-sm-10">
-                <input class="form-control" name="name" placeholder="名称" type="text">
+                <input
+                        class="form-control" name="name" placeholder="名称" type="text" value="{$detail.name|default=''}"
+                        data-remote="{empty name='detail'}{:url('locationMark/_exist')}{else /}{:url('locationMark/_exist', 'lmar_id='.$detail['lmar_id'])}{/empty}"
+                        data-remote-error="该信标名已存在"
+                        required
+                >
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">类型</label>
             <div class="col-sm-10">
                 <select class="form-control" name="type">
-                    <option value="0">一般</option>
-                    <option value="1">紧急</option>
+                    <option value="0" {notempty name='detail'}{eq name="detail['type']" value="一般"}selected{/eq}{/notempty}>一般</option>
+                    <option value="1" {notempty name='detail'}{eq name="detail['type']" value="紧急"}selected{/eq}{/notempty}>紧急</option>
                 </select>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group has-feedback">
             <label  class="col-sm-2 control-label">mac地址</label>
             <div class="col-sm-10">
-                <input class="form-control" name="mac" placeholder="mac地址" type="text">
+                <input
+                        class="form-control" name="mac" placeholder="mac地址" type="text"  value="{$detail.mac|default=''}"
+                        data-remote="{empty name='detail'}{:url('locationMark/_exist')}{else /}{:url('locationMark/_exist', 'lmar_id='.$detail['lmar_id'])}{/empty}"
+                        data-remote-error="该mac地址已存在"
+                        required
+                >
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
             </div>
         </div>
+        {eq name="Request.action" value="mod"}
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">状态</label>
+            <div class="col-sm-10">
+                <div class="checkbox">
+                    <label>
+                        <input type="radio" name="status" value="0"  {eq name="detail['status']" value="正常"}checked{/eq}>正常
+                    </label>
+                    <label>
+                        <input type="radio" name="status"  value="1"  {eq name="detail['status']" value="故障"}checked{/eq}>故障
+                    </label>
+                    <label>
+                        <input type="radio" name="status"  value="2"  {eq name="detail['status']" value="报废"}checked{/eq}>报废
+                    </label>
+                    <label>
+                        <input type="radio" name="status"  value="3"  {eq name="detail['status']" value="遗失"}checked{/eq}>遗失
+                    </label>
+                </div>
+            </div>
+        </div>
+        {/eq}
     </div>
     <div class="modal-footer">
-        <button type="botton" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
         <button type="reset" class="btn btn-default">重置</button>
         <button type="submit" class="btn btn-primary">提交</button>
     </div>

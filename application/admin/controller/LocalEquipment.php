@@ -33,6 +33,7 @@ class LocalEquipment extends Base
                 $this->error('添加终端设备失败！');
             }
         }
+        $this->assign('title', '添加终端设备');
         return $this->fetch();
     }
 
@@ -57,7 +58,8 @@ class LocalEquipment extends Base
         $id = input('get.id');
         $detail = SubModel::get($id);
         $this->assign('detail',$detail);
-        return $this->fetch();
+        $this->assign('title', '修改终端设备信息');
+        return $this->fetch('add');
     }
     //删除
     public function del()

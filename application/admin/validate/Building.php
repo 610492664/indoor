@@ -10,20 +10,19 @@ namespace app\admin\validate;
 
 use think\Validate;
 
-class LocalEquipment extends Validate
+class Building extends Validate
 {
     protected $rule = [
-        'name' => 'require|chsDash|max:30|unique:local_equipment,name^org_id',
-        'buy_time' => 'require|date'
+        'name' => 'require|chsDash|max:30|unique:building,name^org_id'
     ];
 
     protected $field = [
-        'name' => '名称',
-        'buy_time'=> '购入日期'
+        'name' => '建筑名称'
     ];
+
     protected $scene = [
         'exist' => [
-            'name' => 'unique:local_equipment,name^org_id'
+            'name' => 'unique:building,name^org_id'
         ]
     ];
 }

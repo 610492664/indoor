@@ -1,0 +1,39 @@
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span></button>
+    <h4 class="modal-title">{$detail.name}</h4>
+</div>
+<div class="modal-body">
+    <strong><i class="fa fa-tag margin-r-5"></i> 事件类型</strong>
+    <p class="text-muted">
+        【{$detail.type}】
+    </p>
+    <hr>
+    <strong><i class="fa fa-calendar-times-o margin-r-5"></i> 事发时间</strong>
+    <p class="text-muted">
+        开始时间：{$detail.start_time}
+        <br>
+        结束时间：{$detail.end_time}
+    </p>
+    <hr>
+    <strong><i class="fa fa-map-marker margin-r-5"></i> 事发地点</strong>
+    <p class="text-muted">
+        {volist name="detail.buildings" id="building"}
+        建筑名：{$building.name}<br>地址：{$building.address}
+        {/volist}
+    </p>
+    <hr>
+    <strong><i class="fa fa-user margin-r-5"></i> 参与人员</strong>
+    <p>
+        {volist name="detail.persons" id="person"}
+        <span class="label label-info">{$person.name}</span>
+        {/volist}
+    </p>
+    <hr>
+    <strong><i class="fa fa-file-text-o margin-r-5"></i> 描述</strong>
+    <p>{$detail.description}</p>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+</div>

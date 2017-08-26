@@ -1,20 +1,37 @@
-<form class="form-horizontal" id="form" action = "{:url('locator/add')}">
+<form class="form-horizontal" id="form" action = "__SELF__" data-toggle="validator" >
+    {notempty name='detail'}<input name="loc_id" value="{$detail.loc_id}" hidden>{/notempty}
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span></button>
-        <h4 class="modal-title">添加定位模块</h4>
+        <h4 class="modal-title">{$title}</h4>
     </div>
     <div class="modal-body">
-        <div class="form-group">
+        <div class="form-group has-feedback">
             <label  class="col-sm-2 control-label">设备编号</label>
             <div class="col-sm-10">
-                <input class="form-control" name="number" placeholder="设备编号" type="text">
+                <input
+                        class="form-control" name="number" placeholder="设备编号" type="text"  value="{$detail.number|default=''}"
+                        pattern="^[\u4e00-\u9fa5\dA-Za-z_\-]{1,30}$"
+                        data-pattern-error="只允许汉字、字母、数字和下划线_及破折号-"
+                        data-remote="{empty name='detail'}{:url('locator/_exist')}{else /}{:url('locator/_exist', 'loc_id='.$detail['loc_id'])}{/empty}"
+                        data-remote-error="改设备编号已存在"
+                        required
+                >
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group has-feedback">
             <label  class="col-sm-2 control-label">标识码</label>
             <div class="col-sm-10">
-                <input class="form-control" name="mac" placeholder="标识码" type="text">
+                <input
+                        class="form-control" name="mac" placeholder="标识码" type="text"  value="{$detail.mac|default=''}"
+                        data-remote-error="该标识码已存在"
+                        data-remote="{empty name='detail'}{:url('locator/_exist')}{else /}{:url('locator/_exist', 'loc_id='.$detail['loc_id'])}{/empty}"
+                        required
+                >
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
             </div>
         </div>
         <div class="form-group">
@@ -24,10 +41,11 @@
                     <div class="input-group-addon">
                         <i class="fa fa-calendar"></i>
                     </div>
-                    <input class="form-control" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask="" type="text" name="buy_time" placeholder="购入日期">
+                    <input class="form-control" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask="" type="text" name="buy_time" placeholder="购入日期"  value="{$detail.buy_time|default=''}">
                 </div>
             </div>
         </div>
+        {eq name="Request.action" value="add"}
         <div class="form-group">
             <label  class="col-sm-2 control-label">是否启用</label>
             <div class="col-sm-10">
@@ -41,6 +59,31 @@
                 </div>
             </div>
         </div>
+        {/eq}
+        {eq name="Request.action" value="mod"}
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">状态</label>
+            <div class="col-sm-10">
+                <div class="checkbox">
+                    <label>
+                        <input type="radio" name="status" value="0" {eq name="detail['status']" value="可用"}checked{/eq} >可用
+                    </label>
+                    <label>
+                        <input type="radio" name="status"  value="2" {eq name="detail['status']" value="正常停用"}checked{/eq}>正常停用
+                    </label>
+                    <label>
+                        <input type="radio" name="status"  value="3" {eq name="detail['status']" value="故障停用"}checked{/eq}>故障停用
+                    </label>
+                    <label>
+                        <input type="radio" name="status"  value="4" {eq name="detail['status']" value="遗失"}checked{/eq}>遗失
+                    </label>
+                    <label>
+                        <input type="radio" name="status"  value="5" {eq name="detail['status']" value="报废"}checked{/eq}>报废
+                    </label>
+                </div>
+            </div>
+        </div>
+        {/eq}
     </div>
     <div class="modal-footer">
         <button type="reset" class="btn btn-default">重置</button>

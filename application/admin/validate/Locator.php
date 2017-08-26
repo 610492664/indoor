@@ -23,4 +23,11 @@ class Locator extends Validate
         'mac'=> '物理标识码',
         'buy_time'=> '购入日期',
     ];
+
+    protected $scene = [
+        'exist' => [
+            'number' => 'unique:locator,number^org_id',
+            'mac'=> 'unique:locator,mac^org_id'
+        ]
+    ];
 }

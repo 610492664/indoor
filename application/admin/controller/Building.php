@@ -24,13 +24,17 @@ class Building extends Base
         if ($this->request->isPost()) {
             /* @var $model SubModel*/
             $model = Loader::model('Building');
-            $result = $model->data(input('post.'))->save();
+            $post = input('post.');
+            $post['org_id'] = input('session.user.org_id');
+            $result = $model->validate(true, [], true)->save($post);
             if(!empty($result)){
                 $this->success('添加建筑成功！', '');
             }else{
+                $result === false && $this->error($model->getError());
                 $this->error('添加建筑失败！');
             }
         }
+        $this->assign('title', '添加建筑');
         return $this->fetch();
     }
 
@@ -38,18 +42,24 @@ class Building extends Base
     public function mod()
     {
         if ($this->request->isPost()) {
-            $model = new SubModel;
-            $result = $model->save(input("post."),['bui_id' => input('post.bui_id')]);
+            $model = Loader::model('Building');
+            $bui_id = input('post.bui_id');
+            $post = input('post.');
+            $post['org_id'] = input('session.user.org_id');
+            $result = $model->validate(true, [], true)->save($post,['bui_id' => $bui_id]);
             if(!empty($result)){
-                $this->success('修改建筑信息成功！', '');
+                $this->success('修改建筑信息成功！','');
             }else{
+                $result === 0 && $this->error('未做任何修改！');
+                $result === false && $this->error($model->getError());
                 $this->error('修改建筑信息失败！');
             }
         }
         $id = input('get.id');
         $detail = SubModel::get($id);
         $this->assign('detail',$detail);
-        return $this->fetch();
+        $this->assign('title', '修改建筑信息');
+        return $this->fetch('add');
     }
     //删除
     public function del()

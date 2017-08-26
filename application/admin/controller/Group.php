@@ -40,6 +40,7 @@ class Group extends Base
                 $this->error('添加失败！');
             }
         }
+        $this->assign('title', '添加组');
         return $this->fetch();
     }
     //获取修改表单
@@ -64,9 +65,10 @@ class Group extends Base
             }
         }
         $id = input('get.id');
-        $record = SubModel::get($id)->getData();
-        $this->assign('group',$record);
-        return $this->fetch();
+        $record = SubModel::get($id);
+        $this->assign('title', '修改组信息');
+        $this->assign('detail',$record);
+        return $this->fetch('add');
     }
     //删除
     public function del()

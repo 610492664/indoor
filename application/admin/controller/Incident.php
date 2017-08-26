@@ -20,14 +20,14 @@ class Incident extends Base
         return $list;
     }
 
-  /*  //查看详情
+    //查看详情
     public function detail()
     {
         $id = input('get.id');
-        $detail = SubModel::get($id);
+        $detail = SubModel::get($id, 'buildings,persons');
         $this->assign('detail',$detail);
         return $this->fetch();
-    }*/
+    }
     //获取添加表单
     public function add(){
         if ($this->request->isPost()) {
@@ -68,6 +68,8 @@ class Incident extends Base
         $ids = input('get.id/a');
         $result = SubModel::destroy($ids);
         if(!empty($result)){
+            db('inc_per')->where(['inc_id'=>['in', $ids]])->delete();
+            db('inc_bui')->where(['inc_id'=>['in', $ids]])->delete();
             $this->success('删除事件成功！','');
         }else{
             $this->error('删除事件失败！');

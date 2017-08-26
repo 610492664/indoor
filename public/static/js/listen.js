@@ -105,7 +105,8 @@ define(['jquery','common'],function ($) {
             },
             complete: function () {
                 $modal.modal('show');
-                if ($("#form").length > 0) {
+                var $form = $("#form")
+                if ($form.length > 0) {
                     $modal.on('hide.bs.modal',function (e) {
                         $.msg.confirm('确定取消？',function () {
                             $modal.off('hide.bs.modal');
@@ -115,23 +116,33 @@ define(['jquery','common'],function ($) {
                     });
                     //激活公共表单验证
                     require(['bootstrap-validator'],function () {
-                        $('#form').validator();
-                    });
-                    //激活表单上传事件
-                    $("#form").ajaxForm({
-                        type: 'post',
-                        error: function () {
-                            var msg = $('<div class="alert alert-warning"><a href="#" class="close" data-dismiss="alert">&times;</a></div>')
-                                .append('服务器错误！请稍后再试！');
-                            $(".modal-body").prepend(msg);
-                        },
-                        success: function(data) {
-                            $.msg.auto(data, 1000, true, function () {
-                                $modal.off('hide.bs.modal');
-                                $modal.modal('hide');
-                                // $.table.ajax.reload(null, false);
-                            });
-                        }
+                        $form.validator().on('submit', function (e) {
+                            if (e.isDefaultPrevented()) {
+                                // handle the invalid form...
+                            } else {
+                                var $that = $(this);
+                                $that.validator('destroy');
+                                $that.ajaxSubmit({
+                                    type: 'post',
+                                    error: function () {
+                                        var msg = $('<div class="alert alert-warning"><a href="#" class="close" data-dismiss="alert">&times;</a></div>')
+                                            .append('服务器错误！请稍后再试！');
+                                        $(".modal-body").prepend(msg);
+                                    },
+                                    success: function(data) {
+                                        $.msg.auto(data, 1000, true, function () {
+                                            $modal.off('hide.bs.modal');
+                                            $modal.modal('hide');
+                                            // $.table.ajax.reload(null, false);
+                                        },
+                                        function () {
+                                            $that.validator();
+                                        });
+                                    }
+                                });
+                            }
+                            return false;
+                        });
                     });
                 }
             }

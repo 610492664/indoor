@@ -44,9 +44,9 @@ class Organization extends Base
             $user_data['phone'] = $post['phone'];
             $user_data['email'] = $post['email'];
             //验证字段
-            $org_val = $this->validate($post, 'Organization');
+            $org_val = $this->validate($post, 'Organization', [], true);
             $org_val !== true && $this->error($org_val);
-            $user_val = $this->validate($user_data, 'system/User');
+            $user_val = $this->validate($user_data, 'system/User', [], true);
             $user_val !== true && $this->error($user_val);
 
             $org_result = $model->allowField(true)->save($post);
@@ -62,6 +62,7 @@ class Organization extends Base
                 $this->error('添加子单位失败！');
             }
         }
+        $this->assign('title', '添加子单位');
         return $this->fetch();
     }
 
@@ -80,10 +81,11 @@ class Organization extends Base
                 $this->error('修改信息失败！');
             }
         }
+        $this->assign('title', '修改子单位信息');
         $id = input('get.id');
         $detail = SubModel::get($id)->getData();
         $this->assign('detail',$detail);
-        return $this->fetch();
+        return $this->fetch('add');
     }
 
     //删除

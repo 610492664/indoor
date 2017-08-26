@@ -14,8 +14,8 @@ class Person extends Validate
 {
     protected $rule = [
         'name' => 'require|chs|max:10',
-        'birthday'=> 'date',
-        'join_time'=> 'date',
+        'birthday'=> 'require|date',
+        'join_time'=> 'require|date',
         'pid' => 'require|alphaNum|unique:person',
     ];
 

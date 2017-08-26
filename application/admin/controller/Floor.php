@@ -25,14 +25,6 @@ class Floor extends Base
         return $list;
     }
 
-  /*  //查看详情
-    public function detail()
-    {
-        $id = input('get.id');
-        $detail = SubModel::get($id);
-        $this->assign('detail',$detail);
-        return $this->fetch();
-    }*/
     //获取添加表单
     public function add(){
         if ($this->request->isPost()) {
@@ -45,6 +37,7 @@ class Floor extends Base
                 $this->error('添加楼层失败！');
             }
         }
+        $this->assign('title', '添加楼层信息');
         return $this->fetch();
     }
     //获取修改表单
@@ -56,13 +49,15 @@ class Floor extends Base
             if(!empty($result)){
                 $this->success('修改楼层信息成功！','');
             }else{
+                $result === 0 && $this->error('未做任何修改！');
                 $this->error('修改楼层信息失败！');
             }
         }
         $id = input('get.id');
         $detail = SubModel::get($id);
         $this->assign('detail',$detail);
-        return $this->fetch();
+        $this->assign('title', '修改楼层信息');
+        return $this->fetch('add');
     }
 
     //删除

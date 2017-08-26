@@ -21,4 +21,10 @@ class LocationMark extends Validate
         'name' => '名称',
         'mac'=> 'mac地址',
     ];
+    protected $scene = [
+        'exist' => [
+            'name' => 'unique:location_mark,name^org_id',
+            'mac'=> 'unique:location_mark,mac^org_id'
+        ]
+    ];
 }

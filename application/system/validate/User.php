@@ -15,21 +15,30 @@ class User extends Validate
     protected $rule = [
         'name' => 'require|alphaDash|length:3,20|unique:user',
         'password'=> 'require|confirm|length:6,20',
+        'phone'=> 'require|isMobile',
         'email'=> 'require|email',
-        'phone'=> 'isMobile',
+        'username'=> 'unique:user,name'
     ];
 
     protected $field = [
         'name' => '用户名',
         'password'=> '密码',
-        'email'=> 'E-mail',
         'phone'=> '手机号',
+        'email'=> 'E-mail',
+    ];
+
+    protected $message = [
+        'phone.isMobile'=>'手机号格式不正确！'
     ];
 
     protected $scene = [
         'self_info' => ['name','email','phone'],
         'self_pass' => ['password'],
-        'mod' => ['name', 'email', 'phone']
+        'mod' => ['name', 'email', 'phone'],
+        'exist' => [
+            'username' => 'unique:user,name',
+            'name' => 'unique:user'
+        ]
     ];
 
     /**
