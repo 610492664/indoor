@@ -30,10 +30,11 @@ class Floor extends Base
         if ($this->request->isPost()) {
             /* @var $model SubModel*/
             $model = Loader::model('Floor');
-            $result = $model->data(input('post.'))->save();
+            $result = $model->validate(true, [], true)->save(input('post.'));
             if(!empty($result)){
                 $this->success('添加楼层成功！', '');
             }else{
+                $result === false && $this->error($model->getError());
                 $this->error('添加楼层失败！');
             }
         }
@@ -45,11 +46,13 @@ class Floor extends Base
     {
         if ($this->request->isPost()) {
             $model = new SubModel;
-            $result = $model->save(input("post."),['flo_id' => input('post.flo_id')]);
+            $post = input("post.");
+            $result = $model->validate(true, [], true)->save($post,['flo_id' => $post['flo_id']]);
             if(!empty($result)){
                 $this->success('修改楼层信息成功！','');
             }else{
                 $result === 0 && $this->error('未做任何修改！');
+                $result === false && $this->error($model->getError());
                 $this->error('修改楼层信息失败！');
             }
         }
@@ -64,6 +67,13 @@ class Floor extends Base
     public function del()
     {
         $ids = input('get.id/a');
+        foreach ($ids as $id) {
+            $find = db('outfire_facility')->where(['flo_id'=>$id])->find();
+            if(!empty($find)){
+                $flo_number = db('floor')->where('flo_id',$id)->value('number');
+                $this->error('失败，“第'.$flo_number.'层”存在消防设施信息！');
+            }
+        }
         $result = SubModel::destroy($ids);
         if(!empty($result)){
             $this->success('删除楼层信息成功！','');

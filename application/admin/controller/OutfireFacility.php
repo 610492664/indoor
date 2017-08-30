@@ -36,30 +36,22 @@ class OutfireFacility extends Base
         return $list;
     }
 
-   /* //查看详情
-    public function detail()
-    {
-        $id = input('get.id');
-        $detail = SubModel::get($id);
-        $this->assign('detail',$detail);
-        return $this->fetch();
-    }*/
     //获取添加表单
     public function add()
     {
         if ($this->request->isPost()) {
             $model = Loader::model('OutfireFacility');
-            $result = $model->data(input('post.'))->save();
+            $result = $model->validate(true, [], true)->save(input('post.'));
             if(!empty($result)){
                 $this->success('添加消防设施成功！', '');
             }else{
+                $result === false && $this->error($model->getError());
                 $this->error('添加消防设施失败！');
             }
         }
-//        Db::name('building')->where(['orgid'=>input('session.user.org_id')])->select();
-//        BuildingModel::all(['orgid'=>input('session.user.org_id')]);
         $buildings = Db::name('building')->field('bui_id, name')->where(['org_id'=> input('session.user.org_id')])->select();
         $this->assign('buildings', $buildings);
+        $this->assign('title', '添加消防设施信息');
         return $this->fetch();
     }
     /*//获取楼层
@@ -78,10 +70,12 @@ class OutfireFacility extends Base
     {
         if ($this->request->isPost()) {
             $model = new SubModel;
-            $result = $model->save(input("post."),['ofac_id' => input('post.ofac_id')]);
+            $result = $model->validate(true, [], true)->save(input("post."),['ofac_id' => input('post.ofac_id')]);
             if(!empty($result)){
                 $this->success('修改消防设施成功！', '');
             }else{
+                $result === 0 && $this->error('未做任何修改！');
+                $result === false && $this->error($model->getError());
                 $this->error('修改消防设施失败！');
             }
         }
@@ -92,7 +86,8 @@ class OutfireFacility extends Base
         $this->assign('buildings', $buildings);
         $this->assign('floors', $floors);
         $this->assign('detail',$detail);
-        return $this->fetch();
+        $this->assign('title', '修改消防设施信息');
+        return $this->fetch('add');
     }
 
     //删除

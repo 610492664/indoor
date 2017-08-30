@@ -1,6 +1,7 @@
 <?php
 namespace app\admin\controller;
 
+use think\Db;
 use \Think\Loader;
 use \app\admin\model\Group as SubModel;
 
@@ -15,8 +16,12 @@ class Group extends Base
             return $this->fetch();
         }
         $model = model('group');
+        $subsql = Db::name('person')
+            ->where('gro_id','exp','=gro.gro_id')
+            ->fetchSql(true)
+            ->count();
         $records = $model->alias('gro')
-            ->field('gro.gro_id, gro.name, per.name per_name,gro.status')
+            ->field('gro.gro_id, gro.name, per.name per_name,gro.status,('.$subsql.')as count')
             ->join('__PERSON__ per', 'per.per_id = gro.per_id','LEFT')
             ->where(['gro.org_id'=>input('session.user.org_id')])
             ->select();
@@ -74,8 +79,14 @@ class Group extends Base
     public function del()
     {
         $ids = input('get.id/a');
+        foreach ($ids as $id) {
+            $find = db('person')->where(['gro_id'=>$id])->find();
+            if(!empty($find)){
+                $name = db('group')->where('gro_id',$id)->value('name');
+                $this->error('失败，组名为“'.$name.'”的组存在成员！');
+            }
+        }
         $result = SubModel::destroy($ids);
-//        $result = true;
         if(!empty($result)){
             $this->success('删除成功！','');
         }else{

@@ -23,7 +23,7 @@ class Organization extends Base
             return $this->fetch();
         }
         $records =model('organization')->alias('org')
-            ->field('org.org_id, org.name, org.abbr, org.address, org.status, user.name username,user.phone,user.email')
+            ->field('org.org_id, org.name, org.abbr, org.address, org.status, user.use_id,user.name username,user.phone,user.email')
             ->join('__USER__ user', 'user.org_id=org.org_id and user.rol_id="{C407F15A-F477-8AF4-B830-19FEF9B95F54}"', 'Left')
             ->where(['org.p_org_id'=>input('session.user.org_id')])
             ->select();
@@ -119,6 +119,17 @@ class Organization extends Base
         }else{
             $this->error('删除子单位失败！');
         }
+    }
+
+
+    /**
+     * 重置子单位超级管理员密码
+     *
+     * @return mixed
+     */
+    public function resetPass()
+    {
+        return parent::resetPass();
     }
 
 }

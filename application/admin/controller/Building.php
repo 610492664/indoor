@@ -65,6 +65,11 @@ class Building extends Base
     public function del()
     {
         $ids = input('get.id/a');
+        foreach ($ids as $id) {
+            $find = db('floor')->where(['bui_id'=>$id])->find();
+            $bui_name = db('building')->where('bui_id',$id)->value('name');
+            !empty($find)&&$this->error('失败，“'.$bui_name.'”存在楼层信息！');
+        }
         $result = SubModel::destroy($ids);
         if(!empty($result)){
             $this->success('删除建筑信息成功！', '');

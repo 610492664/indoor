@@ -45,4 +45,8 @@ function incident() {
     });
     //添加索引列
     $.table_index($.table);
+    //add、mod模态框初始化
+    $('#myModal').on('show.bs.modal', function () {
+        $("[data-mask]").inputmask();
+    });
 }

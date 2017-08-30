@@ -21,15 +21,25 @@ function outfire_facility() {
             { "data": "status" ,"title":"状态"},
             { "data": "ofac_id","title":"操作", "searchable": false,"orderable": false, "width": "25%"}
         ],
-        "columnDefs": [ {
-            "targets": 0,
-            "render": function ( data, type, full, meta ) {
-                if (type === 'display') {
-                    return '<input type="checkbox" name="checkList" value="' + data + '">';
+        "columnDefs": [
+            {
+                "targets": 0,
+                "render": function ( data, type, full, meta ) {
+                    if (type === 'display') {
+                        return '<input type="checkbox" name="checkList" value="' + data + '">';
+                    }
+                    return data;
                 }
-                return data;
-            }
-        },
+            },
+            {
+                "targets": 6,
+                "render": function ( data, type, full, meta ) {
+                    if (type === 'display') {
+                        return '第' + data + '层';
+                    }
+                    return data;
+                }
+            },
             {
                 "targets": 10,
                 "render": function ( data, type, full, meta ) {
@@ -50,6 +60,7 @@ function outfire_facility() {
     //add、mod模态框初始化
     $('#myModal').on('show.bs.modal', function () {
         if ($("#form").length > 0) {
+            $("[data-mask]").inputmask();
             require(['select2'],function () {
                 require(['static/plugin/select2/js/i18n/zh-CN'], function () {
                     var $building = $("select[name='bui_id']");
@@ -83,5 +94,4 @@ function outfire_facility() {
             });
         }
     });
-    // MODULE+ "/outfire_facility/floors"
 }

@@ -26,6 +26,7 @@ function organization() {
                     if (type === 'display') {
                         return '<div class="btn-group">'+
                             '<button class="btn btn-link" e-action-modal="'+php_url.mod+'" e-data="'+data+'" ><i class="fa fa-pencil-square-o"></i></button>'+
+                            '<button class="btn btn-link" e-action-modal="'+php_url.resetpass+'" e-data="'+full.use_id+'"  title="重置密码"><i class="fa fa-key"></i></button>'+
                             '<button class="btn btn-link" e-action-del="'+php_url.del+'" e-data="'+data+'" ><i class="fa fa-trash-o"></i></button>'+
                             '</div>';
                     }

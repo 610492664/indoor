@@ -26,7 +26,7 @@
                     <div class="input-group-addon">
                         <i class="fa fa-calendar"></i>
                     </div>
-                    <input class="form-control" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask="" type="text" name="buy_time" placeholder="购入日期" value="{$detail.buy_time|default=''}">
+                    <input class="form-control" data-inputmask="'alias': 'yyyy-mm-dd', 'clearIncomplete': true " data-mask="" type="text" name="buy_time" placeholder="购入日期" value="{$detail.buy_time|default=''}">
                 </div>
             </div>
         </div>

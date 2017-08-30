@@ -24,7 +24,7 @@ function user() {
             { "data": "login_num","title":"登录次数" },
             { "data": "login_time","title":"最后登录日期" },
             { "data": "login_ip","title":"最后登录ip" },
-            { "data": "status" ,"title":"状态"},
+            { "data": "status" ,"title":"修改状态"},
             { "data": "use_id","title":"操作", "searchable": false,"orderable": false, "width": "25%"}
         ],
         "columnDefs": [
@@ -59,6 +59,7 @@ function user() {
                     if (type === 'display') {
                         return '<div class="btn-group">'+
                             '<button class="btn btn-link" e-action-modal="'+php_url.mod+'" e-data="'+data+'" ><i class="fa fa-pencil-square-o"></i></button>'+
+                            '<button class="btn btn-link" e-action-modal="'+php_url.resetpass+'" e-data="'+data+'"  title="重置密码"><i class="fa fa-key"></i></button>'+
                             '<button class="btn btn-link" e-action-del="'+php_url.del+'" e-data="'+data+'" ><i class="fa fa-trash-o"></i></button>'+
                             '</div>';
                     }

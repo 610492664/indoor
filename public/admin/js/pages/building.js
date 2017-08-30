@@ -12,7 +12,7 @@ function building() {
             { "data": "bui_id","title":"<input type='checkbox' e-check-name = 'checkList'>", "searchable": false,"orderable": false, "width": "3px" },
             { "data": null, "title":"序号", "searchable": false,"orderable": false, "width": "2em"},
             { "data": "name","title":"名称"},
-            { "data": "height","title":"高度" },
+            { "data": "height","title":"高度(米)" },
             { "data": "totalfloor","title":"层数" },
             { "data": "address","title":"地址" },
             { "data": "comment" ,"title":"备注"},

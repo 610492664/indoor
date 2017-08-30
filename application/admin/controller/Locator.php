@@ -85,12 +85,4 @@ class Locator extends Base
             $this->error('删除定位模块失败！');
         }
     }
-
-    /*public function _exist()
-    {
-        $data = input('get.');
-        $data['org_id'] = input('session.user.org_id');
-        $result = $this->validate($data, 'Locator.exist');
-        true !== $result ? abort(400,$result) : $this->result('没有占用', 200);
-    }*/
 }

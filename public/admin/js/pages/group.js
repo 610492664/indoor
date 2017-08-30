@@ -7,12 +7,13 @@ function group() {
         "ajax": {
             "url": php_url.index,
         },
-        "order": [[4, 'asc'],[2, 'asc']],
+        "order": [[5, 'asc'],[2, 'asc']],
         "columns": [
             { "data": "gro_id","title":"<input type='checkbox' e-check-name = 'checkList'>", "searchable": false,"orderable": false, "width": "3px" },
             { "data": null, "title":"序号", "searchable": false,"orderable": false, "width": "2em"},
             { "data": "name","title":"组名"},
             { "data": "per_name","title":"组长" },
+            { "data": "count","title":"成员总数" },
             { "data": "status" ,"title":"状态"},
             { "data": "gro_id","title":"操作","searchable": false,"orderable": false, "width": "25%"}
         ],
@@ -26,7 +27,7 @@ function group() {
             }
         },
             {
-                "targets": 5,
+                "targets": 6,
                 "render": function ( data, type, full, meta ) {
                     if (type === 'display') {
                         return '<div class="btn-group">'+

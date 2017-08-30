@@ -7,27 +7,36 @@ function floor() {
         "ajax": {
             "url": php_url.index,
         },
-        "order": [[2, 'asc']],
+        "order": [[1, 'asc']],
         "columns": [
             { "data": "flo_id","title":"<input type='checkbox' e-check-name = 'checkList'>", "searchable": false,"orderable": false, "width": "3px" },
-            { "data": null, "title":"序号", "searchable": false,"orderable": false, "width": "2em"},
             { "data": "number","title":"楼层号"},
-            { "data": "height","title":"层高" },
+            { "data": "height","title":"层高(米）" },
             { "data": "layout","title":"三维模型" },
             { "data": "comment" ,"title":"备注"},
             { "data": "flo_id","title":"操作", "searchable": false,"orderable": false, "width": "25%"}
         ],
-        "columnDefs": [ {
-            "targets": 0,
-            "render": function ( data, type, full, meta ) {
-                if (type === 'display') {
-                    return '<input type="checkbox" name="checkList" value="' + data + '">';
-                }
-                return data;
-            }
-        },
+        "columnDefs": [
             {
-                "targets": 6,
+                "targets": 0,
+                "render": function ( data, type, full, meta ) {
+                    if (type === 'display') {
+                        return '<input type="checkbox" name="checkList" value="' + data + '">';
+                    }
+                    return data;
+                }
+            },
+            {
+                "targets": 1,
+                "render": function ( data, type, full, meta ) {
+                    if (type === 'display') {
+                        return '第'+ data + '层';
+                    }
+                    return data;
+                }
+            },
+            {
+                "targets": 5,
                 "render": function ( data, type, full, meta ) {
                     if (type === 'display') {
                         return '<div class="btn-group">'+
@@ -40,8 +49,6 @@ function floor() {
             }
         ]
     });
-    //添加索引列
-    $.table_index($.table);
     require(['select2'],function () {
         // $.fn.select2.defaults.set('amdBase', STATIC_PATH +'/');
         // $.fn.select2.defaults.set('amdLanguageBase',);
@@ -61,6 +68,7 @@ function floor() {
     });
     //add、mod模态框初始化
     $('#myModal').on('show.bs.modal', function () {
-        $('input[name="bui_id"]').val($("#build").val());
+        var $bui_id = $('input[name="bui_id"]');
+        $bui_id.val() === '' &&　$bui_id.val($("#build").val());
     });
 }

@@ -9,7 +9,7 @@ class User extends Base
         'create_time'=>'timestamp',
         'login_time'=>'timestamp'
     ];
-    protected $auto = ['login_ip'];
+    protected $auto = ['login_ip', 'password'];
     protected $insert = ['use_id','org_id'];
     protected $update = [];
 

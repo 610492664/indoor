@@ -25,4 +25,10 @@ class Person extends Validate
         'join_time'=> '入伍日期',
         'pid' => '证件号',
     ];
+
+    protected $scene = [
+        'exist' => [
+            'pid' => 'unique:person'
+        ]
+    ];
 }

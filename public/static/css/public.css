@@ -29,3 +29,12 @@
         color: #ffffff;
     }
 }
+.help-block {
+    display: block;
+    margin-top: 0;
+    margin-bottom: 0;
+    color: #737373;
+}
+.form-group.has-error .help-block {
+    margin-top: 5px;
+}

@@ -36,7 +36,7 @@ class AccessAuth {
                 $result = ['code' => 0, 'msg' => '抱歉, 您还没有登录获取访问权限!', 'data' => '', 'url' => '@system/login/in', 'wait' => 3];
                 throw new HttpResponseException(json($result));
             }
-            throw new HttpResponseException(redirect('@system/login/in'));
+            throw new HttpResponseException(redirect('system/login/in'));
         }
 
         // 访问权限节点检查

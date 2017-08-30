@@ -72,7 +72,10 @@ class User extends Base
     {
         if(request()->isPost()){
             $model = new SubModel;
-            $result = $model->validate('User.self_info', [], true)->save(input("post."),['use_id' => input('post.use_id')]);
+            $post = input("post.");
+            $use_id = input('session.user.use_id');
+            $post['use_id'] = $use_id;
+            $result = $model->validate('User.self_info', [], true)->save($post, ['use_id' => $use_id]);
             if(!empty($result)){
                 $this->success('修改用户信息成功！', '');
             }else{
@@ -81,7 +84,7 @@ class User extends Base
                 $this->error('修改用户信息失败！');
             }
         }
-        $id = input('get.id');
+        $id = input('session.user.use_id');
         $model = SubModel::get($id);
         $detail = $model->getData();
         $this->assign('detail',$detail);
@@ -93,7 +96,7 @@ class User extends Base
     {
         if(request()->isPost()){
             $post = input("post.");
-            $use_id = $post['use_id'];
+            $use_id = input('session.user.use_id');
             $model = new SubModel;
             $checkpass = $model->where(['use_id'=>$use_id, 'password'=>password_encrypt($post['oldpassword'])])->find();
             empty($checkpass)&&$this->error('修改失败，旧密码错误！', '');
@@ -106,7 +109,7 @@ class User extends Base
                 $this->error('修改密码失败！');
             }
         }
-        $id = input('get.id');
+        $id = input('session.user.use_id');
         $model = SubModel::get($id);
         $detail = $model->getData();
         $this->assign('detail',$detail);
@@ -126,7 +129,7 @@ class User extends Base
     }
 
     /**
-     * 用户禁用
+     * 用户禁用/启用
      */
     public function forbid() {
         $model = new SubModel;
@@ -135,5 +138,11 @@ class User extends Base
         $result = $model->save($data,['use_id' => input('post.id')]);
         !empty($result) ? $this->success('操作成功！', '') : $this->error('操作失败！');
     }
+
+    public function resetPass()
+    {
+        return parent::resetPass();
+    }
+
 
 }

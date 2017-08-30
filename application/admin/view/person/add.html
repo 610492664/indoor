@@ -1,17 +1,18 @@
-<form class="form-horizontal" id="form" data-toggle="validator" action="{:url('person/add')}">
+<form class="form-horizontal" id="form" data-toggle="validator" action="__SELF__">
+    {notempty name='detail'}<input name="per_id" value="{$detail.per_id}" hidden/>{/notempty}
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span></button>
-        <h4 class="modal-title">添加人员</h4>
+        <h4 class="modal-title">{$title}</h4>
     </div>
     <div class="modal-body">
         <div class="row">
             <div class="col-sm-3">
                 <div class="form-group diy-text-center">
                     <div class="picbox diy-input-group">
-                        <img id="thumb" src="__IMG__/headpic.png" class="img-responsive img-thumbnail" alt="头像">
+                        <img id="thumb" src="{$detail.pic|default='__IMG__/headpic.png'}" class="img-responsive img-thumbnail" alt="头像">
                         <span class="glyphicon glyphicon-trash"></span>
-                        <input id="pic" name="pic" type="file">
+                        <input id="pic" name="pic" type="file" value="{$detail.pic|default=''}">
                     </div>
                     <p>(照片比例25×35，<500K,<br>限jpg、png、gif格式)</p>
                 </div>
@@ -22,7 +23,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label diy-label-pad">姓名</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" placeholder="姓名" name="name" required>
+                                <input type="text" class="form-control" placeholder="姓名" name="name" required value="{$detail.name|default=''}">
                             </div>
                         </div>
                     </div>
@@ -32,15 +33,17 @@
                             <div class="col-sm-10">
                                 <div>
                                     <label class="radio-inline">
-                                        <input type="radio" name="sex" value="0" checked> 男
+                                        <input type="radio" name="sex" value="0" {empty name='detail'}checked{else /}{eq name="detail['sex']" value="男"}checked{/eq}{/empty}> 男
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="sex" value="1"> 女
+                                        <input type="radio" name="sex" value="1" {notempty name='detail'}{eq name="detail['sex']" value="女"}checked{/eq}{/notempty}> 女
                                     </label>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label class="col-sm-2 control-label diy-label-pad">出生日期</label>
@@ -49,7 +52,7 @@
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </div>
-                                    <input class="form-control" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask="" type="text" name="birthday" required>
+                                    <input class="form-control" data-inputmask="'alias': 'yyyy-mm-dd', 'clearIncomplete': true" data-mask="" type="text" name="birthday" value="{$detail.birthday|default=''}">
                                 </div>
                             </div>
                         </div>
@@ -62,11 +65,13 @@
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </div>
-                                    <input class="form-control" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask="" type="text" name="join_time" required>
+                                    <input class="form-control" data-inputmask="'alias': 'yyyy-mm-dd', 'clearIncomplete': true" data-mask="" type="text" name="join_time" value="{$detail.join_time|default=''}">
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label  class="col-sm-2 control-label diy-label-pad">证件</label>
@@ -74,12 +79,18 @@
                                 <div class="input-group">
                                     <span class="input-group-addon">
                                         <select name="pidtype" class="diy-select-addon" >
-                                            <option value="0">士官证</option>
-                                            <option value="1">身份证</option>
+                                            <option value="0" {notempty name='detail'}{eq name="detail['pidtype']" value="士官证"}selected{/eq}{/notempty}>士官证</option>
+                                            <option value="1" {notempty name='detail'}{eq name="detail['pidtype']" value="身份证"}selected{/eq}{/notempty}>身份证</option>
                                         </select>
                                     </span>
-                                    <input type="text" class="form-control" placeholder="证件号" name="pid" required>
+                                    <input
+                                            type="text" class="form-control" placeholder="证件号" name="pid" value="{$detail.pid|default=''}"
+                                            data-remote="{empty name='detail'}{:url('person/_exist')}{else /}{:url('person/_exist', 'per_id='.$detail['per_id'])}{/empty}"
+                                            data-remote-error="该证件号已存在"
+                                            required
+                                    >
                                 </div><!-- /input-group -->
+                                <div class="help-block with-errors"></div>
                             </div>
                         </div>
                     </div>
@@ -88,21 +99,23 @@
                             <label class="col-sm-2 control-label diy-label-pad">职务</label>
                             <div class="col-sm-10">
                                 <select class="form-control" name="position">
-                                    <option value="1">职务一</option>
-                                    <option value="2">职务二</option>
-                                    <option value="3">职务三</option>
+                                    <option value="1" {notempty name='detail'}{eq name="detail['position']" value="职务一"}selected{/eq}{/notempty}>职务一</option>
+                                    <option value="2" {notempty name='detail'}{eq name="detail['position']" value="职务二"}selected{/eq}{/notempty}>职务二</option>
+                                    <option value="3" {notempty name='detail'}{eq name="detail['position']" value="职务三"}selected{/eq}{/notempty}>职务三</option>
                                 </select>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label class="col-sm-2 control-label diy-label-pad">警衔</label>
                             <div class="col-sm-10">
                                 <select class="form-control" name="rank">
-                                    <option value="1">警衔一</option>
-                                    <option value="2">警衔二</option>
-                                    <option value="3">警衔三</option>
+                                    <option value="1" {notempty name='detail'}{eq name="detail['rank']" value="警衔一"}selected{/eq}{/notempty} >警衔一</option>
+                                    <option value="2" {notempty name='detail'}{eq name="detail['rank']" value="警衔二"}selected{/eq} {/notempty}>警衔二</option>
+                                    <option value="3" {notempty name='detail'}{eq name="detail['rank']" value="警衔三"}selected{/eq} {/notempty}>警衔三</option>
                                 </select>
                             </div>
                         </div>
@@ -113,9 +126,15 @@
                             <div class="col-sm-10">
                                 <select class="form-control" name="loc_id">
                                     <option value="">暂无</option>
+                                    {empty name="detail"}
                                     {volist name="locators" id="locator"}
                                     <option value="{$locator.loc_id}">{$locator.number}</option>
                                     {/volist}
+                                    {else /}
+                                    {volist name="locators" id="locator"}
+                                    <option value="{$locator.loc_id}" {eq name="detail['loc_id']" value="$locator['loc_id']"}selected{/eq}>{$locator.number}</option>
+                                    {/volist}
+                                    {/empty}
                                 </select>
                             </div>
                         </div>

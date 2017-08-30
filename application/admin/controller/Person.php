@@ -62,6 +62,7 @@ class Person extends Base
             ->field('loc_id,number')
             ->select();
         $this->assign('locators', $locators);
+        $this->assign('title', '添加人员信息');
         return $this->fetch();
     }
 
@@ -99,14 +100,15 @@ class Person extends Base
         }
         $id = input('get.id');
         $person = SubModel::get($id);
-        $this->assign('person',$person);
+        $this->assign('detail',$person);
         $locators = Db::name('locator')
             ->where(['status'=>0])
             ->whereOr(['loc_id'=>$person->loc_id])
             ->field('loc_id,number')
             ->select();
         $this->assign('locators', $locators);
-        return $this->fetch();
+        $this->assign('title', '修改人员信息');
+        return $this->fetch('add');
     }
     //删除
     public function del()
