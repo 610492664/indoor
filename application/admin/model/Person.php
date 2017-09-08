@@ -23,13 +23,13 @@ class Person extends Base
 
     public function getPositionAttr($value)
     {
-        $status = [1=>'职务一',2=>'职务二', 3=>'职务三'];
+        $status = self::$dataMap['person']['position'];
         return $status[$value];
     }
 
     public function getPidtypeAttr($value)
     {
-        $status = [0=>'士官证',1=>'身份证'];
+        $status = self::$dataMap['person']['pidtype'];
         return $status[$value];
     }
 
@@ -41,7 +41,7 @@ class Person extends Base
 
     public function getRankAttr($value)
     {
-        $status = [1=>'警衔一',2=>'警衔二', 3=>'警衔三'];
+        $status = self::$dataMap['person']['rank'];
         return $status[$value];
     }
 
@@ -54,5 +54,9 @@ class Person extends Base
     public function locator()
     {
         return $this->belongsTo('Locator', 'loc_id')->bind(['loc_number'=>'number']);
+    }
+    public function organization()
+    {
+        return $this->belongsTo('Organization', 'org_id')->bind(['orgname'=>'name']);
     }
 }

@@ -45,6 +45,7 @@ class Group extends Base
                 $this->error('添加失败！');
             }
         }
+
         $this->assign('title', '添加组');
         return $this->fetch();
     }
@@ -71,6 +72,10 @@ class Group extends Base
         }
         $id = input('get.id');
         $record = SubModel::get($id);
+
+        $group = get_data('group');
+
+        $this->assign('status', $group['status']);
         $this->assign('title', '修改组信息');
         $this->assign('detail',$record);
         return $this->fetch('add');

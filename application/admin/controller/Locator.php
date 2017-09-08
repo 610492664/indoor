@@ -65,6 +65,7 @@ class Locator extends Base
         $record = SubModel::get($id);
         $this->assign('detail',$record);
         $this->assign('title', '修改定位模块信息');
+        $this->assign('locator', get_data('locator'));
         return $this->fetch('add');
     }
 

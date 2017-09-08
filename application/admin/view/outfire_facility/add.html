@@ -29,9 +29,9 @@
             <label  class="col-sm-2 control-label">类型</label>
             <div class="col-sm-10">
                 <select class="form-control" name="type">
-                    <option value="0" {notempty name='detail'}{eq name="detail['type']" value="灭火器"}selected{/eq}{/notempty}>灭火器</option>
-                    <option value="1" {notempty name='detail'}{eq name="detail['type']" value="消防栓"}selected{/eq}{/notempty}>消防栓</option>
-                    <option value="2" {notempty name='detail'}{eq name="detail['type']" value="烟雾检测器"}selected{/eq}{/notempty}>烟雾检测器</option>
+                    {volist name=":get_data('outfire_facility')['type']" id="type"}
+                    <option value="{$key}" {notempty name='detail'}{eq name="detail['type']" value="$type"}selected{/eq}{/notempty}>{$type}</option>
+                    {/volist}
                 </select>
             </div>
         </div>
@@ -92,15 +92,11 @@
             <label  class="col-sm-2 control-label">状态</label>
             <div class="col-sm-10">
                 <div class="checkbox">
+                    {volist name=":get_data('outfire_facility')['status']" id="status"}
                     <label>
-                        <input type="radio" name="status" {eq name="detail['status']" value="正常"}checked{/eq} >正常
+                        <input type="radio" name="status" value="{$key}" {eq name="detail['status']" value="$status"}checked{/eq} >{$status}
                     </label>
-                    <label>
-                        <input type="radio" name="status"  {eq name="detail['status']" value="故障"}checked{/eq} >故障
-                    </label>
-                    <label>
-                        <input type="radio" name="status"  {eq name="detail['status']" value="已移除"}checked{/eq} >已移除
-                    </label>
+                    {/volist}
                 </div>
             </div>
         </div>

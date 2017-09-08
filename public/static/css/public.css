@@ -16,7 +16,7 @@
     background-color: transparent;
     border: none;
     font-size:40px;
-    color: #ffffff;
+    color: #666;
     /*border: 0;*/
 }
 @media (min-width: 768px) {
@@ -26,7 +26,7 @@
         background-color: transparent;
         border: none;
         font-size:40px;
-        color: #ffffff;
+        color: #666;
     }
 }
 .help-block {

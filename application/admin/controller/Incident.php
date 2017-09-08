@@ -14,9 +14,15 @@ class Incident extends Base
             return $this->fetch();
         }
         $org_id = input('session.user.org_id');
-        $list = SubModel::all(function ($query) use($org_id) {
-            $query->where('org_id',$org_id)->order('start_time');
-        },'buildings');
+        $start = strtotime(input('get.start')) ?: strtotime('-29 day midnight');//默认一个月内
+        $end = strtotime(input('get.end')) ?: strtotime('1 day midnight');
+        /* @var $orgmodel \app\admin\model\Organization */
+        $orgmodel = model('organization');
+        $children_org_ids = $orgmodel->children($org_id);
+
+        $list = SubModel::all(function ($query) use($children_org_ids, $start, $end) {
+            $query->where(['org_id'=>['in', $children_org_ids], 'start_time'=>['between', [$start, $end]]])->order('start_time');
+        },'buildings,organization');
         return $list;
     }
 
@@ -24,7 +30,7 @@ class Incident extends Base
     public function detail()
     {
         $id = input('get.id');
-        $detail = SubModel::get($id, 'buildings,persons');
+        $detail = SubModel::get($id, 'buildings,persons,organization');
         $this->assign('detail',$detail);
         return $this->fetch();
     }

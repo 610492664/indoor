@@ -24,12 +24,11 @@
             <label  class="col-sm-2 control-label">状态</label>
             <div class="col-sm-10">
                 <div class="checkbox">
+                    {volist name="status" id="data"}
                     <label>
-                        <input type="radio" name="status" value="0" {notempty name='detail'}{eq name="detail['status']" value="正常"}checked{/eq}{/notempty}>正常
+                        <input type="radio" name="status" value="{$key}" {eq name="detail['status']" value="$data"}checked{/eq}>{$data}
                     </label>
-                    <label>
-                        <input type="radio" name="status"  value="1" {notempty name='detail'}{eq name="detail['status']" value="撤销"}checked{/eq}{/notempty}>撤销
-                    </label>
+                    {/volist}
                 </div>
             </div>
         </div>

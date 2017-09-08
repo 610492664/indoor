@@ -5,6 +5,11 @@
     <h4 class="modal-title">{$detail.name}</h4>
 </div>
 <div class="modal-body">
+    <strong><i class="fa fa-star margin-r-5"></i>主管单位</strong>
+    <p class="text-muted">
+        {$detail.organization.name}
+    </p>
+    <hr>
     <strong><i class="fa fa-tag margin-r-5"></i> 事件类型</strong>
     <p class="text-muted">
         【{$detail.type}】
@@ -12,9 +17,7 @@
     <hr>
     <strong><i class="fa fa-calendar-times-o margin-r-5"></i> 事发时间</strong>
     <p class="text-muted">
-        开始时间：{$detail.start_time}
-        <br>
-        结束时间：{$detail.end_time}
+        {$detail.start_time} —— {$detail.end_time}
     </p>
     <hr>
     <strong><i class="fa fa-map-marker margin-r-5"></i> 事发地点</strong>

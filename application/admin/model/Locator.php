@@ -10,7 +10,7 @@ class Locator extends Base
 
     public function getStatusAttr($value)
     {
-        $status = [0=>'可用',1=>'已占用',2=>'正常停用', 3=>'故障', 4=>'遗失',5=>'报废'];
+        $status = self::$dataMap['locator']['status'];
         return $status[intval($value)];
     }
 

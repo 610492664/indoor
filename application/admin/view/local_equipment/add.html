@@ -50,21 +50,11 @@
             <label  class="col-sm-2 control-label">状态</label>
             <div class="col-sm-10">
                 <div class="checkbox">
+                    {volist name=":get_data('local_equipment')['status']" id="status"}
                     <label>
-                        <input type="radio" name="status" value="0" {eq name="detail['status']" value="正常可用"}checked{/eq} >正常可用
+                        <input type="radio" name="status" value="{$key}" {eq name="detail['status']" value="$status"}checked{/eq}>{$status}
                     </label>
-                    <label>
-                        <input type="radio" name="status"  value="2" {eq name="detail['status']" value="正常停用"}checked{/eq}>正常停用
-                    </label>
-                    <label>
-                        <input type="radio" name="status"  value="3" {eq name="detail['status']" value="故障停用"}checked{/eq}>故障停用
-                    </label>
-                    <label>
-                        <input type="radio" name="status"  value="5" {eq name="detail['status']" value="报废"}checked{/eq}>报废
-                    </label>
-                    <label>
-                        <input type="radio" name="status"  value="4" {eq name="detail['status']" value="遗失"}checked{/eq}>遗失
-                    </label>
+                    {/volist}
                 </div>
             </div>
         </div>

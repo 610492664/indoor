@@ -23,6 +23,8 @@ require.config({
         'bootstrap-validator':['static/plugin/bootstrap-validator-1000hz/validator'],
         'bootstrap-dialog': ['static/plugin/bootstrap-dialog/js/bootstrap-dialog'],
         'bootstrap-switch':['static/plugin/bootstrap-switch/js/bootstrap-switch'],
+        "moment": ['static/plugin/bootstrap-daterangepicker/moment'],
+        "daterangepicker": ['static/plugin/bootstrap-daterangepicker/daterangepicker'],
         'html5shiv': ['static/plugin/compatible/html5shiv'],
         'respond': ['static/plugin/compatible/respond.min'],
         'dataTables.bootstrap': ['static/plugin/datatables/dataTables.bootstrap'],
@@ -48,6 +50,7 @@ require.config({
         'bootstrap-validator': {deps: ['bootstrap']},
         'bootstrap-switch': {deps: ['bootstrap', 'css!' + baseUrl + '/static/plugin/bootstrap-switch/css/bootstrap-switch.css']},
         'bootstrap-dialog': {deps: ['bootstrap','css!' + baseUrl + '/static/plugin/bootstrap-dialog/css/bootstrap-dialog.css']},
+        'daterangepicker': {deps: ['jquery','moment', 'css!' + baseUrl + '/static/plugin/bootstrap-daterangepicker/daterangepicker.css']},
         'dataTables.bootstrap': {deps: ['jquery','bootstrap','jquery.dataTables','css!' + baseUrl + '/static/plugin/datatables/dataTables.bootstrap.css']},
         'dataTables.input':  {deps: ['dataTables.bootstrap']},
         'inputmask': {deps: ['jquery']},
@@ -67,7 +70,7 @@ require.config({
 
 
 // UI框架初始化
-require(['bootbox','bootstrap-dialog','bootstrap-switch', 'fastclick', 'jquery.form','bootstrap-validator', 'jquery.slimscroll','dataTables.bootstrap','app','listen'],
+require(['bootbox','bootstrap-dialog', 'bootstrap-switch', 'fastclick', 'jquery.form','bootstrap-validator', 'jquery.slimscroll','dataTables.bootstrap','app','listen'],
     function (bootbox,BootstrapDialog) {
         window.bootbox = bootbox;
         window.BootstrapDialog = BootstrapDialog;

@@ -25,13 +25,13 @@
     //加载content内容
     $.content_load = function (href, layout_fix) {
         $.form.load(href, {}, 'get', true, function () {
-            if ($("#form").length > 0) {
+            if ($("#form_page").length > 0) {
                 //激活公共表单验证
                 require(['bootstrap-validator'],function () {
-                    $('#form').validator();
+                    $('#form_page').validator();
                 });
                 //激活表单上传事件
-                $("#form").ajaxForm({
+                $("#form_page").ajaxForm({
                     type: 'post',
                     error: function () {
                         var msg = $('<div class="alert alert-warning"><a href="#" class="close" data-dismiss="alert">&times;</a></div>')
@@ -97,7 +97,7 @@
                 $.msg.tips(self.errMsg.replace('{status}', 'E' + textStatus + ' - '));
             },
             success: function (res) {
-                $.msg.close(dialogIndex);
+                $.msg.close(dialogIndex);//关闭加载层
                 if(async === false){
                     if(typeof callback === 'function'&&　callback.call(self, res) === false){
                         return false;
@@ -312,9 +312,10 @@
         msg = msg ? msg : '';
         return this.index = bootbox.dialog({
             className: "loading",
-            message: '<div class="text-center"><i class="fa fa-spinner fa-pulse"></i>'+msg+'</div>' ,
+            message: '<div class="text-center" style="width: 140px; margin: auto"><i class="fa fa-spinner fa-pulse" style="padding: 30px"></i>'+msg+'</div>' ,
             closeButton: false,
-            animate: false
+            animate: false,
+            backdrop: false
         });
        /* return this.index = msg
             ? layer.msg(msg, {icon: 16, scrollbar: false, shade: this.shade, time: 0, end: callback})
@@ -342,16 +343,19 @@
                     data.url = '';
                     force_refresh  = true;
                     break;
+                case '/reload':
+                    location.reload();
+                    break;
                 default:
                     data.url = '#'+ data.url.substr(APP.length);break;
             }
+            typeof ok === 'function' && ok();
             return self.success(data.msg, time, function () {
-                typeof ok === 'function' && ok();
                 data.url !== '' ? (window.location.href = data.url) : (((refresh !== false) || force_refresh )&& $.form.reload(force_refresh));
             });
         }
+        typeof no === 'function' && no();
         self.alert(data.msg, function () {
-            typeof no === 'function' && no();
             !!data.url && (window.location.href = data.url);
         });
     };

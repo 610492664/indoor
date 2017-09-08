@@ -3,15 +3,13 @@ namespace app\admin\model;
 
 class Group extends Base
 {
-    protected $type = [
-        'buy_time' => 'timestamp:Y-m-d'
-    ];
+    protected $type = [];
 
     protected $insert = ['gro_id', 'org_id'];
 
     public function getStatusAttr($value)
     {
-        $status = [0 => '正常', 1 => '撤销'];
+        $status = self::$dataMap['group']['status'];
         return $status[$value];
     }
 

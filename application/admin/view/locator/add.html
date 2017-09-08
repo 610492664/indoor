@@ -65,24 +65,16 @@
             <label  class="col-sm-2 control-label">状态</label>
             <div class="col-sm-10">
                 <div class="checkbox">
-                    {eq name="detail['status']" value="已占用"}
-                    <span>已占用</span>
+                    {eq name="detail['status']" value="$locator.status[1]"}
+                        <span>{$locator.status[1]}</span>
                     {else/}
-                    <label>
-                        <input type="radio" name="status" value="0" {eq name="detail['status']" value="可用"}checked{/eq} >可用
-                    </label>
-                    <label>
-                        <input type="radio" name="status"  value="2" {eq name="detail['status']" value="正常停用"}checked{/eq}>正常停用
-                    </label>
-                    <label>
-                        <input type="radio" name="status"  value="3" {eq name="detail['status']" value="故障"}checked{/eq}>故障
-                    </label>
-                    <label>
-                        <input type="radio" name="status"  value="4" {eq name="detail['status']" value="遗失"}checked{/eq}>遗失
-                    </label>
-                    <label>
-                        <input type="radio" name="status"  value="5" {eq name="detail['status']" value="报废"}checked{/eq}>报废
-                    </label>
+                        {volist name="locator.status" id="status"}
+                            {neq name="key" value="1"}
+                            <label>
+                                <input type="radio" name="status" value="{$key}" {eq name="detail['status']" value="$status"}checked{/eq} >{$status}
+                            </label>
+                            {/neq}
+                        {/volist}
                     {/eq}
                 </div>
             </div>

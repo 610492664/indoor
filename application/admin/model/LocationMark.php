@@ -21,13 +21,13 @@ class LocationMark extends Base
 
     public function getStatusAttr($value)
     {
-        $status = [0=>'正常',1=>'故障',2=>'报废', 3=>'遗失'];
+        $status = self::$dataMap['location_mark']['status'];
         return $status[intval($value)];
     }
 
     public function getTypeAttr($value)
     {
-        $status = [0=>'一般',1=>'紧急'];
+        $status = self::$dataMap['location_mark']['type'];
         return $status[intval($value)];
     }
 }

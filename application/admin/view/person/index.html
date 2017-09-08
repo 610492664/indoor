@@ -1,5 +1,14 @@
 {extend name="public/content_table" /}
-{block name="box-header"}{/block}
+{block name="box-header"}
+<ul id="myTab" class="nav nav-tabs">
+    <li class="active">
+        <a data-id="self" data-toggle="tab">
+            本单位人员管理
+        </a>
+    </li>
+    <li><a data-id="all"  data-toggle="tab">查看全部人员</a></li>
+</ul>
+{/block}
 {block name="button"}
 <button type="button" class="btn btn-link" e-action-modal="{:url('person/add')}"><i class="fa fa-plus"></i> 新增</button>
 <button class="btn btn-link" e-action-del="{:url('person/del')}"><i class="fa fa-fw fa-trash"></i> 删除</button>

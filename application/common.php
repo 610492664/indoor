@@ -43,3 +43,17 @@ function password_encrypt($password)
 function auth($node) {
     return NodeService::checkAuthNode($node);
 }
+
+
+/**
+ * 获取数据代码映射表
+ * @param $filename
+ * @return array
+ */
+function get_data($filename)
+{
+    $data_map = [];
+    $map_file = ROOT_PATH.'data/'.$filename.'.php';
+    is_file($map_file) && $data_map = include($map_file);
+    return $data_map;
+}

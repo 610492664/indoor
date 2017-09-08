@@ -35,4 +35,9 @@ class Incident extends Base
     {
         return $this->belongsToMany('Person','inc_per', 'per_id', 'inc_id');
     }
+
+    public function organization()
+    {
+        return $this->belongsTo('organization','org_id', 'org_id');
+    }
 }

@@ -25,4 +25,10 @@ class Role extends Validate
     protected $message = [
         'name.notIn'=>'添加失败，系统超级管理员为系统内置角色！'
     ];
+
+    protected $scene = [
+        'exist' => [
+            'name' => 'unique:role,name^org_id|notIn:系统超级管理员'
+        ]
+    ];
 }

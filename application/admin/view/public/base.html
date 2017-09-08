@@ -92,9 +92,9 @@
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <!--<img src="__IMG__/logo.jpg" class="user-image" alt="User Image">-->
-                                <span>深圳市淘米科技有限公司</span><br>
+                                <span>{$Think.session.user.org_name}</span><br>
                                 <!--<span class="glyphicon glyphicon-user"></span>-->
-                                <span>【超级管理员】</span>
+                                <span>【{$Think.session.user.rol_name}】</span>
                                 <span>{$Think.session.user.name}</span>
                             </a>
                             <ul class="dropdown-menu">

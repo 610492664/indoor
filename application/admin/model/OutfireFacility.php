@@ -22,13 +22,13 @@ class OutfireFacility extends Base
 
     protected function getTypeAttr($value)
     {
-        $status = [0=>'灭火器',1=>'消防栓', 2=>'烟雾检测器'];
+        $status = self::$dataMap['outfire_facility']['type'];
         return $status[$value];
     }
 
     protected function getStatusAttr($value)
     {
-        $status = [0=>'正常',1=>'故障', 2=>'已移除'];
+        $status = self::$dataMap['outfire_facility']['status'];
         return $status[$value];
     }
 

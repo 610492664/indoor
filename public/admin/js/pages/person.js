@@ -2,7 +2,9 @@
  * Created by Administrator on 2017/6/8.
  */
 function person() {
+    var target = 'self';
     $.table = $('#table').DataTable({
+        "lengthMenu": [[10, 25, 50, 100, -1], ["10", "25", "50", "100", "全部"]],
         "ajax": {
             "url": php_url.index,
         },
@@ -14,6 +16,7 @@ function person() {
             { "data": "pidtype" , "title": "证件类型"},
             { "data": "pid" , "title": "证件号"},
             { "data": "birthday" , "title": "出生日期"},
+            { "data": "orgname" , "title": "单位"},
             { "data": "position" , "title": "职务"},
             { "data": "rank" , "title": "警衔"},
             { "data": "loc_id" , "title": "定位模块"},
@@ -30,20 +33,23 @@ function person() {
                 }
             },
             {
-                "targets": 8,
+                "targets": 9,
                 "render": function ( data, type, full, meta ) {
                     return (data != '') ? full.loc_number :'无';
                 }
             },
             {
-                "targets": 9,
+                "targets": 10,
                 "render": function ( data, type, full, meta ) {
                     if (type === 'display') {
-                        return '<div class="btn-group">'+
-                            '<button class="btn btn-link " e-action-modal="'+php_url.detail+'" e-data="'+data+'" ><i class="fa fa-search"></i></button>'+
-                            '<button class="btn btn-link" e-action-modal="'+php_url.mod+'" e-data="'+data+'" ><i class="fa fa-pencil-square-o"></i></button>'+
-                            '<button class="btn btn-link" e-action-del="'+php_url.del+'" e-data="'+data+'" ><i class="fa fa-trash-o"></i></button>'+
-                            '</div>';
+                        var str = '<div class="btn-group">'+
+                            '<button class="btn btn-link " e-action-modal="'+php_url.detail+'" e-data="'+data+'" ><i class="fa fa-search"></i></button>';
+                        if(target !== 'all'){
+                            str += '<button class="btn btn-link" e-action-modal="'+php_url.mod+'" e-data="'+data+'" ><i class="fa fa-pencil-square-o"></i></button>'+
+                                '<button class="btn btn-link" e-action-del="'+php_url.del+'" e-data="'+data+'" ><i class="fa fa-trash-o"></i></button>'+
+                                '</div>';
+                        }
+                        return str
                     }
                     return data;
                 }
@@ -111,4 +117,24 @@ function person() {
         }
     });
 
+    //tab切换
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        var $this = $(this);
+        target = $this.data('id');
+        var $buttons = $('#buttons');
+        if (target === 'self'){
+            $buttons .show();
+            $.table.columns([0]).visible(true);
+            $.table.columns([6]).visible(false);
+
+        }else if(target === 'all'){
+            $buttons .hide();
+            $.table.columns([0]).visible(false);
+            $.table.columns([6]).visible(true);
+        }
+        $.table.settings()[0].ajax.data = {
+            "target" :target
+        };
+        $.table.ajax.reload();
+    })
 }

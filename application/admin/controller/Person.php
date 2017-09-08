@@ -14,10 +14,18 @@ class Person extends Base
             $this->breadCrumb();
             return $this->fetch();
         }
+        $target = input('get.target');
         $org_id = input('session.user.org_id');
-        $persons = SubModel::all(function($query)use($org_id){
-            $query->where(['org_id'=>$org_id]);
-        },'locator');
+        if($target === 'all'){
+            /* @var $orgmodel \app\admin\model\Organization */
+            $orgmodel = model('organization');
+            $org_ids = $orgmodel->children($org_id);
+        }else{
+            $org_ids = [$org_id];
+        }
+        $persons = SubModel::all(function($query)use($org_ids){
+            $query->where(['org_id'=>['in', $org_ids]]);
+        },'locator,organization');
         return $persons;
     }
 
@@ -62,6 +70,7 @@ class Person extends Base
             ->field('loc_id,number')
             ->select();
         $this->assign('locators', $locators);
+        $this->assign('person', get_data('person'));//person相关数据映射表
         $this->assign('title', '添加人员信息');
         return $this->fetch();
     }
@@ -107,6 +116,7 @@ class Person extends Base
             ->field('loc_id,number')
             ->select();
         $this->assign('locators', $locators);
+        $this->assign('person', get_data('person'));//person相关数据映射表
         $this->assign('title', '修改人员信息');
         return $this->fetch('add');
     }
@@ -115,6 +125,7 @@ class Person extends Base
     {
         $ids = input('get.id/a');
         $model = model('person');
+        //记录删除人员所绑定的定位模块，删除人员后修改定位模块的占用状态
         $loc_ids = $model->where(['per_id'=>['in', $ids], 'loc_id'=>['neq','']])->column('loc_id');
         $result = $model->where(['per_id'=>['in',$ids]])->delete();
         if(!empty($result)){

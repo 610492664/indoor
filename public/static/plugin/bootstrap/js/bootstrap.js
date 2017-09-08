@@ -1103,7 +1103,7 @@ if (typeof jQuery === 'undefined') {
   Modal.prototype.removeBackdrop = function () {
     //模态框时全部关闭时，移除遮罩层，否则修改z-index，（瞬时关闭再打开带有fade属性的模态框，会同时存在两个遮罩窗）
     if(Modal.elements.length == 1 ){
-        this.$backdrop && this.$backdrop.remove()
+        this.$backdrop && this.$backdrop.remove();
         this.$backdrop = null
     }else{
         var perviouszIndex = parseInt($(".modal-backdrop").css("z-Index"));

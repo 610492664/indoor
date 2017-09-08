@@ -26,7 +26,7 @@ class Base extends Controller
             $post = input("post.");
             $use_id = $post['use_id'];
             $model = new User;
-            $result = $model->validate('system/User.self_pass', [], true)->allowField(true)->save($post,['use_id' => $use_id]);
+            $result = $model->validate('system/User.self_pass', [], true)->allowField(['password'])->save($post,['use_id' => $use_id]);
             if(!empty($result)){
                 $this->success('重置密码成功！', '');
             }else{
