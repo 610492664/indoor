@@ -16,7 +16,7 @@ function person() {
             { "data": "pidtype" , "title": "证件类型"},
             { "data": "pid" , "title": "证件号"},
             { "data": "birthday" , "title": "出生日期"},
-            { "data": "orgname" , "title": "单位"},
+            { "data": "orgname" , "title": "单位", "visible": false},
             { "data": "position" , "title": "职务"},
             { "data": "rank" , "title": "警衔"},
             { "data": "loc_id" , "title": "定位模块"},

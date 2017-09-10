@@ -5,7 +5,7 @@ define(['jquery','common'],function ($) {
         var $table = $(this);
         var $checked = $table.find('th input[type="checkbox"]');
         var $tbody_checked = $table.find('tbody input[type="checkbox"]');
-        if( $tbody_checked.length == 0 || $tbody_checked.not(':checked').length > 0){
+        if( $tbody_checked.length === 0 || $tbody_checked.not(':checked').length > 0){
             $checked.prop("checked",false);
         }else {
             $checked.prop("checked",true);
@@ -26,6 +26,24 @@ define(['jquery','common'],function ($) {
                 return ret;
             }
         });
+    });
+
+    $body.on('change', '[data-action-set]', function () {
+        var $this = $(this);
+        var url = $this.attr('data-action-set'),
+            id = $this.data('id'),
+            name = this.name,
+            value = $this.val(),
+            text = $this.find('option:selected').text();
+        $.form.load(url, {id: id, name: name, value: value}, 'POST', false, function (res) {
+            if(res.code === 1) {
+                $.table.cell( $this.parent()).data(text);//更新datatable存储的值
+            }else{
+                $.table.cell( $this.parent()).invalidate().draw();//还原原来的值
+                return true;
+            }
+            return false;
+        }, false, false);
     });
 
     //监听全选事件（自定义属性 e-check-name)

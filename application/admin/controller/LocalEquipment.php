@@ -16,7 +16,7 @@ class LocalEquipment extends Base
         $org_id = input('session.user.org_id');
         $model = new SubModel();
         $list = $model->where(['org_id'=>$org_id])->select();
-        return $list;
+        return ["data"=>$list, "dataMap"=> get_data('local_equipment')];
     }
 
     //获取添加表单
@@ -60,6 +60,15 @@ class LocalEquipment extends Base
         $this->assign('detail',$detail);
         $this->assign('title', '修改终端设备信息');
         return $this->fetch('add');
+    }
+
+    public function set()
+    {
+        $model = new SubModel;
+        $post = input('post.');
+        $data = ['lequ_id' => $post['id'], $post['name'] => $post['value']];
+        $result = $model->save($data,['lequ_id' => input('post.id')]);
+        !empty($result) ? $this->success('操作成功！', '') : $this->error('操作失败！');
     }
     //删除
     public function del()

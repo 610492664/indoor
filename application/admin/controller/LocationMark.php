@@ -16,7 +16,7 @@ class LocationMark extends Base
         $org_id = input('session.user.org_id');
         $model = new SubModel();
         $list = $model->where(['org_id'=>$org_id])->select();
-        return $list;
+        return ["data"=>$list, "dataMap"=> get_data('location_mark')];
     }
     //获取添加表单
     public function add(){
@@ -58,6 +58,16 @@ class LocationMark extends Base
         $this->assign('detail',$detail);
         $this->assign('title', '修改信标信息');
         return $this->fetch('add');
+    }
+
+    public function set()
+    {
+        $model = new SubModel;
+        $pk = $model->getPk();
+        $post = input('post.');
+        $data = [$pk => $post['id'], $post['name'] => $post['value']];
+        $result = $model->isUpdate()->data($data)->save();
+        !empty($result) ? $this->success('操作成功！', '') : $this->error('操作失败！');
     }
 
     //删除

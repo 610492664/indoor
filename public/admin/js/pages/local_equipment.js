@@ -6,6 +6,7 @@ function local_equipment() {
     $.table = $('#table').DataTable({
         "ajax": {
             "url": php_url.index,
+            "dataSrc": 'data'
         },
         "order": [[3, 'asc'],[2, 'asc']],
         "columns": [
@@ -25,6 +26,23 @@ function local_equipment() {
                 return data;
             }
         },
+            {
+                "targets": 4,
+                "render": function ( data, type, full, meta ) {
+                    if (type === 'display') {
+                        var str = '<select name="status" data-id="'+full.lequ_id+'" data-action-set="'+php_url.set+'">',
+                            selected = '',
+                            status = meta.settings.json.dataMap.status;
+                        for(var i = 0; i< status.length; i++){
+                            selected = status[i] === data ? ' selected="selected"' : '';
+                            str += '<option value="'+i+'"'+selected+'>'+status[i]+'</option>';
+                        }
+                        str += '</select>';
+                        return str;
+                    }
+                    return data;
+                }
+            },
             {
                 "targets": 5,
                 "render": function ( data, type, full, meta ) {

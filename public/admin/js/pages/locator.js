@@ -6,6 +6,7 @@ function locator() {
     $.table = $('#table').DataTable({
         "ajax": {
             "url": php_url.index,
+            "dataSrc": 'data'
         },
         "order": [[4, 'asc'],[1, 'asc']],
         "columns": [
@@ -26,6 +27,25 @@ function locator() {
                 return data;
             }
         },
+            {
+                "targets": 4,
+                "render": function ( data, type, full, meta ) {
+                    if (type === 'display') {
+                        var str = '<select name="status" data-id="'+full.loc_id+'" data-action-set="'+php_url.set+'">',
+                            selected = '',
+                            status = meta.settings.json.dataMap.status;
+                        if(data === status[1])return data;
+                        for(var i = 0; i< status.length; i++){
+                            if(i === 1) continue;
+                            selected = status[i] === data ? ' selected="selected"' : '';
+                            str += '<option value="'+i+'"'+selected+'>'+status[i]+'</option>';
+                        }
+                        str += '</select>';
+                        return str;
+                    }
+                    return data;
+                }
+            },
             {
                 "targets": 6,
                 "render": function ( data, type, full, meta ) {

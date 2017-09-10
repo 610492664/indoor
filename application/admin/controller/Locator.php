@@ -22,7 +22,7 @@ class Locator extends Base
             ->join('__PERSON__ per', 'per.loc_id = loc.loc_id','LEFT')
             ->where(['loc.org_id'=>$org_id])
             ->select();
-        return $records;
+        return ["data"=>$records, "dataMap"=> get_data('locator')];
     }
 
     //获取添加表单
@@ -67,6 +67,16 @@ class Locator extends Base
         $this->assign('title', '修改定位模块信息');
         $this->assign('locator', get_data('locator'));
         return $this->fetch('add');
+    }
+
+    public function set()
+    {
+        $model = new SubModel;
+        $pk = $model->getPk();
+        $post = input('post.');
+        $data = [$pk => $post['id'], $post['name'] => $post['value']];
+        $result = $model->isUpdate()->data($data)->save();
+        !empty($result) ? $this->success('操作成功！', '') : $this->error('操作失败！');
     }
 
     //删除

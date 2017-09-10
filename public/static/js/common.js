@@ -332,6 +332,7 @@
      * @param refresh 成功是否刷新页面
      * @return {common_L11._msg|*}
      */
+
     msg.prototype.auto = function (data, time, refresh, ok, no) {
         var self = this, force_refresh = false;
         if (parseInt(data.code) === 1) {

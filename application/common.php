@@ -47,13 +47,13 @@ function auth($node) {
 
 /**
  * 获取数据代码映射表
- * @param $filename
+ * @param string $model
  * @return array
  */
-function get_data($filename)
+function get_data($model)
 {
     $data_map = [];
-    $map_file = ROOT_PATH.'data/'.$filename.'.php';
+    $map_file = ROOT_PATH.'data/'.$model.'.php';
     is_file($map_file) && $data_map = include($map_file);
     return $data_map;
 }

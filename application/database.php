@@ -17,9 +17,9 @@ return [
     // 数据库名
     'database'        => 'indoor',
     // 用户名
-    'username'        => 'ilweb',
+    'username'        => 'root',
     // 密码
-    'password'        => 'Tmuser1234',
+    'password'        => '',
     // 端口
     'hostport'        => '3306',
     // 连接dsn

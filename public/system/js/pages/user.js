@@ -24,8 +24,8 @@ function user() {
             { "data": "login_num","title":"登录次数" },
             { "data": "login_time","title":"最后登录日期" },
             { "data": "login_ip","title":"最后登录ip" },
-            { "data": "status" ,"title":"修改状态"},
-            { "data": "use_id","title":"操作", "searchable": false,"orderable": false, "width": "25%"}
+            { "data": "status" ,"title":"修改状态" ,"width": "120px"},
+            { "data": "use_id","title":"操作", "searchable": false,"orderable": false, "width": "100px"}
         ],
         "columnDefs": [
             {
