@@ -117,19 +117,28 @@ define(['jquery','common'],function ($) {
             beforeSend:  function () {
                $.msg.loading();
             },
+            statusCode: {
+                404: function () {
+                    $.msg.tips( 'E404 该访问地址不存在！ ');
+                },
+                500: function () {
+                    $.msg.tips('E500 服务器错误');
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                $.msg.tips('请求出错！');
+            },
             success: function(data){
                 $.msg.close();
                 $('#myModal div.modal-content').html(data);
-            },
-            complete: function () {
                 $modal.modal('show');
-                var $form = $("#form")
+                var $form = $("#form");
                 if ($form.length > 0) {
                     $modal.on('hide.bs.modal',function (e) {
                         $.msg.confirm('确定取消？',function () {
                             $modal.off('hide.bs.modal');
                             $modal.modal('hide');
-                        })
+                        });
                         e.preventDefault();
                     });
                     //激活公共表单验证
@@ -149,13 +158,13 @@ define(['jquery','common'],function ($) {
                                     },
                                     success: function(data) {
                                         $.msg.auto(data, 1000, true, function () {
-                                            $modal.off('hide.bs.modal');
-                                            $modal.modal('hide');
-                                            // $.table.ajax.reload(null, false);
-                                        },
-                                        function () {
-                                            $that.validator();
-                                        });
+                                                $modal.off('hide.bs.modal');
+                                                $modal.modal('hide');
+                                                // $.table.ajax.reload(null, false);
+                                            },
+                                            function () {
+                                                $that.validator();
+                                            });
                                     }
                                 });
                             }

@@ -129,6 +129,7 @@
                             <li><a href="#{:url('organization/index', 'view=index')}"><i class="fa fa-circle-o"></i>子单位管理</a></li>
                         </ul>
                     </li>
+                    {if auth("admin/group/index")||auth("admin/person/index")}
                     <li class="treeview">
                         <a href="javascript:void(0);">
                             <i class="fa fa-files-o"></i> <span>人员管理</span>
@@ -137,10 +138,11 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="#{:url('group/index', 'view=index')}"><i class="fa fa-circle-o"></i>分组管理</a></li>
-                            <li><a href="#{:url('person/index', 'view=index')}"><i class="fa fa-circle-o"></i>人员列表</a></li>
+                            {if auth("admin/group/index")}<li><a href="#{:url('group/index', 'view=index')}"><i class="fa fa-circle-o"></i>分组管理</a></li>{/if}
+                            {if auth("admin/person/index")}<li><a href="#{:url('person/index', 'view=index')}"><i class="fa fa-circle-o"></i>人员列表</a></li>{/if}
                         </ul>
                     </li>
+                    {/if}
                     <li class="treeview">
                         <a href="javascript:void(0);">
                             <i class="fa fa-files-o"></i> <span>设备管理</span>

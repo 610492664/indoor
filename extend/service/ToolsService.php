@@ -97,7 +97,6 @@ class ToolsService {
      * @return array
      */
     public static function arr2table($list, $id = 'id', $pid = 'pid') {
-//        $_array_tree = self::arr2tree($list, $id, $pid);
         $tree = array();
         foreach ($list as $_tree) {
             $_tree['spl'] = str_repeat("&nbsp;&nbsp;&nbsp;├&nbsp;&nbsp;", substr_count($_tree[$id], '/'));

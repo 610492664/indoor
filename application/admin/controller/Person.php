@@ -65,8 +65,9 @@ class Person extends Base
                 $this->error('添加人员失败！');
             }
         }
+        $org_id = input('session.user.org_id');
         $locators = Db::name('locator')
-            ->where(['status'=>0])
+            ->where(['status'=>0, 'org_id'=>$org_id])
             ->field('loc_id,number')
             ->select();
         $this->assign('locators', $locators);
@@ -110,8 +111,9 @@ class Person extends Base
         $id = input('get.id');
         $person = SubModel::get($id);
         $this->assign('detail',$person);
+        $org_id = input('session.user.org_id');
         $locators = Db::name('locator')
-            ->where(['status'=>0])
+            ->where(['status'=>0, 'org_id'=>$org_id])
             ->whereOr(['loc_id'=>$person->loc_id])
             ->field('loc_id,number')
             ->select();

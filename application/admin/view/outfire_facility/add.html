@@ -87,20 +87,6 @@
             </div>
         </div>
         {/eq}
-        {eq name="Request.action" value="mod"}
-        <div class="form-group">
-            <label  class="col-sm-2 control-label">状态</label>
-            <div class="col-sm-10">
-                <div class="checkbox">
-                    {volist name=":get_data('outfire_facility')['status']" id="status"}
-                    <label>
-                        <input type="radio" name="status" value="{$key}" {eq name="detail['status']" value="$status"}checked{/eq} >{$status}
-                    </label>
-                    {/volist}
-                </div>
-            </div>
-        </div>
-        {/eq}
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>

@@ -48,11 +48,12 @@ class Organization extends Base
      * 获取全部子单位主键org_id
      *
      * @param string $org_id 单位主键id
+     * @param bool $self 是否包含本单位id
      * @return array
      */
     public function children($org_id = '', $self = true )
     {
-        $org_id = $org_id !== '' ?: input('session.user.org_id');
+        $org_id = $org_id !== '' ? $org_id : input('session.user.org_id');
         $chain = $this->where(['org_id'=>$org_id])->value('chain');
         $children_org_ids = $this->where('chain', 'like',$chain.'-'.$org_id.'%')->column('org_id');
         $self && array_push($children_org_ids , $org_id);//包含本单位

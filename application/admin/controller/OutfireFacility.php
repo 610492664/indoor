@@ -33,7 +33,7 @@ class OutfireFacility extends Base
             ->join('__FLOOR__ flo', 'ofac.flo_id = flo.flo_id','LEFT')
             ->where(['bui.org_id'=>$org_id])
             ->select();
-        return $list;
+        return ["data"=>$list, "dataMap"=> get_data('outfire_facility')];
     }
 
     //获取添加表单
@@ -88,6 +88,16 @@ class OutfireFacility extends Base
         $this->assign('detail',$detail);
         $this->assign('title', '修改消防设施信息');
         return $this->fetch('add');
+    }
+
+    public function set()
+    {
+        $model = new SubModel;
+        $pk = $model->getPk();
+        $post = input('post.');
+        $data = [$pk => $post['id'], $post['name'] => $post['value']];
+        $result = $model->isUpdate()->data($data)->save();
+        !empty($result) ? $this->success('操作成功！', '') : $this->error('操作失败！');
     }
 
     //删除

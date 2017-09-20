@@ -66,7 +66,8 @@ class LocalEquipment extends Base
     {
         $model = new SubModel;
         $post = input('post.');
-        $data = ['lequ_id' => $post['id'], $post['name'] => $post['value']];
+        $pk = $model->getPk();
+        $data = [$pk => $post['id'], $post['name'] => $post['value']];
         $result = $model->save($data,['lequ_id' => input('post.id')]);
         !empty($result) ? $this->success('操作成功！', '') : $this->error('操作失败！');
     }

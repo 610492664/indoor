@@ -10,16 +10,17 @@
 </ul>
 {/block}
 {block name="button"}
-<button type="button" class="btn btn-link" e-action-modal="{:url('person/add')}"><i class="fa fa-plus"></i> 新增</button>
-<button class="btn btn-link" e-action-del="{:url('person/del')}"><i class="fa fa-fw fa-trash"></i> 删除</button>
+{if auth("admin/person/add")}<button type="button" class="btn btn-link" e-action-modal="{:url('person/add')}"><i class="fa fa-plus"></i> 新增</button>{/if}
+{if auth("admin/person/del")}<button class="btn btn-link" e-action-del="{:url('person/del')}"><i class="fa fa-fw fa-trash"></i> 删除</button>{/if}
 {/block}
 {block name='script'}
 <script>
+
     var php_url = {
         index : '{:url("person/index")}',
         detail : '{:url("person/detail")}',
-        mod : '{:url("person/mod")}',
-        del : '{:url("person/del")}',
+        mod : '{:auth("admin/person/mod") ? url("person/mod") : "false"}',
+        del :'{:auth("admin/person/del") ? url("person/del") : "false"}',
     };
 </script>
 <script>

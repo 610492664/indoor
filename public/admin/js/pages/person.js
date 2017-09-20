@@ -20,7 +20,7 @@ function person() {
             { "data": "position" , "title": "职务"},
             { "data": "rank" , "title": "警衔"},
             { "data": "loc_id" , "title": "定位模块"},
-            { "data": "per_id", "title": "操作", "searchable": false,"orderable": false, "width": "25%"}
+            { "data": "per_id", "title": "操作", "searchable": false,"orderable": false, "width": "150px"}
         ],
         "columnDefs": [
             {
@@ -42,14 +42,15 @@ function person() {
                 "targets": 10,
                 "render": function ( data, type, full, meta ) {
                     if (type === 'display') {
-                        var str = '<div class="btn-group">'+
-                            '<button class="btn btn-link " e-action-modal="'+php_url.detail+'" e-data="'+data+'" ><i class="fa fa-search"></i></button>';
+                        var detail =  '<button class="btn btn-link " e-action-modal="'+php_url.detail+'" e-data="'+data+'" ><i class="fa fa-search"></i></button>';
+                        var mod = php_url.mod === 'false' ? "" : '<button class="btn btn-link" e-action-modal="'+php_url.mod+'" e-data="'+data+'" ><i class="fa fa-pencil-square-o"></i></button>';
+                        var del =   php_url.del === 'false' ? "" : '<button class="btn btn-link" e-action-del="'+php_url.del+'" e-data="'+data+'" ><i class="fa fa-trash-o"></i></button>';
+                        var str = '<div class="btn-group">';
+                        str += detail;
                         if(target !== 'all'){
-                            str += '<button class="btn btn-link" e-action-modal="'+php_url.mod+'" e-data="'+data+'" ><i class="fa fa-pencil-square-o"></i></button>'+
-                                '<button class="btn btn-link" e-action-del="'+php_url.del+'" e-data="'+data+'" ><i class="fa fa-trash-o"></i></button>'+
-                                '</div>';
+                            str += mod + del;
                         }
-                        return str
+                        return str +  '</div>'
                     }
                     return data;
                 }

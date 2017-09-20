@@ -6,6 +6,7 @@ function outfire_facility() {
     $.table = $('#table').DataTable({
         "ajax": {
             "url": php_url.index,
+            "dataSrc" : 'data'
         },
         "order": [[4, 'asc'],[2, 'asc']],
         "columns": [
@@ -36,6 +37,23 @@ function outfire_facility() {
                 "render": function ( data, type, full, meta ) {
                     if (type === 'display') {
                         return '第' + data + '层';
+                    }
+                    return data;
+                }
+            },
+            {
+                "targets": 9,
+                "render": function ( data, type, full, meta ) {
+                    if (type === 'display') {
+                        var str = '<select name="status" data-id="'+full.ofac_id+'" data-action-set="'+php_url.set+'">',
+                            selected = '',
+                            status = meta.settings.json.dataMap.status;
+                        for(var i = 0; i< status.length; i++){
+                            selected = status[i] === data ? ' selected="selected"' : '';
+                            str += '<option value="'+i+'"'+selected+'>'+status[i]+'</option>';
+                        }
+                        str += '</select>';
+                        return str;
                     }
                     return data;
                 }
