@@ -1,18 +1,17 @@
 {extend name="admin@public/content_table" /}
 {block name="box-header"}{/block}
 {block name="button"}
-<button type="button" class="btn btn-link" e-action-modal="{:url('role/add')}"><i class="fa fa-plus"></i> 新增</button>
-<button class="btn btn-link" e-action-del="{:url('role/del')}"><i class="fa fa-fw fa-trash"></i> 删除</button>
+<button type="button" class="btn btn-link" e-action-modal="{:url('role/add')}" {if !auth("system/role/add")}disabled{/if}><i class="fa fa-plus"></i> 新增</button>
+<button class="btn btn-link" e-action-del="{:url('role/del')}" {if !auth("system/role/del")}disabled{/if}><i class="fa fa-fw fa-trash"></i> 删除</button>
 {/block}
 {block name='script'}
 <script>
     var php_url = {
         getList: '{:url("role/index")}',
-        detail: '{:url("role/detail")}',
-        mod : '{:url("role/mod")}',
-        del : '{:url("role/del")}',
-        authShow : '#{:url("role/authShow", "id=__ID__")}',
-        forbid : '{:url("role/forbid")}',
+        mod :  '{:auth("system/role/mod") ? url("role/mod") : "false"}',
+        del :  '{:auth("system/role/del") ? url("role/del") : "false"}',
+        authShow :  '{:auth("system/role/authShow") ? "#".url("role/authShow", "id=__ID__") : "false"}',
+        forbid :  '{:auth("system/role/forbid") ? url("role/forbid") : "false"}',
     };
     require(['dataTables.bootstrap','inputmask.date','jquery.form','system/js/pages/role'],function () {
         role();

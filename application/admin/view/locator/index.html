@@ -1,16 +1,16 @@
 {extend name="public/content_table" /}
 {block name="box-header"}{/block}
 {block name="button"}
-<button type="button" class="btn btn-link" e-action-modal="{:url('locator/add')}"><i class="fa fa-plus"></i> 新增</button>
-<button class="btn btn-link" e-action-del="{:url('locator/del')}"><i class="fa fa-fw fa-trash"></i> 删除</button>
+<button type="button" class="btn btn-link" e-action-modal="{:url('locator/add')}" {if !auth("admin/locator/add")}disabled{/if}><i class="fa fa-plus"></i> 新增</button>
+<button class="btn btn-link" e-action-del="{:url('locator/del')}" {if !auth("admin/locator/del")}disabled{/if}><i class="fa fa-fw fa-trash"></i> 删除</button>
 {/block}
 {block name='script'}
 <script>
     var php_url = {
         index : '{:url("locator/index")}',
-        mod : '{:url("locator/mod")}',
-        del : '{:url("locator/del")}',
-        set : '{:url("locator/set")}'
+        mod :'{:auth("admin/locator/mod") ? url("locator/mod") : "false"}',
+        del :'{:auth("admin/locator/del") ? url("locator/del") : "false"}',
+        set :'{:auth("admin/locator/set") ? url("locator/set") : "false"}',
     };
     require(['dataTables.bootstrap','inputmask.date','jquery.form'],function () {
         require(['domready!','admin/js/pages/locator'],function () {

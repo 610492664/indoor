@@ -2,17 +2,16 @@
 {block name="box-header"}
 {/block}
 {block name="button"}
-<button type="button" class="btn btn-link" e-action-modal="{:url('OutfireFacility/add')}"><i class="fa fa-plus"></i> 新增</button>
-<button class="btn btn-link" e-action-del="{:url('OutfireFacility/del')}"><i class="fa fa-fw fa-trash"></i> 删除</button>
+<button type="button" class="btn btn-link" e-action-modal="{:url('OutfireFacility/add')}" {if !auth("admin/OutfireFacility/add")}disabled{/if}><i class="fa fa-plus"></i> 新增</button>
+<button class="btn btn-link" e-action-del="{:url('OutfireFacility/del')}" {if !auth("admin/OutfireFacility/del")}disabled{/if}><i class="fa fa-fw fa-trash"></i> 删除</button>
 {/block}
 {block name='script'}
 <script>
     var php_url = {
         index: '{:url("OutfireFacility/index")}',
-        detail: '{:url("OutfireFacility/detail")}',
-        mod : '{:url("OutfireFacility/mod")}',
-        del : '{:url("OutfireFacility/del")}',
-        set : '{:url("OutfireFacility/set")}',
+        mod :'{:auth("admin/OutfireFacility/mod") ? url("OutfireFacility/mod") : "false"}',
+        del :'{:auth("admin/OutfireFacility/del") ? url("OutfireFacility/del") : "false"}',
+        set :'{:auth("admin/OutfireFacility/set") ? url("OutfireFacility/set") : "false"}',
     };
     require(['dataTables.bootstrap','inputmask.date','jquery.form','admin/js/pages/outfire_facility'],function () {
         outfire_facility();

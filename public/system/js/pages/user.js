@@ -6,6 +6,7 @@ function user() {
     $.table = $('#table').DataTable({
         "ajax": {
             "url": php_url.index,
+            "dataSrc": "data",
         },
         "order": [[7, 'asc'],[2, 'asc']],
         "columns": [
@@ -24,7 +25,7 @@ function user() {
             { "data": "login_num","title":"登录次数" },
             { "data": "login_time","title":"最后登录日期" },
             { "data": "login_ip","title":"最后登录ip" },
-            { "data": "status" ,"title":"修改状态" ,"width": "120px"},
+            { "data": "status" ,"title":"状态" ,"width": "120px"},
             { "data": "use_id","title":"操作", "searchable": false,"orderable": false, "width": "100px"}
         ],
         "columnDefs": [
@@ -40,10 +41,11 @@ function user() {
             {
                 "targets": 9,
                 "render": function ( data, type, full, meta ) {
-                    if (full.rol_id === '{C407F15A-F477-8AF4-B830-19FEF9B95F54}') {
+                    if (full.rol_id === meta.settings.json.super_rol_id) {
                         return '';
                     }
                     if (type === 'display') {
+                        if(php_url.forbid === "false") return data === 1 ? '已禁用' : '正常';
                         var checked = (data === 1) ? 'checked' : '';
                         return '<input class="switch" type="checkbox" '+checked+ ' name="status" data-size="small" data-on-text="启用" data-off-text="禁用" e-action-mod="'+php_url.forbid+'" e-data="'+full.use_id+'"/>'
                     }
@@ -53,20 +55,25 @@ function user() {
             {
                 "targets": 10,
                 "render": function ( data, type, full, meta ) {
-                    if (full.rol_id === '{C407F15A-F477-8AF4-B830-19FEF9B95F54}') {
+                    if (full.rol_id === meta.settings.json.super_rol_id) {
                         return '';
                     }
                     if (type === 'display') {
-                        return '<div class="btn-group">'+
-                            '<button class="btn btn-link" e-action-modal="'+php_url.mod+'" e-data="'+data+'" ><i class="fa fa-pencil-square-o"></i></button>'+
-                            '<button class="btn btn-link" e-action-modal="'+php_url.resetpass+'" e-data="'+data+'"  title="重置密码"><i class="fa fa-key"></i></button>'+
-                            '<button class="btn btn-link" e-action-del="'+php_url.del+'" e-data="'+data+'" ><i class="fa fa-trash-o"></i></button>'+
-                            '</div>';
+                        var mod = php_url.mod === 'false' ? "" : '<button class="btn btn-link" e-action-modal="'+php_url.mod+'" e-data="'+data+'" ><i class="fa fa-pencil-square-o"></i></button>';
+                        var del = php_url.del === 'false' ? "" : '<button class="btn btn-link" e-action-del="'+php_url.del+'" e-data="'+data+'" ><i class="fa fa-trash-o"></i></button>';
+                        var resetpass = php_url.resetpass === 'false' ? "" : '<button class="btn btn-link" e-action-modal="'+php_url.resetpass+'" e-data="'+data+'"  title="重置密码"><i class="fa fa-key"></i></button>';
+                        return '<div class="btn-group">' + resetpass + mod+ del+ '</div>';
                     }
                     return data;
                 }
             }
-        ]
+        ],
+        "preDrawCallback": function( settings ) {
+            if(php_url.mod === 'false'&&php_url.del === 'false'&&php_url.resetpass === 'false'){
+                this.api().columns([10]).visible(false);
+            }
+            php_url.del === 'false'&& this.api().columns([0]).visible(false);
+        }
     });
     //添加索引列
     $.table_index($.table);

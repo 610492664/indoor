@@ -52,7 +52,8 @@ class Login extends Base
             }
             Db::name('User')->where('use_id', $user['use_id'])->update(['login_time' => time(), 'login_num' => ['exp', 'login_num+1']]);
             $user['rol_name'] = Db::name('role')->where(['rol_id'=>$user['rol_id']])->value('name');
-            $user['org_name'] = Db::name('organization')->where(['org_id'=>$user['org_id']])->value('name');
+            $org_info = Db::name('organization')->where(['org_id'=>$user['org_id']])->field('name org_name, p_org_id')->find();
+            $user = array_merge($user, $org_info);
             $user['nodes'] = Db::name('user')
                 ->alias('user')
                 ->join('__ROLE__ role', 'role.rol_id=user.rol_id')

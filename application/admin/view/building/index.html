@@ -1,17 +1,16 @@
 {extend name="public/content_table" /}
 {block name="box-header"}{/block}
 {block name="button"}
-<button type="button" class="btn btn-link" e-action-modal="{:url('Building/add')}"><i class="fa fa-plus"></i> 新增</button>
-<button class="btn btn-link" e-action-del="{:url('Building/del')}"><i class="fa fa-fw fa-trash"></i> 删除</button>
+<button type="button" class="btn btn-link" e-action-modal="{:url('Building/add')}" {if !auth("admin/Building/add")}disabled{/if}><i class="fa fa-plus"></i> 新增</button>
+<button class="btn btn-link" e-action-del="{:url('Building/del')}" {if !auth("admin/Building/del")}disabled{/if}><i class="fa fa-fw fa-trash"></i> 删除</button>
 {/block}
 {block name='script'}
 <script>
     var php_url = {
         index: '{:url("Building/index")}',
-        detail: '{:url("Building/detail")}',
-        mod : '{:url("Building/mod")}',
-        del : '{:url("Building/del")}',
-        floor : '#{:url("floor/index", "view=index&bui_id=__ID__")}',
+        mod : '{:auth("admin/Building/mod") ? url("Building/mod") : "false"}',
+        del :'{:auth("admin/Building/del") ? url("Building/del") : "false"}',
+        floor :'{:auth("admin/floor/index") ? "#".url("floor/index", "view=index&bui_id=__ID__") : "false"}',
     };
     require(['inputmask.date','jquery.form','admin/js/pages/building'],function () {
         building();

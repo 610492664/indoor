@@ -9,7 +9,6 @@ function incident() {
         },
         "order": [[6, 'desc'], [3, 'asc']],
         "columns": [
-            { "data": "inc_id","title":"<input type='checkbox' e-check-name = 'checkList'>", "searchable": false,"orderable": false, "width": "3px" },
             { "data": null, "title":"序号", "searchable": false,"orderable": false, "width": "2em"},
             { "data": "organization.abbr","title":"主管单位"},
             { "data": "name","title":"名称"},
@@ -20,31 +19,28 @@ function incident() {
             { "data": "description","title":"描述" },
             { "data": "inc_id","title":"操作", "searchable": false,"orderable": false, "width": "25%"}
         ],
-        "columnDefs": [ {
-            "targets": 0,
-            "render": function ( data, type, full, meta ) {
-                if (type === 'display') {
-                    return '<input type="checkbox" name="checkList" value="' + data + '">';
-                }
-                return data;
-            }
-        },
+        "columnDefs": [
             {
-                "targets": 9,
+                "targets": 8,
                 "render": function ( data, type, full, meta ) {
                     if (type === 'display') {
-                        return '<div class="btn-group">'+
-                            '<button class="btn btn-link " e-action-modal="'+php_url.detail+'" e-data="'+data+'" ><i class="fa fa-search"></i></button>'+
-                            '<button class="btn btn-link" e-action-modal="'+php_url.mod+'" e-data="'+data+'" ><i class="fa fa-pencil-square-o"></i></button>'+
-                            '</div>';
+                        var detail =  php_url.detail === 'false' ? "" : '<button class="btn btn-link " e-action-modal="'+php_url.detail+'" e-data="'+data+'" ><i class="fa fa-search"></i></button>';
+                        var mod = php_url.mod === 'false' ? "" : '<button class="btn btn-link" e-action-modal="'+php_url.mod+'" e-data="'+data+'" ><i class="fa fa-pencil-square-o"></i></button>';
+                        return '<div class="btn-group">'+ detail + mod + '</div>';
                     }
                     return data;
                 }
             }
-        ]
+        ],
+        "preDrawCallback": function( settings ) {
+            if(php_url.mod === 'false'&&php_url.detail === 'false'){
+                this.api().columns([8]).visible(false);
+            }
+        }
     });
     //添加索引列
-    $.table_index($.table);
+    $.table_index($.table, 0);
+
     //add、mod模态框初始化
     $('#myModal').on('show.bs.modal', function () {
         $("[data-mask]").inputmask();

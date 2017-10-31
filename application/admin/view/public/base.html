@@ -117,6 +117,7 @@
                             <i class="fa fa-circle-o"></i> <span>主面板</span>
                         </a>
                     </li>
+                    {if auth("admin/organization/self")||auth("admin/organization/index")}
                     <li class="treeview">
                         <a href="javascript:void(0);">
                             <i class="fa fa-files-o"></i> <span>单位管理</span>
@@ -125,10 +126,11 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="#{:url('organization/self')}"><i class="fa fa-circle-o"></i>本单位信息</a></li>
-                            <li><a href="#{:url('organization/index', 'view=index')}"><i class="fa fa-circle-o"></i>子单位管理</a></li>
+                            {if auth("admin/organization/self")}<li><a href="#{:url('organization/self')}"><i class="fa fa-circle-o"></i>本单位信息</a></li>{/if}
+                            {if auth("admin/organization/index")}<li><a href="#{:url('organization/index', 'view=index')}"><i class="fa fa-circle-o"></i>子单位管理</a></li>{/if}
                         </ul>
                     </li>
+                    {/if}
                     {if auth("admin/group/index")||auth("admin/person/index")}
                     <li class="treeview">
                         <a href="javascript:void(0);">
@@ -143,6 +145,7 @@
                         </ul>
                     </li>
                     {/if}
+                    {if auth("admin/locator/index")||auth("admin/locationMark/index")||auth("admin/localEquipment/index")}
                     <li class="treeview">
                         <a href="javascript:void(0);">
                             <i class="fa fa-files-o"></i> <span>设备管理</span>
@@ -151,11 +154,13 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="#{:url('locator/index', 'view=index')}"><i class="fa fa-circle-o"></i> 定位套件</a></li>
-                            <li><a href="#{:url('locationMark/index', 'view=index')}"><i class="fa fa-circle-o"></i> 信标</a></li>
-                            <li><a href="#{:url('localEquipment/index', 'view=index')}"><i class="fa fa-circle-o"></i> 终端管理</a></li>
+                            {if auth("admin/locator/index")}<li><a href="#{:url('locator/index', 'view=index')}"><i class="fa fa-circle-o"></i> 定位套件</a></li>{/if}
+                            {if auth("admin/locationMark/index")}<li><a href="#{:url('locationMark/index', 'view=index')}"><i class="fa fa-circle-o"></i> 信标</a></li>{/if}
+                            {if auth("admin/localEquipment/index")}<li><a href="#{:url('localEquipment/index', 'view=index')}"><i class="fa fa-circle-o"></i> 终端管理</a></li>{/if}
                         </ul>
                     </li>
+                    {/if}
+                    {if auth("admin/building/index")||auth("admin/floor/index")||auth("admin/outfireFacility/index")}
                     <li class="treeview">
                         <a href="javascript:void(0);">
                             <i class="fa fa-files-o"></i> <span>辖区管理</span>
@@ -164,11 +169,13 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="#{:url('building/index', 'view=index')}"><i class="fa fa-fw fa-building-o"></i> 建筑物</a></li>
-                            <li><a href="#{:url('floor/index', 'view=index')}"><i class="fa fa-fw fa-navicon"></i> 楼层管理</a></li>
-                            <li><a href="#{:url('outfireFacility/index', 'view=index')}"><i class="fa fa-fw fa-circle-o"></i> 消防设施</a></li>
+                            {if auth("admin/building/index")}<li><a href="#{:url('building/index', 'view=index')}"><i class="fa fa-fw fa-building-o"></i> 建筑物</a></li>{/if}
+                            {if auth("admin/floor/index")}<li><a href="#{:url('floor/index', 'view=index')}"><i class="fa fa-fw fa-navicon"></i> 楼层管理</a></li>{/if}
+                            {if auth("admin/outfireFacility/index")}<li><a href="#{:url('outfireFacility/index', 'view=index')}"><i class="fa fa-fw fa-circle-o"></i> 消防设施</a></li>{/if}
                         </ul>
                     </li>
+                    {/if}
+                    {if auth("admin/incident/index")}
                     <li class="treeview">
                         <a href="javascript:void(0);">
                             <i class="fa fa-files-o"></i> <span>事件管理</span>
@@ -180,7 +187,9 @@
                             <li><a href="#{:url('incident/index', 'view=index')}"><i class="fa fa-fw fa-circle-o"></i> 事件列表</a></li>
                         </ul>
                     </li>
+                    {/if}
                     <li class="header">系统管理</li>
+                    {if auth("system/user/index")||auth("system/role/index")||auth("system/node/index")}
                     <li class="treeview">
                         <a href="javascript:void(0);">
                             <i class="fa fa-files-o"></i> <span>权限管理</span>
@@ -189,11 +198,13 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="#{:url('system/user/index', 'view=index')}"><i class="fa fa-fw fa-circle-o"></i> 系统用户</a></li>
-                            <li><a href="#{:url('system/role/index', 'view=index')}"><i class="fa fa-fw fa-circle-o"></i> 角色管理</a></li>
-                            <li><a href="#{:url('system/node/index')}"><i class="fa fa-fw fa-circle-o"></i> 节点管理</a></li>
+                            {if auth("system/user/index")}<li><a href="#{:url('system/user/index', 'view=index')}"><i class="fa fa-fw fa-circle-o"></i> 系统用户</a></li>{/if}
+                            {if auth("system/role/index")}<li><a href="#{:url('system/role/index', 'view=index')}"><i class="fa fa-fw fa-circle-o"></i> 角色管理</a></li>{/if}
+                            {if auth("system/node/index")}<li><a href="#{:url('system/node/index')}"><i class="fa fa-fw fa-circle-o"></i> 节点管理</a></li>{/if}
                         </ul>
                     </li>
+                    {/if}
+                    {if auth("system/userLog/index")}
                     <li class="treeview">
                         <a href="javascript:void(0);">
                             <i class="fa fa-files-o"></i> <span>日志</span>
@@ -205,6 +216,7 @@
                             <li><a href="#{:url('system/userLog/index', 'view=index')}"><i class="fa fa-fw fa-circle-o"></i> 操作日志</a></li>
                         </ul>
                     </li>
+                    {/if}
                 </ul>
             </section>
         </aside>

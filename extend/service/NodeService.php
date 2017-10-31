@@ -48,8 +48,11 @@ class NodeService {
     public static function checkAuthNode($node) {
         list($module, $controller, $action) = explode('/', str_replace(['?', '=', '&'], '/', $node . '///'));
         $auth_node = strtolower(trim("{$module}/{$controller}/{$action}", '/'));
-        //rol_id={C407F15A-F477-8AF4-B830-19FEF9B95F54}系统超级管理员 拥有所有访问权限
-        if (session('user.rol_id') === '{C407F15A-F477-8AF4-B830-19FEF9B95F54}' || stripos($node, 'admin/index') === 0) {
+        $rol_id = model('system/role')->getSuperRole();//超级管理员角色rol_id
+        if( stripos($auth_node, 'system/node') === 0&&(session('user.rol_id') !== $rol_id||session('user.p_org_id') !== 0)){
+            return false;
+        }
+        if (session('user.rol_id') === $rol_id|| stripos($node, 'admin/index') === 0) {
             return true;
         }
         if (!in_array($auth_node, self::getAuthNode())) {
@@ -71,7 +74,7 @@ class NodeService {
             }
             $ignore = [
                 'index',
-                'admin/plugs', 'system/login', 'system/index',
+                'admin/index', 'system/login', 'system/node',
             ];
             $exist_nodes = [];
             foreach (self::getNodeTree(APP_PATH) as $thr) {

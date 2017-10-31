@@ -22,9 +22,10 @@ class Organization extends Base
             $this->breadCrumb();
             return $this->fetch();
         }
+        $rol_id = model('system/role')->getSuperRole();//超级管理员角色rol_id
         $records =model('organization')->alias('org')
             ->field('org.org_id, org.name, org.abbr, org.address, org.status, user.use_id,user.name username,user.phone,user.email')
-            ->join('__USER__ user', 'user.org_id=org.org_id and user.rol_id="{C407F15A-F477-8AF4-B830-19FEF9B95F54}"', 'Left')
+            ->join('__USER__ user', 'user.org_id=org.org_id and user.rol_id="'.$rol_id.'"', 'Left')
             ->where(['org.p_org_id'=>input('session.user.org_id')])
             ->select();
 //        $records =SubModel::all(['p_org_id'=>input('session.user.org_id')]);
@@ -52,7 +53,7 @@ class Organization extends Base
             $org_result = $model->allowField(true)->save($post);
             if(!empty($org_result)){
                 $user_data['org_id'] = $model->org_id;
-                $user_data['rol_id'] = '{C407F15A-F477-8AF4-B830-19FEF9B95F54}';
+                $user_data['rol_id'] = model('system/role')->getSuperRole();
                 $user_result = $userModel->allowField(true)->save($user_data);
                 empty($user_result)&&$model->delete();//不成功则删除已添加的子单位
             }

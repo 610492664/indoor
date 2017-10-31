@@ -1,18 +1,17 @@
 {extend name="admin@public/content_table" /}
 {block name="box-header"}{/block}
 {block name="button"}
-<button type="button" class="btn btn-link" e-action-modal="{:url('User/add')}"><i class="fa fa-plus"></i> 新增</button>
-<button class="btn btn-link" e-action-del="{:url('User/del')}"><i class="fa fa-fw fa-trash"></i> 删除</button>
+<button type="button" class="btn btn-link" e-action-modal="{:url('User/add')}" {if !auth("system/user/add")}disabled{/if}><i class="fa fa-plus"></i> 新增</button>
+<button class="btn btn-link" e-action-del="{:url('User/del')}" {if !auth("system/user/del")}disabled{/if}><i class="fa fa-fw fa-trash"></i> 删除</button>
 {/block}
 {block name='script'}
 <script>
     var php_url = {
         index: '{:url("User/index")}',
-        detail: '{:url("User/detail")}',
-        mod : '{:url("User/mod")}',
-        del : '{:url("User/del")}',
-        forbid : '{:url("user/forbid")}',
-        resetpass : '{:url("user/resetPass")}',
+        mod :  '{:auth("system/User/mod") ? url("User/mod") : "false"}',
+        del :  '{:auth("system/User/del") ? url("User/del") : "false"}',
+        forbid :  '{:auth("system/user/forbid") ? url("user/forbid") : "false"}',
+        resetpass :  '{:auth("system/user/resetpass") ? url("user/resetpass") : "false"}',
     };
     require(['dataTables.bootstrap','inputmask.date','jquery.form','system/js/pages/user'],function () {
         user();

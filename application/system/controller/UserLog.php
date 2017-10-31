@@ -34,17 +34,6 @@ class UserLog extends Base {
             ->select();
 //            $records = SubModel::all(['org_id'=> $org_id], 'role');
         return $records;
-
-        /*$this->title = '系统操作日志';
-        $this->assign('actions', Db::name($this->table)->group('action')->column('action'));
-        $db = Db::name($this->table)->order('id desc');
-        $get = $this->request->get();
-        foreach (['action', 'content', 'username'] as $key) {
-            if (isset($get[$key]) && $get[$key] !== '') {
-                $db->where($key, 'like', "%{$get[$key]}%");
-            }
-        }
-        return parent::_list($db);*/
     }
 
     //删除

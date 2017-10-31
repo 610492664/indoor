@@ -18,7 +18,7 @@ class User extends Base
         }
         $org_id = input('session.user.org_id');
         $records = SubModel::all(['org_id'=> $org_id], 'role');
-        return $records;
+        return ["data"=>$records, "super_rol_id"=> model('system/role')->getSuperRole()];
     }
     //获取添加表单
     public function add(){

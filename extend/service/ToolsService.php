@@ -12,59 +12,6 @@ namespace service;
 class ToolsService {
 
     /**
-     * Cors Options 授权处理
-     */
-    public static function corsOptionsHandler() {
-        if (request()->isOptions()) {
-            header('Access-Control-Allow-Origin:*');
-            header('Access-Control-Allow-Headers:Accept,Referer,Host,Keep-Alive,User-Agent,X-Requested-With,Cache-Control,Content-Type,Cookie,token');
-            header('Access-Control-Allow-Credentials:true');
-            header('Access-Control-Allow-Methods:GET,POST,OPTIONS');
-            header('Access-Control-Max-Age:1728000');
-            header('Content-Type:text/plain charset=UTF-8');
-            header('Content-Length: 0', true);
-            header('status: 204');
-            header('HTTP/1.0 204 No Content');
-        }
-    }
-
-    /**
-     * Cors Request Header信息
-     * @return array
-     */
-    public static function corsRequestHander() {
-        return [
-            'Access-Control-Allow-Origin'      => '*',
-            'Access-Control-Allow-Credentials' => true,
-            'Access-Control-Allow-Methods'     => 'GET,POST,OPTIONS',
-            'X-Support'                        => 'service@cuci.cc',
-            'X-Servers'                        => 'Guangzhou Cuci Technology Co. Ltd',
-        ];
-    }
-
-    /**
-     * Emoji原形转换为String
-     * @param string $content
-     * @return string
-     */
-    public static function emojiEncode($content) {
-        return json_decode(preg_replace_callback("/(\\\u[ed][0-9a-f]{3})/i", function($str) {
-                    return addslashes($str[0]);
-                }, json_encode($content)));
-    }
-
-    /**
-     * Emoji字符串转换为原形
-     * @param string $content
-     * @return string
-     */
-    public static function emojiDecode($content) {
-        return json_decode(preg_replace_callback('/\\\\\\\\/i', function() {
-                    return '\\';
-                }, json_encode($content)));
-    }
-
-    /**
      * 一维数据数组生成数据树
      * @param array $list 数据列表
      * @param string $id 父ID Key

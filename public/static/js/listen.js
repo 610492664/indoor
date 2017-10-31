@@ -160,7 +160,6 @@ define(['jquery','common'],function ($) {
                                         $.msg.auto(data, 1000, true, function () {
                                                 $modal.off('hide.bs.modal');
                                                 $modal.modal('hide');
-                                                // $.table.ajax.reload(null, false);
                                             },
                                             function () {
                                                 $that.validator();

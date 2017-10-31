@@ -9,17 +9,17 @@
 {/block}
 {block name="button"}
 <a class="btn btn-link" href="#{:url('group/index', 'view=index')}"><i class="fa fa-fw fa-chevron-circle-left"></i>返回组列表</a>
-<button type="button" class="btn btn-link" e-action-modal="{:url('GroupPerson/add')}"><i class="fa fa-plus"></i> 添加成员</button>
-<button class="btn btn-link" e-action-del="{:url('GroupPerson/del', 'id='.$detail['gro_id'])}"><i class="fa fa-fw fa-trash"></i> 移除成员</button>
-<button class="btn btn-link" e-action-set="{:url('GroupPerson/set', 'id='.$detail['gro_id'])}"><i class="fa fa-user"></i> 设为组长</button>
+<button type="button" class="btn btn-link" e-action-modal="{:url('GroupPerson/add')}" {if !auth("admin/GroupPerson/add")}disabled{/if}><i class="fa fa-plus"></i> 添加成员</button>
+<button class="btn btn-link" e-action-del="{:url('GroupPerson/del', 'id='.$detail['gro_id'])}" {if !auth("admin/GroupPerson/del")}disabled{/if}><i class="fa fa-fw fa-trash"></i> 移除成员</button>
+<button class="btn btn-link" e-action-set="{:url('GroupPerson/set', 'id='.$detail['gro_id'])}" {if !auth("admin/GroupPerson/set")}disabled{/if}><i class="fa fa-user"></i> 设为组长</button>
 {/block}
 {block name='script'}
 <script>
     PHP_DATA.gro_id = '{$detail.gro_id}';
     var php_url = {
         index : '{:url("GroupPerson/index", "id=".$detail["gro_id"])}',
-        del :  '{:url("GroupPerson/del", "id=".$detail["gro_id"])}',
-        set :  '{:url("GroupPerson/set")}',
+        del :'{:auth("admin/GroupPerson/del") ? url("GroupPerson/del", "id=".$detail["gro_id"]) : "false"}',
+        set :'{:auth("admin/GroupPerson/set") ? url("GroupPerson/set") : "false"}',
     };
     require(['dataTables.buttons.bootstrap','inputmask.date','jquery.form'],function () {
         require(['domready!','admin/js/pages/group_person'],function () {

@@ -13,16 +13,15 @@
 {/block}
 {block name="button"}
 <a class="btn btn-link" href="#{:url('building/index', 'view=index')}"><i class="fa fa-fw fa-chevron-circle-left"></i>返回建筑列表</a>
-<button type="button" class="btn btn-link" e-action-modal="{:url('Floor/add')}"><i class="fa fa-plus"></i> 新增</button>
-<button class="btn btn-link" e-action-del="{:url('Floor/del')}"><i class="fa fa-fw fa-trash"></i> 删除</button>
+<button type="button" class="btn btn-link" e-action-modal="{:url('Floor/add')}" {if !auth("admin/Floor/add")}disabled{/if}><i class="fa fa-plus"></i> 新增</button>
+<button class="btn btn-link" e-action-del="{:url('Floor/del')}" {if !auth("admin/Floor/del")}disabled{/if}><i class="fa fa-fw fa-trash"></i> 删除</button>
 {/block}
 {block name='script'}
 <script>
     var php_url = {
         index: '{:url("Floor/index")}',
-        detail: '{:url("Floor/detail")}',
-        mod : '{:url("Floor/mod")}',
-        del : '{:url("Floor/del")}',
+        mod : '{:auth("admin/Floor/mod") ? url("Floor/mod") : "false"}',
+        del :'{:auth("admin/Floor/del") ? url("Floor/del") : "false"}',
     };
     require(['dataTables.bootstrap','inputmask.date','jquery.form','admin/js/pages/floor'],function () {
         floor();

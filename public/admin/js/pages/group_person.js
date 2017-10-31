@@ -41,14 +41,18 @@ function group_person() {
                 "targets": 7,
                 "render": function ( data, type, full, meta ) {
                     if (type === 'display') {
-                        return '<div class="btn-group">'+
-                            '<button class="btn btn-link" e-action-del="'+php_url.del+'" e-data="'+data+'" ><i class="fa fa-trash-o"></i></button>'+
-                            '</div>';
+                        var del =  php_url.del === 'false' ? "" : '<button class="btn btn-link" e-action-del="'+php_url.del+'" e-data="'+data+'" ><i class="fa fa-trash-o"></i></button>';
+                        return '<div class="btn-group">'+ del + '</div>';
                     }
                     return data;
                 }
             }
-        ]
+        ],
+        "preDrawCallback": function( settings ) {
+            if(php_url.del === 'false'){
+                this.api().columns([0,7]).visible(false);
+            }
+        }
     });
     //添加索引列
     $.table_index($.table);

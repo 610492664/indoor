@@ -1,17 +1,16 @@
 {extend name="public/content_table" /}
 {block name="box-header"}{/block}
 {block name="button"}
-<button type="button" class="btn btn-link" e-action-modal="{:url('localEquipment/add')}"><i class="fa fa-plus"></i> 新增</button>
-<button class="btn btn-link" e-action-del="{:url('localEquipment/del')}"><i class="fa fa-fw fa-trash"></i> 删除</button>
+<button type="button" class="btn btn-link" e-action-modal="{:url('localEquipment/add')}" {if !auth("admin/localEquipment/add")}disabled{/if}><i class="fa fa-plus"></i> 新增</button>
+<button class="btn btn-link" e-action-del="{:url('localEquipment/del')}" {if !auth("admin/localEquipment/del")}disabled{/if}><i class="fa fa-fw fa-trash"></i> 删除</button>
 {/block}
 {block name='script'}
 <script>
     var php_url = {
         index: '{:url("localEquipment/index")}',
-        detail: '{:url("localEquipment/detail")}',
-        mod : '{:url("localEquipment/mod")}',
-        del : '{:url("localEquipment/del")}',
-        set : '{:url("localEquipment/set")}',
+        mod :'{:auth("admin/localEquipment/mod") ? url("localEquipment/mod") : "false"}',
+        del :'{:auth("admin/localEquipment/del") ? url("localEquipment/del") : "false"}',
+        set :'{:auth("admin/localEquipment/set") ? url("localEquipment/set") : "false"}',
     };
     require(['dataTables.bootstrap','inputmask.date','jquery.form','admin/js/pages/local_equipment'],function () {
         local_equipment();

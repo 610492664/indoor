@@ -19,7 +19,7 @@ return [
     'PRODUCT_NAME'   => '室内定位web管理', //产品名称
     'WEBSITE_DOMAIN' => 'http://indoor.tomee.cn', //官方网址
     'COMPANY_NAME'   => 'indoor开发维护团队', //公司名称
-    'SQL_PRIMARY_KEY' => 'id',
+//    'SQL_PRIMARY_KEY' => 'id',
 
     // 应用命名空间
     'app_namespace'          => 'app',

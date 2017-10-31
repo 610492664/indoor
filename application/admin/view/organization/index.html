@@ -1,15 +1,15 @@
 {extend name="public/content_table" /}
 {block name="box-header"}{/block}
 {block name="button"}
-<button type="button" class="btn btn-link" e-action-modal="{:url('Organization/add')}"><i class="fa fa-plus"></i> 新增</button>
+<button type="button" class="btn btn-link" e-action-modal="{:url('Organization/add')}" {if !auth("admin/Organization/add")}disabled{/if}><i class="fa fa-plus"></i> 新增</button>
 {/block}
 {block name='script'}
 <script>
     var php_url = {
         index : '{:url("organization/index")}',
-        mod : '{:url("organization/mod")}',
-        del : '{:url("organization/del")}',
-        resetpass : '{:url("organization/resetPass")}',
+        mod :'{:auth("admin/organization/mod") ? url("organization/mod") : "false"}',
+        del :'{:auth("admin/organization/del") ? url("organization/del") : "false"}',
+        resetpass :'{:auth("admin/organization/resetPass") ? url("organization/resetPass") : "false"}',
     };
     require(['dataTables.buttons.bootstrap','inputmask.date','jquery.form'],function () {
         require(['domready!','admin/js/pages/organization'],function () {

@@ -30,16 +30,21 @@ function group() {
                 "targets": 6,
                 "render": function ( data, type, full, meta ) {
                     if (type === 'display') {
-                        return '<div class="btn-group">'+
-                            '<button class="btn btn-link" e-action-modal="'+php_url.mod+'" e-data="'+data+'" ><i class="fa fa-pencil-square-o"></i></button>'+
-                            '<button class="btn btn-link" e-action-del="'+php_url.del+'" e-data="'+data+'" ><i class="fa fa-trash-o"></i></button>'+
-                            '<a class="btn btn-link" href="'+php_url.groupperson.replace('__ID__', data)+'" title="组成员管理" ><i class="fa fa-fw fa-navicon"></i></a>'+
-                            '</div>';
+                        var mod = php_url.mod === 'false' ? "" : '<button class="btn btn-link" e-action-modal="'+php_url.mod+'" e-data="'+data+'" ><i class="fa fa-pencil-square-o"></i></button>';
+                        var del =   php_url.del === 'false' ? "" : '<button class="btn btn-link" e-action-del="'+php_url.del+'" e-data="'+data+'" ><i class="fa fa-trash-o"></i></button>';
+                        var groupperson =   php_url.groupperson === 'false' ? "" :  '<a class="btn btn-link" href="'+php_url.groupperson.replace('__ID__', data)+'" title="组成员管理" ><i class="fa fa-fw fa-navicon"></i></a>'
+                        return '<div class="btn-group">' + mod + del + groupperson+ '</div>';
                     }
                     return data;
                 }
             }
-        ]
+        ],
+        "preDrawCallback": function( settings ) {
+            if(php_url.mod === 'false'&&php_url.del === 'false'&&php_url.groupperson==='false'){
+                this.api().columns([6]).visible(false);
+            }
+            php_url.del === 'false'&& this.api().columns([0]).visible(false);
+        }
     });
     $.table.buttons().container()
         .appendTo( $('.col-sm-6:eq(0)', $.table.table().container() ) );
@@ -48,6 +53,6 @@ function group() {
 
     //add、mod模态框初始化，添加页面个性化表单事件
     $('#myModal').on('show.bs.modal', function () {
-
+        //todo 显示回调
     });
 }

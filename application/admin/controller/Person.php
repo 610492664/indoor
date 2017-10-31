@@ -128,9 +128,16 @@ class Person extends Base
         $ids = input('get.id/a');
         $model = model('person');
         //记录删除人员所绑定的定位模块，删除人员后修改定位模块的占用状态
-        $loc_ids = $model->where(['per_id'=>['in', $ids], 'loc_id'=>['neq','']])->column('loc_id');
+        $arr = $model->field('loc_id,pic')->where(['per_id'=>['in', $ids]])->select();
+        $loc_ids = array_column($arr, 'loc_id');
+        $pics = array_column($arr, 'pic');
         $result = $model->where(['per_id'=>['in',$ids]])->delete();
         if(!empty($result)){
+            $root = $this->request->root();
+            foreach ($pics as $pic){
+                $pic_path = $root. DS .'static'. DS .'upload/'.$pic;
+                is_file($pic_path) && unlink($pic_path);
+            }
             !empty($loc_ids)&&Db::name('locator')->where(['loc_id'=>['in',$loc_ids]])->setField('status', 0);
             $this->success('删除人员成功！', '');
         }else{

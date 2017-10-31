@@ -25,7 +25,7 @@ class Node extends Base
      * 保存节点变更
      */
     public function save() {
-        if ($this->request->isPost()) {
+        if ($this->request->isPost()){
             $post = input('post.');
             if (isset($post['id']) && isset($post['name']) && isset($post['value'])) {
                 $data = ['node' => $post['id'], $post['name'] => $post['value']];

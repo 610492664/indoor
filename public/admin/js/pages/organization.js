@@ -24,16 +24,20 @@ function organization() {
                 "targets": 8,
                 "render": function ( data, type, full, meta ) {
                     if (type === 'display') {
-                        return '<div class="btn-group">'+
-                            '<button class="btn btn-link" e-action-modal="'+php_url.mod+'" e-data="'+data+'" ><i class="fa fa-pencil-square-o"></i></button>'+
-                            '<button class="btn btn-link" e-action-modal="'+php_url.resetpass+'" e-data="'+full.use_id+'"  title="重置密码"><i class="fa fa-key"></i></button>'+
-                            '<button class="btn btn-link" e-action-del="'+php_url.del+'" e-data="'+data+'" ><i class="fa fa-trash-o"></i></button>'+
-                            '</div>';
+                        var mod = php_url.mod === 'false' ? "" : '<button class="btn btn-link" e-action-modal="'+php_url.mod+'" e-data="'+data+'" ><i class="fa fa-pencil-square-o"></i></button>';
+                        var del =   php_url.del === 'false' ? "" : '<button class="btn btn-link" e-action-del="'+php_url.del+'" e-data="'+data+'" ><i class="fa fa-trash-o"></i></button>';
+                        var resetpass = php_url.resetpass === 'false' ? "" : '<button class="btn btn-link" e-action-modal="'+php_url.resetpass+'" e-data="'+full.use_id+'"  title="重置密码"><i class="fa fa-key"></i></button>'
+                        return '<div class="btn-group">'+ mod + resetpass + del+ '</div>';
                     }
                     return data;
                 }
             }
-        ]
+        ],
+        "preDrawCallback": function( settings ) {
+            if(php_url.mod === 'false'&&php_url.del === 'false'&&php_url.resetpass === 'false'){
+                this.api().columns([8]).visible(false);
+            }
+        }
     });
     //添加索引列
     $.table_index($.table, 0);

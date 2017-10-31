@@ -44,9 +44,6 @@ class AccessAuth {
             $result = ['code' => 0, 'msg' => '抱歉, 您没有访问该模块的权限!', 'data' => '', 'url' => '', 'wait' => 3];
             throw new HttpResponseException(json($result));
         }
-      /*  // 权限正常, 默认赋值
-        $view = View::instance(Config::get('template'), Config::get('view_replace_str'));
-        $view->assign('classuri', strtolower("{$module}/{$controller}"));*/
     }
 
 }

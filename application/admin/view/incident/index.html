@@ -8,8 +8,8 @@
             <input type="text" id="daterange" class="form-control input-sm" style="padding-right:25px; width: 190px;">
             <i class="glyphicon glyphicon-calendar fa fa-calendar" style="position: absolute; right: 10px; top:8px"></i>
         </label>
-        <button type="button" class="btn btn-link" e-action-modal="{:url('Incident/add')}"><i class="fa fa-plus"></i> 新增</button>
-        <button class="btn btn-link" e-action-del="{:url('Incident/del')}"><i class="fa fa-fw fa-trash"></i> 删除</button>
+        <!--<button type="button" class="btn btn-link" e-action-modal="{:url('Incident/add')}" {if !auth("admin/Incident/add")}disabled{/if}><i class="fa fa-plus"></i> 新增</button>-->
+        <!--<button class="btn btn-link" e-action-del="{:url('Incident/del')}" {if !auth("admin/Incident/del")}disabled{/if}><i class="fa fa-fw fa-trash"></i> 删除</button>-->
     </div>
 </div>
 <!-- /.form group -->
@@ -18,9 +18,9 @@
 <script>
     var php_url = {
         index: '{:url("Incident/index")}',
-        detail: '{:url("Incident/detail")}',
-        mod : '{:url("Incident/mod")}',
-        del : '{:url("Incident/del")}',
+        detail : '{:auth("admin/Incident/detail") ? url("Incident/detail") : "false"}',
+        mod : '{:auth("admin/Incident/mod") ? url("Incident/mod") : "false"}',
+        del :'{:auth("admin/Incident/del") ? url("Incident/del") : "false"}',
     };
     require([ 'moment','dataTables.bootstrap','inputmask.date', 'daterangepicker','jquery.form','admin/js/pages/incident'],function (moment) {
         window.moment = moment

@@ -47,8 +47,9 @@ class Person extends Base
 
     public function getPicAttr($value)
     {
-        $directory = '/indoor/public'. DS .'static'. DS .'upload/';
-        return (empty($value)) ? ('/indoor/public/static/img/headpic.png') : ($directory.$value);
+        $root = request()->root();
+        $directory =$root. DS .'static'. DS .'upload/';
+        return (empty($value)) ? ($root.'/static/img/headpic.png') : ($directory.$value);
     }
 
     public function locator()

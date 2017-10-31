@@ -34,14 +34,16 @@ function user_log() {
                 "targets": 9,
                 "render": function ( data, type, full, meta ) {
                     if (type === 'display') {
-                        return '<div class="btn-group">'+
-                            '<button class="btn btn-link" e-action-del="'+php_url.del+'" e-data="'+data+'" ><i class="fa fa-trash-o"></i></button>'+
-                            '</div>';
+                        var del = php_url.del === 'false' ? "" : '<button class="btn btn-link" e-action-del="'+php_url.del+'" e-data="'+data+'" ><i class="fa fa-trash-o"></i></button>';
+                        return '<div class="btn-group">'+ del + '</div>';
                     }
                     return data;
                 }
             }
         ],
+        "preDrawCallback": function( settings ) {
+            php_url.del === 'false'&& this.api().columns([0,9]).visible(false);
+        },
         initComplete: function () {
             var api = this.api();
             api.columns().indexes().flatten().each( function ( i ) {
@@ -70,7 +72,7 @@ function user_log() {
     });
     //添加索引列
     $.table_index($.table);
-    $("button[url]").click(function () {
+    $("button[data-url]").click(function () {
         var url = $(this).attr('url');
         $.form.load(url, {}, 'POST');
     })

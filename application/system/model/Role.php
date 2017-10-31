@@ -41,4 +41,13 @@ class Role extends Base
     {
         return $this->belongsToMany('Node', 'rol_nod', 'node', 'rol_id');
     }
+
+    /**
+     * 获取超级管理员角色id
+     * @return mixed
+     */
+    public function getSuperRole()
+    {
+        return $this->where(['org_id'=>0])->value('rol_id');
+    }
 }

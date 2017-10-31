@@ -37,28 +37,5 @@ class FilterView {
             '__MODULE__'=>$appRoot.'/'.$module
         ];
         $params = str_replace(array_keys($replace), array_values($replace), $params);
-//        !IS_CLI && $this->baidu($params);
     }
-
-    /**
-     * 百度统计实现代码
-     * @param $params
-     */
-    public function baidu(&$params) {
-        if (($key = sysconf('tongji_baidu_key'))) {
-            $script = <<<SCRIPT
-        <script>
-            var _hmt = _hmt || [];
-            (function() {
-                var hm = document.createElement("script");
-                hm.src = "https://hm.baidu.com/hm.js?{$key}";
-                var s = document.getElementsByTagName("script")[0]; 
-                s.parentNode.insertBefore(hm, s);
-            })();
-        </script>
-SCRIPT;
-            $params = preg_replace('|</body>|i', "{$script}\n    </body>", $params);
-        }
-    }
-
 }

@@ -42,7 +42,7 @@ function person() {
                 "targets": 10,
                 "render": function ( data, type, full, meta ) {
                     if (type === 'display') {
-                        var detail =  '<button class="btn btn-link " e-action-modal="'+php_url.detail+'" e-data="'+data+'" ><i class="fa fa-search"></i></button>';
+                        var detail =  php_url.detail === 'false' ? "" : '<button class="btn btn-link " e-action-modal="'+php_url.detail+'" e-data="'+data+'" ><i class="fa fa-search"></i></button>';
                         var mod = php_url.mod === 'false' ? "" : '<button class="btn btn-link" e-action-modal="'+php_url.mod+'" e-data="'+data+'" ><i class="fa fa-pencil-square-o"></i></button>';
                         var del =   php_url.del === 'false' ? "" : '<button class="btn btn-link" e-action-del="'+php_url.del+'" e-data="'+data+'" ><i class="fa fa-trash-o"></i></button>';
                         var str = '<div class="btn-group">';
@@ -55,7 +55,15 @@ function person() {
                     return data;
                 }
             }
-        ]
+        ],
+        "preDrawCallback": function( settings ) {
+            if (php_url.detail === 'false' && ((php_url.del === 'false' && php_url.mod === 'false')|| target === 'all')) {
+                this.api().columns([10]).visible(false);
+            }else{
+                this.api().columns([10]).visible(true);
+            }
+            php_url.del === 'false'&& this.api().columns([0]).visible(false);
+        }
     });
     //添加索引列
     $.table_index($.table);

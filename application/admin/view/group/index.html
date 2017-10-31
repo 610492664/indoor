@@ -1,16 +1,16 @@
 {extend name="public/content_table" /}
 {block name="box-header"}{/block}
 {block name="button"}
-<button type="button" class="btn btn-link" e-action-modal="{:url('group/add')}"><i class="fa fa-plus"></i> 新增</button>
-<button class="btn btn-link" e-action-del="{:url('group/del')}"><i class="fa fa-fw fa-trash"></i> 删除</button>
+<button type="button" class="btn btn-link" e-action-modal="{:url('group/add')}" {if !auth("admin/group/add")}disabled{/if}><i class="fa fa-plus"></i> 新增</button>
+<button class="btn btn-link" e-action-del="{:url('group/del')}" {if !auth("admin/group/del")}disabled{/if}><i class="fa fa-fw fa-trash"></i> 删除</button>
 {/block}
 {block name='script'}
 <script>
     var php_url = {
         index : '{:url("group/index")}',
-        mod :  '{:url("group/mod")}',
-        del :  '{:url("group/del")}',
-        groupperson : '#{:url("GroupPerson/index", "view=index&id=__ID__")}',
+        mod : '{:auth("admin/group/mod") ? url("group/mod") : "false"}',
+        del :'{:auth("admin/group/del") ? url("group/del") : "false"}',
+        groupperson :'{:auth("admin/GroupPerson/index") ? "#".url("GroupPerson/index", "view=index&id=__ID__") : "false"}',
     };
     require(['dataTables.buttons.bootstrap','inputmask.date','jquery.form'],function () {
         require(['domready!','admin/js/pages/group'],function () {

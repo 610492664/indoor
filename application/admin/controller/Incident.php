@@ -34,23 +34,23 @@ class Incident extends Base
         $this->assign('detail',$detail);
         return $this->fetch();
     }
-    //获取添加表单
-    public function add(){
-        if ($this->request->isPost()) {
-            /* @var $model SubModel*/
-            $model = Loader::model('incident');
-            //测试的建筑，此功能后面会删除
-            $buiding = \app\admin\model\Building::get('{BFF5481F-A3DF-F185-927A-83FF572351DB}');
-            $result = $model->data(input('post.'),true)->save();
-            $model->buildings()->save($buiding,['ibui_id'=>create_guid()] );
-            if(!empty($result)){
-                $this->success('添加事件成功！','');
-            }else{
-                $this->error('添加事件失败！');
-            }
-        }
-        return $this->fetch();
-    }
+//    //获取添加表单
+//    public function add(){
+//        if ($this->request->isPost()) {
+//            /* @var $model SubModel*/
+//            $model = Loader::model('incident');
+//            //测试的建筑，此功能后面会删除
+//            $buiding = \app\admin\model\Building::get('{BFF5481F-A3DF-F185-927A-83FF572351DB}');
+//            $result = $model->data(input('post.'),true)->save();
+//            $model->buildings()->save($buiding,['ibui_id'=>create_guid()] );
+//            if(!empty($result)){
+//                $this->success('添加事件成功！','');
+//            }else{
+//                $this->error('添加事件失败！');
+//            }
+//        }
+//        return $this->fetch();
+//    }
     //获取修改表单
     public function mod()
     {
@@ -68,18 +68,18 @@ class Incident extends Base
         $this->assign('detail',$detail);
         return $this->fetch();
     }
-    //删除
-    public function del()
-    {
-        $ids = input('get.id/a');
-        $result = SubModel::destroy($ids);
-        if(!empty($result)){
-            db('inc_per')->where(['inc_id'=>['in', $ids]])->delete();
-            db('inc_bui')->where(['inc_id'=>['in', $ids]])->delete();
-            $this->success('删除事件成功！','');
-        }else{
-            $this->error('删除事件失败！');
-        }
-    }
+//    //删除
+//    public function del()
+//    {
+//        $ids = input('get.id/a');
+//        $result = SubModel::destroy($ids);
+//        if(!empty($result)){
+//            db('inc_per')->where(['inc_id'=>['in', $ids]])->delete();
+//            db('inc_bui')->where(['inc_id'=>['in', $ids]])->delete();
+//            $this->success('删除事件成功！','');
+//        }else{
+//            $this->error('删除事件失败！');
+//        }
+//    }
 
 }
